@@ -20,6 +20,7 @@ urchinTracker();
 </script>		
 	</head>
 	<body id="body">
+		<% if RAILS_ENV == 'development' %><div id="dev-bar">DEVELOPMENT SITE</div><% end %>
 		<div id="wrap">
 			<div id="login">
 				<p>
