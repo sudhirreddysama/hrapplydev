@@ -2,7 +2,7 @@
 #   gem install sqlite3-ruby (not necessary on OS X Leopard)
 development:
   adapter: mysql
-  database: hr_apply_online
+  database: hr_apply_onlinedev
   username: root
   password: McMilk1
   host: localhost
