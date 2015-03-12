@@ -65,12 +65,13 @@ class Notifier < ActionMailer::Base
 		body :a => 'TEST'
 	end
 
-	#def recipients *args
-		#if RAILS_ENV == 'development'
-	#		super ['jesse@unicornelex.com', 'jessesternberg@monroecounty.gov']
-		#else
-		#	super *args
-		#end
-	#end
+	# DEV ONLY!
+	def recipients *args
+		if RAILS_ENV == 'development'
+			super ['jessesternberg@monroecounty.gov']
+		else
+			super *args
+		end
+	end
 
 end
