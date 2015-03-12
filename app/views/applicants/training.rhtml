@@ -1,0 +1,36 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<div style="display: none;"><%= submit_tag %></div>
+	<h2>Training</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<p>If you have received other training (i.e., work training programs, Armed Forces training) you may list it below. please estimate training hours received.</p>
+	<p>Use the &quot;Add a Course / Program&quot; button to add your information. You may enter any number of training courses / programs - just click the same button for as many as you would like to add.</p>
+	<% @obj.trainings.each_with_index { |t, i| fields_for("obj[new_trainings][#{t.id}]", t) { |ff| %>
+		<div id="<%= t.id %>" class="subform">
+			<h3>Course / Program # <%= i + 1 %></h3>
+			<div class="field">
+				<%= submit_tag 'Remove This Course / Program', :name => "obj[new_trainings][#{t.id}][remove]", :confirm => 'Are you sure you want to remove this item?' %>
+				<% if has_err(t.id) %>
+					<div class="field-error">If you are not using this item and wish to continue, click this button to remove it</div><div class="clear"></div>
+				<% end %>
+			</div>
+			<div class="field">
+				<label>Course / Program: <span class="req">*</span></label>
+				<%= ff.text_field :description, :style => 'width: 80%' %>
+				<%= err 'description', t.id %>
+			</div>
+			<div class="field">
+				<label>Hours: <span class="req">*</span></label>
+				<%= ff.text_field :hours, :style => 'width: 80%' %>
+				<%= err 'hours', t.id %>
+			</div>
+		</div>
+	<% }} %>
+	<div class="field">
+		<%= submit_tag 'Add a Course / Program', :name => 'obj[new_training]' %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>

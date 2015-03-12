@@ -1,0 +1,60 @@
+<h1>Applications Admin</h1>
+<% form_for(:filter) { |f| %>
+	<div class="filter">
+		<table>
+			<tr>
+				<th>Search:</th>
+				<td>
+					<%= f.text_field :search %> <%= submit_tag 'Apply Filter' %> 
+					<%= submit_tag 'Clear Filter', :name => 'filter[clear]' %> 
+					<div class="field-help">(id, name)</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+<% } %>
+<%= will_paginate @objs %>
+<table class="dg2" width="100%">
+	<thead>
+		<tr>
+			<th width="1%" class="nobr">Exam/Job&nbsp;No.</th>
+			<th width="96%">Name</th>
+			<th width="1%" class="nobr">Application Deadline</th>
+			<th width="1%" class="nobr">Exam Date</th>
+			<th width="1%">Fee</th>
+		</tr>
+	</thead>
+	<% @objs.each { |o| %>
+		<tbody>
+			<tr>
+				<td class="alt" colspan="5">
+						<% s = o.submit_complete ? 'submitted' : 'unfinished' %>
+						<div class="apstatus <%= s %> right"><%= s %></div>
+					<div class=" right"><%= h(o.first_name) %> <%= h(o.last_name) %>&nbsp;&nbsp;</div>
+					<%= link_to "Application # #{o.id} (click here to view / edit)", :action => :view, :id => o.id %>
+				</td>
+			</tr>
+		</tbody>
+		<% o.exam_prices.each { |ep| e = ep.exam %>
+			<tbody>
+				<tr>
+					<td><%= h(e.no.blank? ? 'N/A' : e.no) %></td>
+					<td><%= h(e.name) %></td>
+					<td class="nobr"><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+					<td class="nobr"><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
+					<td class="rt"><%= m ep.price %></td>
+				</tr>
+			</tbody>
+		<% } %>
+		<tbody>
+			<tr>
+				<td colspan="4" class="rt">Payment Fee:</td>
+				<td class="rt"><%= m(o.payment_fee) %></td>
+			</tr>
+			<tr>
+				<td colspan="4" class="rt">Total:</td>
+				<td class="rt"><%= m(o.total) %></td>
+			</tr>
+		</tbody>
+	<% } %>
+</table>

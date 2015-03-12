@@ -1,0 +1,26 @@
+<% if other_exam[:target] %>
+	<a name="target"></a>
+<% end %>
+<div class="other-exam-form">
+	<div class="field">
+		<label>Exam Number:</label>
+		<%= text_field_tag 'obj[new_other_exams][][no]', other_exam.no, :style => 'width: 80%;' %>
+	</div>
+	<div class="field">
+		<label>Exam Title:</label>
+		<%= text_field_tag 'obj[new_other_exams][][name]', other_exam.name, :style => 'width: 80%;' %>
+	</div>
+	<div class="field">
+		<label>Offered By:</label>
+		<label><%= radio_button_tag 'obj[new_other_exams][][agency]', 'city', other_exam.agency == 'city' %> City</label>
+		<label><%= radio_button_tag 'obj[new_other_exams][][agency]', 'county', other_exam.agency == 'county' %> Monroe County</label>
+		<label><%= radio_button_tag 'obj[new_other_exams][][agency]', 'state', other_exam.agency == 'state' %> State</label>
+		<div>
+			<label class="inline"><%= radio_button_tag 'obj[new_other_exams][][agency]', 'other', other_exam.agency == 'other' %> Other County: </label>
+			<%= text_field_tag 'obj[new_other_exams][][other]', other_exam.other, :size => 20 %> (please specify)
+		</div>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Remove This Exam', :name => 'obj[new_other_exams][][remove]', :onclick => "if(confirm('Are you sure you want to remove this item?')) $(this.parentNode.parentNode).remove(); return false;" %>
+	</div>
+</div>

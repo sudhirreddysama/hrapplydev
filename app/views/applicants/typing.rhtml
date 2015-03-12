@@ -1,0 +1,46 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<h2>Typing Test Waiver</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	
+	<p>The exam you are taking requires a Qualifying Typing Performance Test.  The exam announcement will inform you 
+	of the minimum words per minute required to pass your typing performance test along with additional information.</p>
+	
+	<p><b>WAIVER AND/OR DOCUMENTATION MUST BE POSTMARKED, FAXED OR RECEIVED 
+	IN THIS OFFICE NO LATER THAN THIRTY (30) DAYS AFTER THE WRITTEN EXAM.</b></p>
+	
+	<p>If you submit this waiver and/or documentation but it is not done correctly or information is missing or incomplete, it 
+	will be returned to you.  If you do not submit this waiver and/or documentation within the thirty (30) day time frame, 
+	you will be required to take the scheduled typing test.  You will be notified by mail of your test time and location.</p>
+	
+	<div class="field">
+		<label><%= f.check_box :typing_waiver %> I am requesting a waiver of the typing performance test.</label>
+		<%= err 'typing_waiver' %>
+	</div>
+	<div id="typing_waiver">
+		<p>Please select reason:</p>
+		<p><%= f.check_box :typing_waiver_1 %> I am providing documentation that I have been successful on a typing performance test at or above the rate of speed required for the exam I am taking, with at least a 96% accuracy rate.</p>
+		<ul>
+			<li>Documentation may be from a high school continuing education, college, business school, employment agency or local civil service agency.</li>
+			<li>Documentation must be on official letterhead with the signature, title and phone number of the person who administered the typing test along with the following information:</li>
+				<ul>
+					<li>Name</li>
+					<li>Social security number</li>
+					<li>Date of performance test (this must be within five (5) years of the written exam date)</li>
+					<li>Statement saying typing test was five (5) minutes in length</li>
+					<li>Typing test speed in words per minute</li>
+					<li>Number of errors</li>
+				</ul>
+			</li>
+			<li><span class="attention">ATTENTION:</span> Please use the &quot;Attachments&quot; section of this application to upload your documentation.</li>
+		</ul>
+		<p><%= f.check_box :typing_waiver_2 %> I am currently employed by Monroe County or a public agency or jurisdiction served by the Monroe County Civil Service Commission and presently hold permanent or contingent permanent competitive status in a title that required a typing performance test at or above the rate of speed required for the exam I am taking.</p>
+		<div class="field" style="padding-left: 2em;">
+			<label style="display: inline;">Current Title: <%= f.text_field :typing_waiver_2_title, :size => 20 %></label> <label style="display: inline;">Dept or Jurisdiction: <%= f.text_field :typing_waiver_2_dept, :size => 20 %></label>
+			<%= err 'typing_waiver_2' %></p>
+		</div>
+	</div>
+	<%= submit_tag 'Save & Continue' %>
+<% } %>
+<p>&nbsp;</p>

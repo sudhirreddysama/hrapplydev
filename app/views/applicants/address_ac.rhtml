@@ -1,0 +1,5 @@
+<ul>
+	<% @result.each_hash { |o| %>
+		<li><span class="adr"><%= h @no %> <%= h o.street_full %></span>, <span class="cty"><%= h o.city %></span> <span class="zip"><%= h o.zip_code %></span></li>
+	<% } %>
+</ul>

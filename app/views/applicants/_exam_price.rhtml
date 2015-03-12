@@ -1,0 +1,10 @@
+<div class="exam-price-form">
+	<table class="dg2" width="100%">
+		<tr>
+			<td>
+		</tr>
+	<% @obj.exam_prices.each { |ep| %>
+	<div class="field">
+		<%= submit_tag 'Remove This Exam', :name => 'obj[new_exam_prices][][remove]', :onclick => "return confirm('Are you sure you want to remove this item?'))" %>
+	</div>
+</div>

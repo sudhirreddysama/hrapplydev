@@ -1,0 +1,65 @@
+<h1>Login or Register</h1>
+<div class="text">
+	<p>You may login with an existing account or register a new account using the forms below. To register a new account, 
+	you must have a valid email address. A confirmation email will be sent to you via email with instructions on how to 
+	complete setting up your account.</p>
+</div>
+<%= render :partial => 'partial/errors', :locals => {:errors => @errors} %>
+<div id="login-form">
+	<h2>Login</h2>
+	<% form_for(:login) { |f| %>
+		<div class="field">
+			<label>Username: <span class="req">*</span></label>
+			<%= f.text_field :username %>
+		</div>
+		<div class="field">
+			<label>Password: <span class="req">*</span></label>
+			<%= f.password_field :password %>
+		</div>
+		<%= submit_tag 'Login' %>
+	<% } %><br />&nbsp;
+	<h2>Lost Password?</h2>
+	<% form_for(:lost) { |f| %>
+		<div class="field">
+			<label>Username or Email: <span class="req">*</span></label>
+			<%= f.text_field :username %>
+			<p>Enter your username or email and we'll<br />send you your account information</p>
+		</div>
+		<div class="field">
+			<%= submit_tag 'Send My Info' %>
+		</div>
+	<% } %>
+</div>
+<div id="register-form">
+	<h2>Register</h2>
+	<% form_for(:obj) { |f| %>
+		<div class="field">
+			<label>Your Email: <span class="req">*</span></label>
+			<%= f.text_field :email %>
+		</div>
+		<div class="field">
+			<label>First Name: <span class="req">*</span></label>
+			<%= f.text_field :first_name %>
+		</div>
+		<div class="field">
+			<label>Last Name: <span class="req">*</span></label>
+			<%= f.text_field :last_name %>
+		</div>
+		<div class="field">
+			<label>Desired Username: <span class="req">*</span></label>
+			<%= f.text_field :username %>
+		</div>
+		<div class="field">
+			<label>Password: <span class="req">*</span></label>
+			<%= f.password_field :password %>
+		</div>
+		<div class="field">
+			<label>Confirm Password: <span class="req">*</span></label>
+			<%= f.password_field :password_confirmation %>
+		</div>
+		<div class="field">
+			<%= submit_tag 'Create Account' %>
+		</div>
+	<% } %>
+</div>
+<div class="clear"></div>

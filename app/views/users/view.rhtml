@@ -1,0 +1,15 @@
+<%= render :partial => 'nav' %>
+<%= render :partial => 'subnav' %>
+<table class="form" width="100%">
+	<tr>
+		<th width="1%">First Name:</th><td width="49%"><%= h @obj.first_name %></td>
+		<th width="1%">Username:</th><td width="49%"><%= h @obj.username %></td></tr>
+	<tr>
+		<th>Last Name:</th><td><%= h @obj.last_name %></td>
+		<th>Email:</th><td><%= h @obj.email %></td>
+	</tr>
+	<tr>
+		<th>Level:</th><td><%= User::LEVELS.rassoc(@obj.level)[0] %></th>
+		<th></th><td></td>
+	</tr>
+</table>

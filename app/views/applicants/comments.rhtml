@@ -1,0 +1,13 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<h2>Additional Information / Comments</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<p>Please use the field below to specify any additional information or add comments to your application.</p>
+	<p><span class="attention">ATTENTION:</span> Read the exam announcement(s) carefully! Your exam(s) may require specific information, such as number of course hours on a particular subject. If the exam announcement indicates specific information is required, please enter that information below.</p>
+	<div class="field">
+		<%= f.text_area :info, :style => 'width:80%;', :rows => '8' %>
+	</div>
+	<%= submit_tag 'Save & Continue' %>
+<% } %>
+<p>&nbsp;</p>

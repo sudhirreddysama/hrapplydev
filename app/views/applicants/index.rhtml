@@ -1,0 +1,61 @@
+<h1>My Applications</h1>
+<p>Below are all online applications you have created / submitted.</p>
+<% if @objs.empty? %>
+	<p>You do not have any online applications yet. <%= link_to 'Apply here', :controller => :apply %></p>
+<% else %>
+	<table class="dg2" width="100%">
+		<thead>
+			<tr>
+				<th width="1%" class="nobr">Exam/Job&nbsp;No.</th>
+				<th width="96%">Name</th>
+				<th width="1%" class="nobr">Application Deadline</th>
+				<th width="1%" class="nobr">Exam Date</th>
+				<th width="1%">Fee</th>
+			</tr>
+		</thead>
+		<% @objs.each { |o| %>
+			<tbody>
+				<tr>
+					<td class="alt" colspan="5">
+						<% s = o.submit_complete ? 'submitted' : 'unfinished' %>
+						<div class="apstatus <%= s %> right"><%= s %></div>
+						<%= link_to "Application # #{o.id} (click here to view / edit)", :action => :view, :id => o.id %>
+					</td>
+				</tr>
+			</tbody>
+			<% o.exam_prices.each { |ep| e = ep.exam %>
+				<tbody>
+					<tr>
+						<td><%= h(e.no.blank? ? 'N/A' : e.no) %></td>
+						<td><%= link_to_function h(e.name), "$('exam-#{o.id}-#{e.id}').toggle()", :href => url_for(:controller => :apply, :action => :exam, :id => e.id) %></td>
+						<td class="nobr"><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+						<td class="nobr"><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
+						<td class="rt"><%= m ep.price %></td>
+					</tr>
+				</tbody>
+				<tbody id="exam-<%= "#{o.id}-#{e.id}" %>" style="display: none;">
+					<tr>
+						<td colspan="5">
+							<p><strong>Category:</strong> <%= e.category ? e.category.name : 'N/A' %></p>
+							<% if e.description.blank? %>
+								<p>No additional information is available for this item.</p>
+							<% else %>
+								<%= e.description %>
+							<% end %>
+						</td>
+					</tr>
+				</tbody>
+			<% } %>
+			<tbody>
+				<tr>
+					<td colspan="4" class="rt">Payment Fee:</td>
+					<td class="rt"><%= m(o.payment_fee) %></td>
+				</tr>
+				<tr>
+					<td colspan="4" class="rt">Total:</td>
+					<td class="rt"><%= m(o.total) %></td>
+				</tr>
+			</tbody>
+		<% } %>
+	</table>
+<% end %>

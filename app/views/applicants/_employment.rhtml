@@ -1,0 +1,60 @@
+<% if employment[:target] %>
+	<a name="target"></a>
+<% end %>
+<div class="employment-form">
+	<div class="field">
+		<label>Employer's Name: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][name]', employment.name, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Address: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][address]', employment.address, :style => 'width: 80%' %><br />
+		<%= text_field_tag 'obj[new_employments][][address2]', employment.address2, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>City, State, Zip: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][city]', employment.city %>
+		<%= select_tag 'obj[new_employments][][state]', options_for_select([[]] + State::NAMES, employment.state) %> 
+		<%= text_field_tag 'obj[new_employments][][zip]', (employment.attributes['zip'] rescue employment['zip']), :size => 11, :maxlength => 11 %>
+	</div>
+	<div class="field">
+		<label>Dates of Employment: <span class="req">*</span></label>
+		<%= check_box_tag 'obj[new_employments][][currently_employed]' %>Currently Employed (don't enter a &quot;to&quot; date)<br />
+		From: <%= calendar_date_select_tag 'obj[new_employments][][start_date]', employment.start_date %> To: <%= calendar_date_select_tag 'obj[new_employments][][end_date]', employment.end_date %>
+	</div>
+	<div class="field">
+		<label>Salary: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][salary]', employment.salary, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Hours Worked Per Week: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][hours]', employment.hours, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Reason(s) for Leaving: <span class="req">*</span></label>
+		<%= text_area_tag 'obj[new_employments][][reason_left]', employment.reason_left, :rows => 2, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Your Job Title: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][title]', employment.title, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Immediate Supervisor's Name: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][supervisor_name]', employment.supervisor_name, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Supervisor's Title: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][supervisor_title]', employment.supervisor_title, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Supervisor's Phone: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_employments][][supervisor_phone]', employment.supervisor_phone, :size => '16' %>
+	</div>
+	<div class="field">
+		<label>Description of Duties: <span class="req">*</span></label>
+		<%= text_area_tag 'obj[new_employments][][description]', employment.description, :rows => 4, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Remove This Job', :name => 'obj[new_employments][][remove]', :onclick => "if(confirm('Are you sure you want to remove this item?')) $(this.parentNode.parentNode).remove(); return false;" %>
+	</div>
+</div>

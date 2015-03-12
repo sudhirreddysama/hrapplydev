@@ -1,0 +1,9 @@
+<div class="attachment-form">
+	<div class="field" style="text-align: right;">
+		<div style="float: left;">
+			<%= link_to attachment.name.blank? ? 'Uploaded Document' : attachment.name, {:controller => :applicants, :action => :attachment, :id => @obj.id, :id2 => attachment.id}, :target => '_blank' %>
+		</div>
+		<%= submit_tag 'Remove This Attachment', :name => "obj[remove_attachment_id][#{attachment.id}]", :onclick => "return confirm('Are you sure you want to remove this item?')" %>
+		<div class="clear"></div>
+	</div>
+</div>

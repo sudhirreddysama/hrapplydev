@@ -1,0 +1,9 @@
+<div class="tabs2">
+	<%= tab 'View', :action => :view, :id => @obj.id %>
+	<%= tab 'Edit', :action => :edit, :id => @obj.id %>
+	<%= tab 'Print', {:action => :pdf, :id => @obj.id}, {}, :target => :blank %>
+	<%= tab 'Fee / Status', {:action => :status, :id => @obj.id}, :id2 => nil %>
+	<%= tab 'Waiver', :action => :waiver, :id => @obj.id %>
+	<%= tab 'Delete', :action => :delete, :id => @obj.id %>
+	<div class="clear"></div>
+</div>

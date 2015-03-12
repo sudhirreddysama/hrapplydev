@@ -1,0 +1,3 @@
+<% if session[:cart]  and !session[:cart].empty? %>
+	<%= link_to	'You currently have items in your shopping cart. Click here to checkout.', {:controller => :apply, :action => :cart}, :id => 'hr-cart' %>	
+<% end %>

@@ -1,0 +1,41 @@
+<h1>Batch Print Applications</h1>
+<%= render :partial => 'partial/errors', :locals => {:errors => @errors} %>
+<% @exam_types.each { |et| %>
+	<% o2 = @objs2[et.id] %>
+	<p><strong><%= et.name %>:</strong>
+	<% if o2.length.zero? %>
+		No New Applications.</p>
+	<% else %>
+		New Applications: <%= o2.length %></p>
+		<div style="padding-bottom: 5px;">
+			<%= form_tag({}, :onsubmit => "$('batch-print-#{et.id}').disabled = true;") %>
+				<%= hidden_field_tag :exam_type_id, et.id %>
+				<%= submit_tag 'Generate New Batch File', :id => "batch-print-#{et.id}" %>
+			</form>
+		</div>
+	<% end %>
+<% } %>
+<%= will_paginate @objs %>
+<table class="dg2" width="100%">
+	<tr>
+		<th>ID</th>
+		<th>From</th>
+		<th>To</th>
+		<th>Click to Download</th>
+		<th>Applicant&nbsp;Count</th>
+		<th>Type</th>
+		<th>Rebuild</th>
+	</tr>
+	<% @objs.each { |o| %>
+		<tr>
+			<td><%= o.id %></td>
+			<td class="nobr"><%= o.from.to_s :dt rescue nil %></td>
+			<td class="nobr"><%= o.to.to_s :dt rescue nil %></td>
+			<td><%= link_to 'Click to Download', :action => :download, :id => o.id %></td>
+			<td><%= o.applicant_count %></td>
+			<td><%= h o.exam_type.short_name if o.exam_type %></td>
+			<td><%= link_to 'rebuild', :action => :rebuild, :id => o.id %></td>
+		</tr>
+	<% } %>
+</table>
+<%= will_paginate @objs %>

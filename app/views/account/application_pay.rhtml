@@ -1,0 +1,69 @@
+<h1>Pay &amp; Submit Application</h1>
+<%= render :partial => 'nav' %>
+<%= render :partial => 'subnav_applicant' %>
+<% unless @obj.waiver_denied %>
+	<p>Before submitting your application, please review all information for accuracy and completeness and print a copy for your records. You will NOT be able to edit your application after submission.</p>
+	<ul>
+		<li><%= link_to 'View your application as a printable PDF', {:action => :application_pdf, :id => @obj.id}, :target => '_blank' %></li>
+		<li><%= link_to 'View your application as a web page (HTML)', {:action => :application_view, :id => @obj.id}, :target => '_blank' %></li>
+	</ul>
+<% end %>
+<%= form_tag %>
+	<% unless @obj.waiver_denied %>
+		<% if @confirm_error %>
+			<p class="errors">Please review your application and click the checkbox below.</p>
+		<% end %>
+		<div class="field">
+			<label><%= check_box_tag 'confirmed', 1, @obj.confirmed %> I declare that the statements made in this application (including statements made in my accompanying papers) have been examined by me and to the best of my 
+knowledge and belief are true and correct.  Any false statements made may result in termination of employment.  I further understand, and will otherwise submit 
+thereto, that in accordance with the County's pre-employment drug testing policy, I may be required to submit to a urinalysis test as a condition for employment.  
+Applicants may also be required to undergo a State and national criminal history background investigation, which will include a fingerprint check, to determine suitability for appointment.  Failure to meet the standards for the background investigation may result in disqualification. 
+</label>
+		</div>
+	<% end %>
+	<% if @obj.total <= 0 %>
+		<p>Your application requires no payment. Hit the button below to submit your application.</p>
+		<p><%= submit_tag 'Submit Application' %></p>
+	<% elsif @obj.waiver_requested and !@obj.waiver_denied %>
+		<p>You have requested that payment for this application be waived. Your request will be reviewed, and you may have to submit payment at a later date if the waiver is rejected. No payment is required at this time. Hit the button below to submit your application.</p>
+		<p><%= submit_tag 'Submit Application' %></p>
+	<% else %>
+		<p>Your application requires a payment total of <strong><%= m @obj.total %>.</strong> Please fill out your payment information below. You will be charged immediately for your application.</p>
+		<% fields_for(:payment) { |f| %>
+		<%= render :partial => 'partial/errors', :locals => {:errors => @payment.errors.full_messages} %>
+		<fieldset id="payment">
+			<legend>Payment Information</legend>
+			<div id="pay_card">
+				<div class="field">
+					<label>Card Number: <span class="req">*</span></label>
+					<%= f.text_field :number %>
+				</div>
+				<div class="field">
+					<label>Card Type: <span class="req">*</span></label>
+					<%= f.select :typ, Applicant::PAY_CARD_TYPES %>
+				</div>
+				<div class="field">
+					<label>First Name (on card): <span class="req">*</span></label>
+					<%= f.text_field :first_name %>
+				</div>
+				<div class="field">
+					<label>Last Name (on card): <span class="req">*</span></label>
+					<%= f.text_field :last_name %>
+				</div>
+				<div class="field">
+					<label>Card Expiration Date: <span class="req">*</span></label>
+					<% cy = Time.now.year %>
+					<%= f.text_field :month, :size => 3, :maxlength => 2 %> /
+					<%= f.text_field :year, :size => 3, :maxlength => 2 %> (MM / YY)
+				</div>
+				<div class="field">
+					<label>Card Security Code: <span class="req">*</span></label>
+					<%= f.text_field :verification_value %>
+					<div>From back of card. <%= link_to 'Click here to locate', '/cardcodes.gif', :target => '_blank' %></div>
+				</div>
+			</div>
+		</fieldset>
+		<% } %>
+		<p><%= submit_tag 'Pay & Submit Application' %></p>
+	<% end %>
+</form>

@@ -1,0 +1,81 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% if @obj.total.to_f > 0 %>
+	<h2>Submit &amp; Pay for Application</h2>
+<% else %>
+	<h2>Submit Application</h2>
+<% end %>
+<% if @obj.can_submit? %>
+	<% form_for(:obj) { |f| %>
+		<%= render :partial => 'applicants/section_errors' %>
+		<p>Before submitting your application, please review all information for accuracy and completeness and print a copy for your records. You will NOT be able to edit your application after submission.</p>
+		<ul>
+			<li><%= link_to 'View your application as a printable PDF', {:action => :pdf, :id => @obj.id}, :target => '_blank' %></li>
+			<li><%= link_to 'Back to sections overview', {:action => :view, :id => @obj.id} %></li>
+		</ul>
+		<div class="field">
+			<%= err 'confirmed' %>
+			<label><%= f.check_box :confirmed %>
+			I declare that the statements made in this application (including statements made in my accompanying papers) have been examined by me and to the best of my 
+			knowledge and belief are true and correct. Any false statements made may result in termination of employment or removal from Civil Service eligibility. 
+			I further understand, and will otherwise submit thereto, that in accordance with the County's pre-employment drug testing policy, I may be required to submit 
+			to a urinalysis test as a condition for employment. Applicants may also be required to undergo a State and national criminal history background investigation, 
+			which will include a fingerprint check, to determine suitability for appointment. Failure to meet the standards for the background investigation may result in disqualification.			
+			</label>
+		</div>
+		<% unless @noform %>
+			<% if @obj.total.to_f <= 0 %>
+				<p>Your application requires no payment. Hit the button below to submit your application.</p>
+			<% elsif @obj.waiver_requested %>
+				<p>You have requested that payment for this application be waived. Your request will be reviewed, and you may have to submit payment at a later date if the waiver is rejected. No payment is required at this time. Hit the button below to submit your application.</p>
+			<% else %>
+				<p>Your application requires a payment total of <strong><%= m @obj.total %>.</strong> Please fill out your payment information below. You will be charged immediately for your application.</p>
+				<% fields_for('obj[new_payment]', @obj.new_payment) { |f| %>
+					<%= render :partial => 'partial/errors', :locals => {:errors => @obj.new_payment.errors.full_messages} %>
+					<div class="field">
+						<label>Card Number: <span class="req">*</span></label>
+						<%= f.text_field :number %>
+					</div>
+					<div class="field">
+						<label>Card Type: <span class="req">*</span></label>
+						<%= f.select :typ, Applicant::PAY_CARD_TYPES, :include_blank => true %>
+					</div>
+					<div class="field">
+						<label>First Name (on card): <span class="req">*</span></label>
+						<%= f.text_field :first_name %>
+					</div>
+					<div class="field">
+						<label>Last Name (on card): <span class="req">*</span></label>
+						<%= f.text_field :last_name %>
+					</div>
+					<div class="field">
+						<label>Address (use the address the card company has on file) <span class="req">*</span></label>
+						<%= f.text_field :address %>
+					</div>
+					<div class="field">
+						<label>City, State &amp; Zip: <span class="req">*</span></label>
+						<%= f.text_field :city %> <%= f.select :state, State::NAMES %> <%= f.text_field :zip, :size => 11, :maxlength => 11 %>
+					</div>
+					<div class="field">
+						<label>Card Expiration Date: <span class="req">*</span></label>
+						<% cy = Time.now.year %>
+						<%= f.text_field :month, :size => 3, :maxlength => 2 %> /
+						<%= f.text_field :year, :size => 3, :maxlength => 2 %> (MM / YY)
+					</div>
+					<div class="field">
+						<label>Card Security Code: <span class="req">*</span></label>
+						<%= f.text_field :verification_value %>
+						<div>From back of card. <%= link_to 'Click here to locate', '/hrapply/cardcodes.gif', :target => '_blank' %></div>
+					</div>
+				<% } %>
+			<% end %>
+		<% end %>
+		<div class="field">
+			<%= submit_tag 'Submit Application' %>
+		</div>
+	<% } %>
+<% else %>
+	<p>You cannot submit and pay for your application until you have viewed and saved each section and resolved any errors. Please return to the <%= link_to 'application section overview', :action => :view, :id => @obj.id %>
+	to view which sections you have not yet completed.
+	</p>
+<% end %>

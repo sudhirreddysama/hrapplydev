@@ -1,0 +1,29 @@
+<h1><%= h(@obj.label) %></h1>
+<%= render :partial => 'cart' %>
+<table class="form" width="100%">
+	<tr>
+		<th width="1%">No.:</th>
+		<td width="49%"><%= h(@obj.no.blank? ? 'N/A' : @obj.no) %></td>
+		<th width="1%">Name:</th>
+		<td width="49%"><%= h @obj.name %></td>
+	</tr>
+	<tr>
+		<th>Type:</th>
+		<td><%= h @obj.exam_type.name %></td>
+		<th>Deadline:</th>
+		<td><%= @obj.deadline.blank? ? 'N/A' : @obj.deadline.to_s(:dt) %></td>		
+	</tr>
+	<tr>
+		<th>Exam Date:</th>
+		<td><%= @obj.exam_date.blank? ? 'N/A' : @obj.exam_date.to_s(:dt) %></td>
+		<th>Price:</th>
+		<td><%= (@obj.price.blank? or @obj.price.zero?) ? 'N/A' : m(@obj.price) %></td>
+	</tr>
+</table>
+<%= @obj.description %>
+<% if @obj.can_apply %>
+	<%= form_tag :action => :cart %>
+		<%= hidden_field_tag 'add', @obj.id %>
+		<p><%= submit_tag 'Apply Online' %></p>
+	</form>
+<% end %>		

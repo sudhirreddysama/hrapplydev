@@ -1,0 +1,43 @@
+<%= render :partial => 'nav' %>
+<%= render :partial => 'subnav' %>
+<table class="form" width="100%">
+	<tr>
+		<th width="1%">No.:</th>
+		<td width="49%"><%= h(@obj.no.blank? ? 'N/A' : @obj.no) %></td>
+		<th width="1%">Name:</th>
+		<td width="49%"><%= h @obj.name %></td>
+	</tr>
+	<tr>
+		<th>Type:</th>
+		<td><%= @obj.exam_type.name if @obj.exam_type %></td>
+		<th>Category:</th>
+		<td><%= h @obj.new_categories.collect(&:name).join(',') %></td>
+	</tr>
+	<tr>
+		<th>Exam Date:</th>
+		<td><%= @obj.exam_date.to_s(:dt) if @obj.exam_date %></td>
+		<th>Price:</th>
+		<td><%= @obj.price.to_f == 0 ? 'N/A' : m(@obj.price) %></td>
+	</tr>
+	<tr>
+		<th>Publish:</th>
+		<td><%= @obj.publish ? @obj.publish.to_s(:dt) : 'N/A' %></td>
+		<th>Deadline:</th>
+		<td><%= @obj.deadline ? @obj.deadline.to_s(:dt) : 'N/A' %></td>
+	</tr>
+	<tr>
+		<th>Published?:</th>
+		<td><%= @obj.published ? 'Yes' : 'No' %></td>
+		<th>Can Apply?:</th>
+		<td><%= @obj.can_apply ? 'Yes' : 'No' %></td>
+	</tr>
+	<tr>
+		<% if false %>
+			<th>Ask Loans?:</th>
+			<td><%= @obj.ask_loans ? 'Yes' : 'No' %></td>
+		<% end %>
+		<th>Offer Typing Waiver?</th>
+		<td><%= @obj.ask_typing_waiver ? 'Yes' : 'No' %></td>
+	</tr>
+</table>
+<%= @obj.description %>

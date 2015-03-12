@@ -1,0 +1,9 @@
+<h1>Users Admin</h1>
+<% if @current_user.level >= 20 %>
+	<div class="tabs">
+		<%= tab 'List', :action => :index %>
+		<%= tab 'New', :action => :new %>
+		<%= tab(@obj.label, {:id => @obj.id}, :action => :view) if @obj and not @obj.new_record? %>
+		<div class="clear"></div>
+	</div>
+<% end %>

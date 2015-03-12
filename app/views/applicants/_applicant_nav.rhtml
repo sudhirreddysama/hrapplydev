@@ -1,0 +1,52 @@
+<% @right_column = capture { %>
+	<div class="box" id="application-sections" style="position: relative; top: 0px;">
+		<h3>Sections</h3>
+		<div class="boxlinks">
+			<% unless @obj.errors.empty? %>
+				<a href="#errors" class="errors2">Errors</a>
+			<% end %>
+			<a href="#exams">Exams</a>
+			<a href="#general">General <span class="req">*</span></a>
+			<a href="#licenses">Licenses / Certification</a>
+			<a href="#education">Education  <span class="req">*</span></a>
+			<a href="#training">Training</a>
+			<a href="#work">Work Experience</a>
+			<a href="#multi">Application for Exams by both the City and County</a>
+			<a href="#veteran">Armed Forces / Veterans Credits</a>
+			<% if @obj.ask_loans %>
+				<a href="#supplement">Application for Examination Supplement</a>
+			<% end %>
+			<% if @obj.ask_typing_waiver %>
+				<a href="#typing">Typing Test Waiver</a>
+			<% end %>
+			<a href="#waiver">Application Fee Waiver</a>
+			<a href="#equal">Equal Employment Opportunity Data Collection Form</a>
+			<a href="#attachments">File Attachments</a>
+			<a href="#info">Additional Information / Comments</a>
+			<% unless @noform %>
+				<a href="#save">Save or Submit</a>
+			<% end %>
+		</div>
+	</div>
+<% } %>
+
+<script type="text/javascript">
+
+	Event.observe(window, 'load', function() {
+		var sections = $('application-sections');
+		var offset = sections.cumulativeOffset();
+		var lastTargetTop = 0;
+		setInterval(function() { 
+			var scrollOffset = document.viewport.getScrollOffsets();
+			var currentTop = parseInt(sections.style.top);
+			var targetTop = Math.max(scrollOffset[1] -  offset[1] + 10, 0);
+			if((targetTop != currentTop) && (lastTargetTop == targetTop)) {
+				new Effect.Tween(sections, currentTop, targetTop, {duration: 1/4}, function(v) { 
+					sections.style.top = Math.round(v).toString() +'px';
+				});
+			}
+			lastTargetTop = targetTop;
+		}, 250);
+	});
+	
+</script>

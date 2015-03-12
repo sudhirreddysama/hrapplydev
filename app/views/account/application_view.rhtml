@@ -1,0 +1,6 @@
+<h1>View Application # <%= @obj.id %></h1>
+<%= render :partial => 'nav' %>
+<%= render :partial => 'subnav_applicant' %>
+<% @noform = true %>
+<% @obj.prepare_for_form %>
+<%= render :partial => 'applicants/form' %>

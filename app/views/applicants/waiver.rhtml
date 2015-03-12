@@ -1,0 +1,95 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<h2>Application Fee Waiver Request and Certification</h2>
+	<p>Civil Service Law Section 50.5(b): &quot;...fees shall be waived for candidates who certify to the state civil service department, a 
+	municipal commission or regional commission that they are unemployed and primarily responsible for the support of a household, or are 
+	receiving public assistance.&quot;</p>
+	<%= render :partial => 'applicants/section_errors' %>
+	<div class="field">
+		<label><%= f.check_box :waiver_requested %>I request that my application fee(s) be waived in accordance with Section 50.5(b) of the State Civil Service Law for the following reason(s):</label>
+		<%= err 'waiver_requested' %>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.check_box :waiver_unemployed %> I am totally unemployed <strong><em>and</em></strong> I am primarily responsible for the support of my household.
+		<strong>NOTE: Individuals who can be claimed as a dependent on any other person's tax return ARE NOT eligible for application fee waiver 
+		as head of household.</strong></label>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.check_box :waiver_medicaid %> I am currently eligible for medicaid.</label>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.check_box :waiver_ssi %> I am currently receiving Supplemental Security Income (SSI) payments.</label>
+	</div>	
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.check_box :waiver_public_assistance %> I am currently receiving public assistance (Temporary Assistance for Needy Families/Family Assistance or Safety Net Assistance).</label>
+		<div style="padding-left: 40px;">
+			<% if false %>
+				<label><%= f.check_box :waiver_safety_net %> Safety Net</label>
+				<label><%= f.check_box :waiver_family_assistance %> Family Assistance</label>
+			<% end %>
+			<label>Public Assistance Case Number: <%= f.text_field :waiver_case_number %></label>
+			<%= err 'waiver_public_assistance' %>
+		</div>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.check_box :waiver_wia %> I am currently certified Job Training Partnership Act/Workforce Investment Act eligible through a state or local social service agency (e.g. Rochester Works!).</label>
+		<% if false %>
+			<div style="padding-left: 40px;">
+				<label class="inline">Caseworker's Name: <%= f.text_field :waiver_wia_caseworker, :size => '16' %></label> <label class="inline">Phone: <%= f.text_field :waiver_wia_phone, :size => '16' %></label>
+				<%= err 'waiver_wia' %>
+			</div>
+		<% end %>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.check_box :waiver_county %> I am a full-time employee of Monroe County represented by CSEA Local 828, Unit 7400 at pay group 10 or below.</label>
+		<div style="padding-left: 40px;">
+			<label>Job title and grade: <%= f.text_field :waiver_county_job %></label>
+			<%= err 'waiver_county_job' %>
+		</div>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.check_box :waiver_social_workers %> I am represented by the Federation of Social Workers.  I am employed at grade 52 or below or this exam is in my career path.</label>
+		<div style="padding-left: 40px;">
+			<label>Job title and grade: <%= f.text_field :waiver_social_workers_job %></label>
+			<%= err 'waiver_social_workers_job' %>
+		</div>
+	</div>
+	<h3 style="text-align: center;">All Fee Waiver Requests are Subject to Verification by Submission of Documentation</h3>	
+	<div class="field">
+		<%= err 'waiver_legal' %>
+		<label><%= f.check_box :waiver_legal %> I have read the above portion of Section 50.5(b) of the Civil Service Law relating to the waiver of application fees and 
+		certify that I am qualified to receive such waiver for the reasons indicated above.  I understand that my claim for application 
+		fee may be investigated and I may be disqualified from the listed civil service examination if I make any false statement 
+		regarding my eligibility for application fee waiver.</label>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>
+
+<script type="text/javascript">
+	
+	var check_ids = [
+		'obj_waiver_unemployed',
+		'obj_waiver_medicaid',
+		'obj_waiver_ssi',
+		'obj_waiver_public_assistance',
+		'obj_waiver_wia',
+		'obj_waiver_county',
+		'obj_waiver_social_workers'
+	]
+	
+	var waiver_check = function(e) {
+		var checked = false;
+		for(var i = 0; i < check_ids.length && !checked; i++) {
+			checked = $(check_ids[i]).checked
+		}
+		$('obj_waiver_requested').checked = checked;
+	}
+	
+	for(var i = 0; i < check_ids.length; i++) {
+		Event.observe(check_ids[i], 'change', waiver_check);
+	}
+	
+</script>

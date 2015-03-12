@@ -1,0 +1,5 @@
+<% errors = @obj.saved_errors.find_all_by_section @obj.section %>
+<% unless errors.empty? %>
+	<div class="errors">Some of the information you have provided in this section is incomplete. Please scroll down to view errors that need to be resolved, or click the button below to go to another section and return here later.</div>
+	<div style="padding-top: 1em;"><%= submit_tag 'Go To Another Section', :name => 'obj[save_view]' %></div>
+<% end %>

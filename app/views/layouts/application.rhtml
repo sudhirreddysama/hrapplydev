@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<!-- HRAPPLY -->
+	<head>
+		<title>Monroe County HR</title>
+		<%= javascript_include_tag :defaults %>
+		<%= stylesheet_link_tag 'mc-content-2col', 'mc-global', 'datagrid2' %>
+		<%= stylesheet_link_tag 'mc-print.css', :media => 'print' %>
+		<%= stylesheet_link_tag 'hr.css', :media => 'all' %>
+		<%= calendar_date_select_includes %>
+		<%= yield :head %>
+		<link rel="stylesheet" rev="stylesheet" href="/c/mc-small.css" title="stylesheet 1" type="text/css" media="screen" charset="utf-8" />
+		<link rel="alternate stylesheet" rev="stylesheet" href="/c/mc-medium.css" title="stylesheet 2" type="text/css" media="screen" charset="utf-8" />
+		<link rel="alternate stylesheet" rev="stylesheet" href="/c/mc-large.css" title="stylesheet 3" type="text/css" media="screen" charset="utf-8" />
+		<script type="text/javascript" src="/js/mc.js"></script>
+<script src="https://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+<script type="text/javascript">
+_uacct = "UA-93385-4";
+urchinTracker();
+</script>		
+	</head>
+	<body id="body">
+		<div id="wrap">
+			<div id="login">
+				<p>
+					<% if @current_user %>
+						You are logged in as <%= h @current_user.username %>
+						<%= link_to '(logout)', :controller => :account, :action => :logout %>
+					<% else %>
+						<%= link_to 'login', :controller => :account, :action => :index %>
+					<% end %>	
+				</p>
+			</div>
+			<div id="header">
+			</div>
+			<div id="navbar">
+				<ul id="nav">
+					<li id="home"><a href="http://www.monroecounty.gov/home-index.php" accesskey="i" title="My Monroe portal">My Monroe</a></li>
+					<li id="res"><a href="http://www.monroecounty.gov/resident-index.php" accesskey="r" title="Resident portal">Resident</a></li>
+					<li id="vis"><a href="http://www.monroecounty.gov/visitor-index.php" accesskey="v" title="Visitor portal">Visitor</a></li>
+					<li id="bus"><a href="http://www.monroecounty.gov/business-index.php" accesskey="b" title="Business portal">Business</a></li>
+					<li id="gov"><a href="http://www.monroecounty.gov/government-index.php" accesskey="g" title="Government portal">Government</a></li>
+					<li id="emp"><a href="http://www.monroecounty.gov/employment-index.php" accesskey="e" title="Employment portal">Employement</a></li>
+					<li id="dept"><a href="http://www.monroecounty.gov/department-index.php" accesskey="d" title="All Departments">Departments</a></li>
+					<li id="done"><a href="http://www.monroecounty.gov/online" accesskey="o" title="Get It Done Online">Get It Done Online!</a></li>
+				</ul>				
+				<div id="urhere">
+					<p></p>
+				</div>
+			</div>
+			<div id="wrap-inner">
+				<div id="main-body" class="clearfix">
+					<div id="content-2col">					
+						<div class="text">
+							<% if session[:noactivation] and @current_user %>
+								<p style="color: #800; font-weight: bold;">Please remember to <%= link_to 'logout', :controller => :account, :action => :logout %> when you are done to prevent other users from accessing your personal information.</p>
+							<% end %>
+							<% if flash[:notice] %>
+								<p class="notice"><%= flash[:notice] %></p>
+							<% end %>
+							<% if flash[:error] %>
+								<%= render :partial => 'partial/errors', :locals => {:errors => [flash[:error]]} %>
+							<% end %>
+							<%= yield %>
+							<p><strong><em>If you are experiencing any problems with this site please email us at <a href="mailto:civilservice@monroecounty.gov">civilservice@monroecounty.gov</a>. If have any other questions please contact our office at 753-1700.</em></strong></p>
+						</div>
+						<div id="footer">
+							<p class="btmlinks">
+								<a href="http://www.monroecounty.gov/default-about.php" title="Go to About MonroeCounty.gov page">About MonroeCounty.gov</a> &middot; 
+								<a href="http://www.monroecounty.gov/default-accessibilitystandards.php" title="Go to Accessibility and Standards page">Accessibility and Web Standards</a> &middot; 
+								<a href="http://www.monroecounty.gov/default-disclaimer.php" title="Go to Web Disclaimer and Privacy Policy page">Web Disclaimer and Privacy Policy</a></p>
+							<p class="copyright">Official Site of the Monroe County, New York. Copyright &copy; <%= Time.now.to_date.year %> Monroe County. All Rights Reserved.</p>					
+						</div>
+						<div id="leftcol">
+							<div id="switcher">
+								<ul id="switch">
+									<li id="normalstyle"><a id="style1" href="javascript:setActiveStyleSheet('stylesheet 1')" title="Normal text size">Normal Text Stylesheet</a></li>
+									<li id="largestyle"><a id="style2" href="javascript:setActiveStyleSheet('stylesheet 2')" title="Larger text size">Large Text Stylesheet</a></li>
+									<li id="xlargestyle"><a id="style3" href="javascript:setActiveStyleSheet('stylesheet 3')" title="Extra Large text size">Extra Large Text Stylesheet</a></li>
+									<li id="emailpage"><a href="javascript:" onclick="return mailpage();" title="eMail this page">e-Mail Page</a></li>							
+									<li id="printpage"><a href="javascript:print();" title="Print this page">Print Page</a></li>
+								</ul>
+							</div>
+							<img width="150" height="33" border="0" alt="Picture of American flag." src="/i-p/col-flag.jpg"/>
+							<p><a href="#" id="toggle" onclick="$('deptlinks').toggle();" class="plus" title="Hide or show Department Links (below).">Quick Links</a></p>		
+							<div id="deptlinks" style="display: none;">
+								<a href="http://www.monroecounty.gov/safety-ecd.php" title="Emergency Communications Department 9-1-1">9-1-1 ECD </a>
+								<a href="http://www.monroecounty.gov/aging-index.php" title="Office for the Aging page">Aging and Adult Services</a>
+								<a href="http://www.monroecounty.gov/airport-index.php" title="Airport (GRIA) and Aviation Department page">Airport (GRIA)</a>
+							
+								<a href="http://www.monroecounty.gov/elections-index.php" title="Board of Elections page">Board of Elections</a><a href="http://www.monroecounty.gov/budget-index.php" title="Office of Management and Budget page">Budget</a>
+								<a href="http://www.monroecounty.gov/communications-index.php" title="Department of Communications page">Communications</a>
+								<a href="http://www.monroecounty.gov/clerk-index.php" title="County Clerk page">County Clerk</a>
+								<a href="http://www.monroecounty.gov/executive-index.php" title="County Executive page">County Executive</a>
+								<a href="http://www.monroecounty.gov/da-index.php" title="Distrcit Attorney page">District Attorney</a>
+								<a href="http://www.monroecounty.gov/economic2-index.php" title="Economic Development page">Economic Development</a>
+							
+								<a href="http://www.monroecounty.gov/safety-oep.php" title="Emergency Preparedness page">Emergency Preparedness</a>
+								<a href="http://www.monroecounty.gov/des-index.php" title="Department of Environmental Services page">Environmental Services (DES) </a>
+								<a href="http://www.monroecounty.gov/fbci-index.php" title="Faith Based and Community Initiatives page">Faith Based and Community Initiatives</a>
+								<a href="http://www.monroecounty.gov/finance-index.php" title="Finance page">Finance</a><a href="http://www.monroecounty.gov/gis-index.php" title="Geographic Information System (GIS)">Geographic Information System (GIS)</a>
+								
+								<a href="http://www.monroecounty.gov/history-index.php" title="History page">History</a>
+								<a href="http://www.monroecounty.gov/hr-index.php" title="Department of Human Resources page">Human Resources</a>
+							
+								<a href="http://www.monroecounty.gov/hs-index.php" title="Department of Human Services page">Human Services</a>
+								<a href="http://www.monroecounty.gov/is-index.php" title="Information Services page">Information Services</a>
+								<a href="http://www.monroecounty.gov/law-index.php" title="Law Department page">Law</a>
+								<a href="http://www.monroecounty.gov/legislature-index.php" title="County Legislature page">Legislature</a>
+								<a href="http://www.monroecounty.gov/libra-index.php" title="Monroe County Library System page">Library (LIBRA)</a>
+								<a href="http://www.monroecounty.gov/mh-index.php" title="Office of Mental Health page">Mental Health</a>
+							
+								<a href="http://www.monroecounty.gov/mcc-index.php" title="Monroe Community College page">Monroe Community College (MCC)</a>
+								<a href="http://www.monroecounty.gov/mch-index.php" title="Monroe Community Hospital page">Monroe Community Hospital (MCH) </a>
+								<a href="http://www.monroecounty.gov/communications-newst.php" title="News and Media Information page">News and Media Information</a>
+								<a href="http://www.monroecounty.gov/parks-index.php" title="Parks Department page">Parks</a>
+								<a href="http://www.monroecounty.gov/planning-index.php" title="Planning and Development Department page">Planning and Development</a>
+								<a href="http://www.monroecounty.gov/defender-index.php" title="Public Defender page">Public Defender</a>
+							
+								<a href="http://www.monroecounty.gov/health-index.php" title="Department of Public Health page">Public Health</a><a href="http://www.monroecounty.gov/safety-index.php" title="Department of Public Safety page">Public Safety</a>
+								<a href="http://www.monroecounty.gov/pstf-index.php" title="Department of Public Safety page">Public Safety Training Facility (PSTF)</a>
+								<a href="http://www.monroecounty.gov/purch-index.php" title="Purchasing and Central Services page">Purchasing</a><a href="http://www.monroecounty.gov/des-purewaters.php">Pure Waters</a>
+								<a href="http://www.monroecounty.gov/sheriff-index.php" title="Sheriff page">Sheriff</a>
+									<a href="http://www.monroecounty.gov/des-survey.php" title="Survey page">Survey</a>
+							
+								<a href="http://www.monroecounty.gov/dot-index.php" title="Department of Transportation page">Transportation (DOT) </a>
+								<a href="http://www.monroecounty.gov/vet-index.php" title="Veterans Service Agency page">Veterans Agency</a>
+								<a href="http://www.monroecounty.gov/youth-index.php" title="Rochester-Monroe County Youth Bureau page">Youth Bureau</a>
+								<a href="http://www.monroecounty.gov/parks-zoo.php" title="Seneca Park Zoo page">Zoo</a>
+							</div>
+							<div class="menu">
+								<div class="deptpagelinks">
+									<a href="https://www.monroecounty.gov/hr-index.php" title="Human Resources Home page">Human Resources Home</a>
+									<a href="/hrapply" <%= 'class="here"' if params[:controller] == 'apply' %>>Civil Service Exams - Apply Online</a>
+									<% if @current_user %>
+										<%= link_to 'My Applications', {:controller => :applicants, :action => :index}, :class => params[:controller] == 'applicants' ? 'here' : '' %>
+										<%= link_to 'Edit My Account', {:controller => :account, :action => :edit}, :class => params[:controller] == 'account' ? 'here' : '' %>
+										<%= link_to 'Logout', {:controller => :account, :action => :logout} %>
+									<% else %>
+										<%= link_to 'Login', {:controller => :account, :action => :index}, :class => params[:controller] == 'account' ? 'here' : '' %>
+									<% end %>
+									<a href="/hrapply/subscribe">Email Notifications</a>
+									<a href="/mccs/lists">Civil Service Test Scores</a>
+									<a href="http://www.monroecounty.gov/hr-civilservice.php" title="Employment/Exam Application">Civil Service Background Information</a>
+									<a href="http://www.monroecounty.gov/hr-guides.php" title="Forms and Guides page">Forms and Study Guides</a>
+									<a href="http://www.monroecounty.gov/hr-faq.php">FAQ</a>
+								</div>
+								<% if @current_user and @current_user.level >= 10 %>
+									<div class="relatedlinks">
+										<h3>Admin Tools:</h3>
+										<%= link_to 'Exams Admin', {:controller => 'exams', :action => :index}, :class => params[:controller] == 'exams' ? 'here' : '' %>
+										<%= link_to 'Applications Admin', {:controller => 'applications', :action => :index}, :class => params[:controller] == 'applications' ? 'here' : '' %>
+										<%= link_to 'Batch Print Applications', {:controller => :print, :action => :index}, :class => params[:controller] == 'print' ? 'here' : '' %>
+										<% if @current_user.level >= 20 %>
+											<%= link_to 'Users Admin', {:controller => 'Users', :action => :index}, :class => params[:controller] == 'users' ? 'here' : '' %>
+											<%#= link_to 'System Settings', :controller => 'system', :action => :index %>
+										<% end %>
+									</div>
+								<% end %>
+								<div class="relatedlinks">
+									<h3>Related Information</h3>
+									<a href="http://www.monroecounty.gov/hr-index.php#NonDisciminationPolicy">Non-Discrimination Policy</a>
+									<a href="http://www.monroecounty.gov/hr-index.php#Links">Helpful Online Information </a>
+									<% if false %><a href="http://www.monroecounty.gov/p/dhr-CivilServiceReferenceGuide.pdf">Civil Service Reference Guide (40k PDF)</a><% end %>
+								</div>
+								<div class="advert">
+									<img alt="" width="140" height="146" src="https://www.monroecounty.gov/Image/12WOH-Honoree-logo.jpg" />
+									<img alt="" width="140" height="140" src="https://www.monroecounty.gov/Image/E-Verify.jpg" />
+									<a href="http://www.NYRxDiscountCard.com"><img width="140" height="60" alt="" src="https://www.monroecounty.gov/Image/ProActButton(1).jpg" /></a>
+									<a href="http://www.monroecounty.gov/joblink-index"><img width="140" height="60" alt="Monroe County Joblink" src="https://www.monroecounty.gov/files/joblink/mjl_small.jpg" /></a>									
+								</div>									
+
+							</div>
+						</div>
+						<% if @right_column %>
+							<div id="rightcol">
+								<%= @right_column %>
+							</div>
+						<% end %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

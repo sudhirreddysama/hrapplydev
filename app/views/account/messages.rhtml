@@ -1,0 +1,18 @@
+<h1>My Messages</h1>
+<%= render :partial => 'nav' %>
+<% if @objs.empty? %>
+	<p>No messages have been sent to your account yet.
+<% else %>
+	<table class="dg2" width="100%">
+		<tr>
+			<th width="1%">Sent</th>
+			<th>Title</th>
+		</tr>
+		<% @objs.each { |o| %>
+			<tr>
+				<td class="nobr"><%= o.created_at.to_s(:dt) %></td>
+				<td><%= link_to o.subject, :action => :message_view, :id => o.id %></td>
+			</tr>
+		<% } %>
+	</table>
+<% end %>

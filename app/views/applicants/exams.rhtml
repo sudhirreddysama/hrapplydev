@@ -1,0 +1,61 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<h2>Exams / Jobs and Application Fees</h2>
+	<%= err 'exams' %>
+	<table class="dg2" width="100%">
+		<thead>
+			<tr>
+				<th></th>
+				<th width="1%">#</th>
+				<th width="96%">Name</th>
+				<th width="1%" class="nobr">Application Deadline</th>
+				<th width="1%" class="nobr">Exam Date</th>
+				<th width="1%" class="rt">Application&nbsp;Fee</th>
+			</tr>
+		</thead>
+		<% @obj.exam_prices.each { |ep| e = ep.exam %>
+			<tbody>
+				<tr>
+					<td><%= submit_tag 'Remove', :name => "obj[new_exam_prices][#{ep.id}][remove]", :confirm => 'Are you sure you want to remove this item?' %></td>
+					<td class="nobr"><%= h e.no %></td>
+					<td><%= link_to_function h(e.name), "$('exam-#{e.id}').toggle()", :href => url_for(:controller => :apply, :action => :exam, :id => e.id) %></td>
+					<td class="nobr"><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+					<td class="nobr"><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
+					<td class="nobr rt"><%= ep.price == 0 ? 'N/A' : m(e.price) %></td>
+				</tr>
+			<tbody id="exam-<%= e.id %>" style="display: none;">
+				<tr>
+					<td colspan="6">
+						<p><strong>Category:</strong> <%= e.category ? e.category.name : 'N/A' %></p>
+						<p><strong>Salary:</strong> <%= e.salary.blank? ? 'N/A' : h(e.salary) %></p>
+						<% if e.description.blank? %>
+							<p>No additional information is available for this item.</p>
+						<% else %>
+							<%= e.description %>
+						<% end %>
+					</td>
+				</tr>
+			</tbody>
+		<% } %>
+		<tfoot>
+			<tr>
+				<td colspan="5" class="rt">Online Processing Fee:</td>
+				<td class="rt"><%= m @obj.payment_fee %></td>
+			</tr>
+			<tr>
+				<td colspan="5" class="rt">Total:</td>
+				<td class="rt"><%= m @obj.total %></td>
+			</tr>
+		</tfoot>
+	</table>
+	<% if @obj.new_exam_price_no_error %>
+		<div class="errors"><%= @obj.new_exam_price_no_error %></div>
+	<% end %>
+	<% unless @noform %>
+		<p>If you want to add another exam / job to this application, browse <%= link_to 'Employment Opportunities', :controller => :apply, :action => :index %>, find the exam / job you are looking for, select it and click &quot;Apply Online&quot; (if available). The exam / job will be added to this unfinished applicantion.</p>
+	<% end %>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>

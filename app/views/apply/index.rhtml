@@ -1,0 +1,118 @@
+<h1>Civil Service Exams/Job Announcements</h1>
+<%= render :partial => 'cart' %>
+<p>You can apply by mail, in person or Online for <a href="#1">Civil Service Exams</a>, <a href="#2">County Job Openings</a>, or <a href="#3">Summer Jobs</a>.</p>
+<p>A <a href="http://www.monroecounty.gov/hr-faq.php#15">non-refundable application processing fee</a> is usually required for exams.</p>
+<p>To receive <%= link_to 'automatic e-mail notification', :controller => :subscribe %> when a specific civil service exam or job announcement will be offered, please register with our <%= link_to 'automatic e-mail notification service', :controller => :subscribe %>.</p>
+<p><strong><a href="http://www.monroecounty.gov/hr-guides.php">Application Forms and Study Guides</a></strong></p>
+<p><strong><a href="#online" onclick="toggle_online(); return false;">How to Apply Online</a></strong></p>
+<p id="online"><strong>Step 1.</strong> Select an exam or job announcement that interests you.<br />
+<strong>Step 2.</strong>Review the &quot;Who May Apply&quot; column to determine if you are eligible.<br />
+<strong>Step 3.</strong> Click on the exam/job name to view Minimum Qualifications required to apply and determine if you qualify.<br />
+<strong>Step 4.</strong> Download and read the entire exam announcement. It contains important information like a description of the position, civil service procedures and a summary of the material on which you will be tested.<br />
+<strong>Step 5.</strong> Select &quot;Apply Online&quot; and complete the application process by reading each page carefully and following instructions.<br />
+<strong>Step 6.</strong> Submit credit card payment of non-refundable application processing fee.
+</p>
+<script type="text/javascript">
+	function toggle_online() {
+		var online = document.getElementById('online');
+		if(online.style.display == 'none') {
+			online.style.display = 'block';
+		}
+		else {
+			online.style.display = 'none';
+		}
+	}
+	toggle_online();
+</script>
+<p>For additional information, please refer to <a href="http://www.monroecounty.gov/hr-faq.php">Frequently Asked Questions</a>.</p>
+<% @types.each { |t| %>
+	<h2><a name="<%= t.sort %>"></a><%= h t.name %></h2>
+	<%= t.description %>
+	<% exams = t.exams.find :all, :order => 'exams.name', :conditions => '(exams.publish < now() or exams.publish is null) and (exams.deadline > now() or exams.deadline is null) and (exams.published = 1 or exams.published is null)' %>
+	<% old_exams = t.exams.find :all, :order => 'exams.name', :conditions => '(exams.publish < now() or exams.publish is null) and (exams.deadline < now() and exams.deadline is not null) and (exams.published = 1 or exams.published is null) and (exams.exam_date > now() and exams.exam_date is not null)' %>
+	<% if exams.empty? && old_exams.empty? %>
+		<p><em>Nothing is currently available in this category.</em></p>
+	<% else %>
+		<table width="100%" class="dg2">
+			<thead>
+				<th width="1%">#</th>
+				<th width="48%">Name</th>
+				<th width="48%">Who May Apply</th>
+				<th width="1%" class="nobr">Application<br />Deadline</th>
+				<th width="1%" class="nobr">Exam<br />Date</th>
+				<th width="1%" class="rt">Application<br />Fee</th>
+			</thead>
+			<% exams.each { |e| %>
+				<tbody>
+					<tr>
+						<td class="nobr"><%= h e.no.blank? ? 'N/A' : e.no %></td>
+						<td><%= link_to_function h(e.name), "$('exam-#{e.id}').toggle()", :href => url_for({:controller => :apply, :action => :exam, :id => e.id}) %></td>
+						<td><%= h e.who_may_apply %></td>
+						<td><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+						<td><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
+						<td class="nobr rt"><%= e.price.to_f == 0 ? 'N/A' : m(e.price) %></td>
+					</tr>
+				<tbody id="exam-<%= e.id %>" style="display: none;">
+					<tr>
+						<td colspan="5">
+							<p><strong>Category:</strong> <%= e.new_categories.empty? ? 'N/A' : h(e.new_categories.collect(&:name).join(', ')) %></p>
+							<% if e.description.blank? %>
+								<p>No additional information is available for this exam.</p>
+							<% else %>
+								<%= e.description %>
+								<% if @current_user && @current_user.level >= 10 %>
+									<p><%= link_to 'Edit This Exam', :controller => :exams, :action => :edit, :id => e.id %></p>
+								<% end %>
+							<% end %>
+							<% if e.can_apply %>
+								<%= form_tag :action => :cart %>
+									<%= hidden_field_tag 'add', e.id %>
+									<p><%= submit_tag 'Apply Online' %></p>
+								</form>
+							<% end %>							
+						</td>
+					</tr>
+				</tbody>
+			<% } %>
+			<% unless old_exams.empty? %>
+				<tbody>
+					<tr>
+						<th colspan="6">The following exams' application deadline has passed:</th>
+					</tr>
+				</tbody>
+				<% old_exams.each { |e| %>
+					<tbody>
+						<tr class="deadline-passed">
+							<td class="nobr"><%= h e.no.blank? ? 'N/A' : e.no %></td>
+							<td><%= link_to_function h(e.name), "$('exam-#{e.id}').toggle()", :href => url_for({:controller => :apply, :action => :exam, :id => e.id}) %></td>
+							<td><%= h e.who_may_apply %></td>
+							<td><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+							<td><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
+							<td class="nobr rt"><%= e.price.to_f == 0 ? 'N/A' : m(e.price) %></td>
+						</tr>
+					<tbody id="exam-<%= e.id %>" style="display: none;">
+						<tr>
+							<td colspan="6">
+								<p><strong>Category:</strong> <%= e.new_categories.empty? ? 'N/A' : h(e.new_categories.collect(&:name).join(', ')) %></p>
+								<% if e.description.blank? %>
+									<p>No additional information is available for this exam.</p>
+								<% else %>
+									<%= e.description %>
+								<% end %>
+							</td>
+						</tr>
+					</tbody>
+				<% } %>
+			<% end %>
+		</table>
+	<% end %>
+<% } %>
+<% if false %>
+	<h2>Other Web Pages</h2>
+	<ul>
+	<li><a href="http://www.sdcounty.ca.gov/hr/jobs/Online_Employment_Application_Guide.pdf">http://www.sdcounty.ca.gov/hr/jobs/Online_Employment_Application_Guide.pdf</a></li>
+	<li><a href="http://agency.governmentjobs.com/sdcounty/default.cfm">http://agency.governmentjobs.com/sdcounty/default.cfm</a></li>
+	<li><a href="http://www.cityofrochester.gov/article.aspx?id=8589935772">http://www.cityofrochester.gov/article.aspx?id=8589935772</a></li>
+	<li><a href="http://www.cityofrochester.gov/app.aspx?id=8589934617">http://www.cityofrochester.gov/app.aspx?id=8589934617</a></li>
+	</ul>
+<% end %>

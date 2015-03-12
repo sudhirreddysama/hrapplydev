@@ -1,0 +1,8 @@
+<%= render :partial => 'partial/errors', :locals => {:errors => @obj.errors.full_messages} %>
+<p>Are you sure you want to delete &quot;<%= name %>?&quot; This action is irreversible!</p>
+<div class="field">
+	<%= button_to 'Yes, Delete', :style => 'display: inline;' %>
+</div>
+<div class="field">
+	<%= link_to 'No, don\'t delete!', :back %>
+</div>

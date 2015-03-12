@@ -1,0 +1,34 @@
+<%= render :partial => 'nav' %>
+<% form_for(:filter) { |f| %>
+	<div class="filter">
+		<table>
+			<tr>
+				<th>Search:</th>
+				<td>
+					<%= f.text_field :search %> <%= submit_tag 'Apply Filter' %> 
+					<%= submit_tag 'Clear Filter', :name => 'filter[clear]' %> 
+					<div class="field-help">(exam no. and name)</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+<% } %>
+<%= will_paginate @objs %>
+<table class="dg2" width="100%">
+	<tr>
+		<th width="1%">No.</th>
+		<th width="96%">Name</th>
+		<th width="1%">Deadline</th>
+		<th width="1%" class="nobr">Exam Date</th>
+		<th width="1%" class="rt">Price</th>
+	</tr>
+	<% @objs.each { |o| %>
+		<tr>
+			<td class="nobr"><%= h(o.no.blank? ? 'N/A' : o.no) %></td>
+			<td><%= link_to h(o.name), :action => :view, :id => o.id %></td>
+			<td class="nobr"><%= o.deadline ? o.deadline.to_s(:dt) : 'N/A' %></td>
+			<td class="nobr"><%= o.exam_date ? o.exam_date.to_s(:dt) : 'N/A' %></td>
+			<td class="rt nobr"><%= (o.price.nil? or o.price.zero?) ? 'N/A' : m(o.price) %></td>
+		</tr>
+	<% } %>
+</table>

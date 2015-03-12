@@ -1,0 +1,9 @@
+<div class="tabs2">
+	<%= tab 'View', :action => :application_view, :id => @obj.id %>
+	<%= tab 'Edit', :action => :application_edit, :id => @obj.id unless @obj.submitted_at %>
+	<%= tab 'Submit', :action => :application_pay, :id => @obj.id unless @obj.submitted_at or !@obj.validated %>
+	<%= tab 'Print (pdf)', {:action => :application_pdf, :id => @obj.id}, {}, :target => '_blank', :id => 'print-tab' %>
+	<%= tab 'Delete', :action => :application_delete, :id => @obj.id unless @obj.submitted_at %>
+	<%= tab 'Pay Fee', :action => 'application_pay', :id => @obj.id if @obj.waiver_denied and !@obj.waiver_paid %>
+	<div class="clear"></div>
+</div>

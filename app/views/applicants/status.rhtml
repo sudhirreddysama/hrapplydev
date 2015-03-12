@@ -1,0 +1,54 @@
+<%= render :partial => 'nav' %>
+<%= render :partial => 'subnav' %>
+<%= form_tag %>
+	<% if @ep %>
+		<% fields_for(:ep) { |f| %>
+			<div class="field">
+				<label>Exam:</label>
+				<%= link_to "#{@ep.exam.no}, #{@ep.exam.name}", :controller => :exams, :id => @ep.exam.id %>
+			</div>
+			<div class="field">
+				<label>New Status: <span class="req">*</span></label>
+				<%= f.select :status, Applicant::STATUSES %>
+			</div>
+		<% } %>
+		<%= render :partial => 'message' %>
+		<div class="field">
+			<%= submit_tag 'Update Status' %>
+		</div>
+	<% else %>
+		<p>NOTE: Changing the status here will not send an email notificaiton to the applicant. If you want to send an approval / rejection notice along with the status change, click either &quot;approve&quot; or &quot;reject&quot; next to an exam.</p>
+		<table class="dg2">
+			<tr>
+				<th width="98%">Exam</th>
+				<th width="1%">Fee</th>
+				<th width="1%">Status</th>
+			</tr>
+			<% @obj.exam_prices.each { |ep| %>
+				<tr>
+					<td>
+						<%= link_to "#{ep.exam.no}, #{ep.exam.name}", :controller => :exams, :action => :view, :id => ep.exam.id %>: 
+						<%= link_to 'approve', {:action => :status, :id => @obj.id, :id2 => ep.id, :status => 'approved'} %>
+						<%= link_to 'reject', {:action => :status, :id => @obj.id, :id2 => ep.id, :status => 'rejected'} %>
+						<%= link_to 'other', {:action => :status, :id => @obj.id, :id2 => ep.id} %>
+					</td>
+					<td class="rt"><%= text_field_tag "exam_prices[#{ep.id}][price]", ep.price, :size => 4 %></td>
+					<td><%= select_tag "exam_prices[#{ep.id}][status]", options_for_select(Applicant::STATUSES, ep.status) %></td>
+				</tr>
+			<% } %>
+			<tr>
+				<td class="rt">Payment Fee:</td>
+				<td><%= text_field_tag 'obj[payment_fee]', @obj.payment_fee, :size => 4 %></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td class="rt">Total:</td>
+				<td class="rt"><%= m @obj.total %></td>
+				<td></td>
+			</tr>
+		</table>
+		<div class="field">
+			<%= submit_tag 'Update Fees & Statuses' %>
+		</div>
+	<% end %>
+</form>

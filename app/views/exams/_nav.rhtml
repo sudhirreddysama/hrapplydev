@@ -1,0 +1,7 @@
+<h1>Exams Admin</h1>
+<div class="tabs">
+	<%= tab 'List Exams', :action => :index %>
+	<%= tab 'New Exam', :action => :new %>
+	<%= tab(@obj.name, {:id => @obj.id}, :action => :view) if @obj and not @obj.new_record? %>
+	<div class="clear"></div>
+</div>

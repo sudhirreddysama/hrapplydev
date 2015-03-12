@@ -1,0 +1,14 @@
+<h1>Account Recovery</h1>
+<div class="text">
+	<p>A recovery key has been sent to your email address. Either enter the key in the field below, or click the link contained in the email to login to your account. Once logged in, please update your account with a new password.</p>
+</div>
+<%= render :partial => 'partial/errors', :locals => {:errors => @errors} %>
+<%= form_tag %>
+	<div class="field">
+		<label>Recovery Key:</label>
+		<%= text_field_tag 'id', params[:id] %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Submit' %>
+	</div>
+</form>

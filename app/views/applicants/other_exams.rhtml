@@ -1,0 +1,63 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<div style="display: none;"><%= submit_tag %></div>
+	<h2>Crossfiler Form</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<p>If you have applied for one or more examinations offered by the City of Rochester, New York State or other County Civil Service Commissions on the same date as the Monroe County exam you are applying for, you must complete this section. If you are just taking more than one exam with Monroe County on the same date, you <u>do not</u> need to complete this form. </p>
+	<p>Use the &quot;Add an Exam&quot; button to add exams. You may enter any number of exams - just click the same button for as many as you would like to add.</p>
+	<% @obj.other_exams.each_with_index { |o, i| fields_for("obj[new_other_exams][#{o.id}]", o) { |ff| %>
+		<div class="subform" id="<%= o.id %>">
+			<h3>Other Exam # <%= i + 1 %></h3>
+			<div class="field">
+				<%= submit_tag 'Remove This Exam', :name => "obj[new_other_exams][#{o.id}][remove]", :confirm => 'Are you sure you want to remove this item?' %>
+				<% if has_err(o.id) %>
+					<div class="field-error">If you are not using this item and wish to continue, click this button to remove it</div><div class="clear"></div>
+				<% end %>
+			</div>
+			<div class="field">
+				<label>Exam Number: <span class="req">*</span></label>
+				<%= ff.text_field :no, :style => 'width: 80%;' %>
+				<%= err 'no', o.id %>
+			</div>
+			<div class="field">
+				<label>Exam Title: <span class="req">*</span></label>
+				<%= ff.text_field :name, :style => 'width: 80%;' %>
+				<%= err 'name', o.id %>
+			</div>
+			<div class="field">
+				<label>Offered By: <span class="req">*</span></label>
+				<label><%= ff.radio_button :agency, 'city' %> City</label>
+				<label><%= ff.radio_button :agency, 'county' %> Monroe County</label>
+				<label><%= ff.radio_button :agency, 'state' %> State **</label>
+				<div>
+					<label class="inline"><%= ff.radio_button :agency, 'other' %> Other County: </label>
+					<%= ff.text_field :other, :size => 20 %> (please specify)
+				</div>
+				<%= err 'agency', o.id %>
+			</div>
+		</div>
+	<% }} %>
+	<div class="field">
+		<%= submit_tag 'Add an Exam', :name => 'obj[new_other_exam]' %>
+	</div>
+	<% unless @obj.other_exams.empty? %>
+		<div class="field">
+			<label>Arrangements must be made to take ALL examinations at ONE test site. I wish to have all of these examinations administered by (check only one):</label>
+			<label><%= f.radio_button :other_exams_admin, 'city' %> City of Rochester Civil Service Commission</label>
+			<label><%= f.radio_button :other_exams_admin, 'county' %> Monroe County Civil Service Commission</label>
+			<div>
+				<label style="display: inline;"><%= f.radio_button :other_exams_admin, 'other' %> Other County Civil Service Commission:</label> <label style="display: inline;"><%= f.text_field :other_exams_admin_other, :size => 20 %> (name of county)</label>
+			</div>
+			<label><%= f.radio_button :other_exams_admin, 'state' %> New York State Civil Service Commission</label>
+			<%= err 'other_exams_admin' %>
+		</div>
+		<p>** If you have applied for both State and local government examinations, you must notify Monroe County Civil Service 
+		of your intent to take both a State and a local government examination. When taking both a State and a local government 
+		examination you will be required to take all your examinations at a State examination center. You will be advised by 
+		letter when and where to report for your examinations. Please note you must complete this crossfiler form as well.</p>
+	<% end %>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>

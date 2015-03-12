@@ -1,0 +1,11 @@
+This is a confirmation that you have created an online application for Monroe County. You are applying for:
+
+<% @a.exams(true).each { |e| -%>
+	<%= e.no.blank? ? '' : "#{e.no}, " %><%= e.name %>
+<% } -%>
+
+Your application will not be processed until it is completed and submitted to Monroe County. Please take note of the Application Deadline Date and Time if applicable. You will not be able to submit an application once a deadline has passed. At any time before the deadline you can login to your account to edit and submit your application(s) at the following address: 
+
+<%= @url %>
+
+Monroe County

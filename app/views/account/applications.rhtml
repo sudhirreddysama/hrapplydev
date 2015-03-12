@@ -1,0 +1,71 @@
+<h1>My Exam / Job Applications</h1>
+<%= render :partial => 'nav' %>
+<% if @current_user.applicants.empty? %>
+	<p>You have not created any online exam applications yet.</p>
+<% else %>
+	<table class="dg2" width="100%">
+		<tr>
+			<th width="96%">Exams</th>
+			<th width="1%">Deadline</th>
+			<th width="1%">Exam Date</th>
+			<th width="1%">Status</th>
+			<th width="1%">Fee</th>
+		</tr>
+		<% @current_user.applicants.each { |a| %>
+			<tr>
+				<td class="alt" colspan="5">
+					Application # <%= a.id %>:
+					<%= link_to 'view', :action => 'application_view', :id => a.id %>
+					<%= link_to 'print', {:action => 'application_pdf', :id => a.id}, :target => '_blank' %>
+					<% unless a.submitted_at %>
+						<%= link_to 'edit', :action => 'application_edit', :id => a.id %>
+						<%= link_to 'delete', :action => 'application_delete', :id => a.id %>
+					<% end %>
+					<% if a.waiver_denied and !a.waiver_paid %>
+						<%= link_to 'pay fee', :action => 'application_pay', :id => a.id %>
+					<% end %>
+				</td>
+			</tr>
+			<% a.exam_prices.each { |ep| %>
+				<tr class="noborder">
+					<td valign="top">
+						<%= h "#{ep.exam.no}, #{ep.exam.name}" %>: <%= link_to 'info', :controller => :apply, :action => :exam, :id => ep.exam_id %></td>
+					<td class="nobr" valign="top"><%= ep.exam.deadline ? ep.exam.deadline.to_s(:dt) : 'NA' %></td>
+					<td class="nobr" valign="top"><%= ep.exam.exam_date ? ep.exam.exam_date.to_s(:dt) : 'NA' %></td>
+					<td valign="top"><div class="apstatus <%= ep.status %>"><%= ep.status %></div></td>
+					<td valign="top" class="nobr rt"><%= ep.price.nil? or ep.price.zero? ? 'NA' : m(ep.price) %></td>
+				</tr>
+			<% } %>
+			<tr class="noborder">
+				<td class="noborder rt" colspan="5">Total<%= a.has_payment_fee ? " (+ #{m(a.payment_fee)} payment fee)" : '' %>: <%= m a.total %></td>
+			</tr>
+		<% } %>
+	</table>
+	<h2>Status Key:</h2>
+	<table width="100%" class="form">
+		<tr>
+			<td valign="top" width="1"><div class="apstatus unfinished">unfinished</div></td>
+			<td valign="top"> Your application has not been submitted. You must submit your application before the application deadline(s).</td>
+		</tr>
+		<tr>
+			<td valign="top"><div class="apstatus approved">approved</div></td>
+			<td valign="top"> Your application has been approved. If this application is for an exam, please show up on the exam date with a print out of your application.</td>
+		</tr>
+		<tr>
+			<td valign="top"><div class="apstatus rejected">rejected</div></td>
+			<td valign="top">Your application has been rejected.</td>
+		</tr>
+		<tr>
+			<td valign="top"><div class="apstatus submitted">submitted</div></td>
+			<td valign="top">Your application has been submitted to HR, but it has not yet been reviewed.</td>
+		</tr>
+		<tr>
+			<td valign="top"><div class="apstatus expired">expired</div></td>
+			<td valign="top">You missed the deadline for this application and can no longer submit it to HR.</td>
+		</tr>
+		<tr>
+			<td valign="top"><div class="apstatus must-pay">must-pay</div></td>
+			<td valign="top">You've requested the fee be waived for this application, but the waiver was rejected. You must pay the for your application to be considered.</td>
+		</tr>
+	</table>
+<% end %>

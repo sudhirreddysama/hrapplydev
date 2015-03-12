@@ -1,0 +1,48 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<div style="display: none;"><%= submit_tag %></div>
+	<h2>License / Certifications</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<p>Use the &quot;Add a license / Certification&quot; button to add your information. You may enter any number of licenses / certifications - just click the same button for as many as you would like to add.</p>
+	<div><%= err 'license_requirement' %></div>
+	<% @obj.certifications.each_with_index { |c, i| fields_for("obj[new_certifications][#{c.id}]", c) { |ff| %>
+		<div class="subform">
+			<h3 id="<%= c.id %>">License / Certification # <%= i + 1 %></h3>
+			<div class="field">
+				<%= submit_tag 'Remove This License / Certification', :name => "obj[new_certifications][#{c.id}][remove]", :confirm => 'Are you sure you want to remove this license / certification?' %>
+				<% if has_err(c.id) %>
+					<div class="field-error">If you are not using this item and wish to continue, click this button to remove it</div><div class="clear"></div>
+				<% end %>
+			</div>
+			<div class="field">
+				<label>Name of Trade or Profession:</label>
+				<%= ff.text_field :name, :style => 'width: 80%' %>
+				<%= err 'name', c.id %>
+			</div>
+			<div class="field">
+				<label>License / Certificate Number:</label>
+				<%= ff.text_field :no, :style => 'width: 80%' %>
+			</div>
+			<div class="field">
+				<label>Licensing Agency:</label>
+				<%= ff.text_field :agency, :style => 'width: 80%' %>
+			</div>
+			<div class="field">
+				<label>Is this certification Permanent?</label>
+				<label><%= ff.radio_button :permanent, true %> Yes</label> 
+				<label><%= ff.radio_button :permanent, false %> No</label>
+			</div>
+			<div class="field">
+				<label>Licensed Dates:</label>
+				From <%= ff.calendar_date_select :from_date %> To: <%= ff.calendar_date_select :to_date %>
+			</div>
+		</div>
+	<% }} %>
+	<div class="field">
+		<%= submit_tag 'Add a License / Certification', :name => 'obj[new_certification]' %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>

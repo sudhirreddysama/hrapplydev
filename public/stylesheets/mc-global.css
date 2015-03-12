@@ -1,0 +1,286 @@
+/*
+Copyright 2005-2006 Monroe County, NY 
+CSS Import
+$Revision: 1.01 $
+Use as global stylesheet.
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*--- Rules for Layout ---*/
+
+
+
+#wrap {line-height: 1.2; font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;}
+#wrap-inner {max-width: 1005px; width: expression(document.body.clientWidth > 1005? "1005px": "auto" );}
+	
+/*--- Rules for Header ---*/
+
+#header {position: relative; background: #194e84 url(../i-p/masthead.jpg) top left no-repeat; height: 98px; border-bottom: 1px solid #fff;}
+#navbar {background: url(../i-p/tabs-bg.gif) top left repeat-x;}
+#login {background-color: #000; color: #fff; border-bottom: 1px solid #fff;}
+#urhere {background: #fff; clear: both; text-align: left; font-size: 80%; font-weight: normal;}
+#search {position: absolute; right: 4px; top: 6px;}
+#nav {float: left; height: 40px; list-style: none;}
+#main-body {position: relative;}
+#footer {position: relative; border-top: 1px solid #194e84; padding: 5px 0;}
+#content {padding: 1em 0; margin-left: 180px; margin-right: 235px;}
+#content-2col {padding: 1em 0; margin-left: 180px; margin-right: 25px;}
+#leftcol {position: absolute; top: 0; left: 0; width: 150px;}
+#switcher {margin: 0; padding: 0; background-color: #fff; height: 20px; overflow: hidden;}
+#switch {float: left; list-style: none;}
+#rightcol {position: absolute; top: 1em; right: 8px; width: 200px;}
+#billboards {margin: 0; padding: 0 0 1.25em 0; border-bottom: 1px solid #b7b7b7;}
+
+
+	
+html>#leftcol {
+	width: 150px; /* Be nice to Opera */
+	}
+html>#rightcol {
+	width: 200px; /* Be nice to Opera */
+	}
+
+div.divider {
+	border-bottom: 1px solid #999;
+	margin: 1.5em 0;
+	clear: both;
+}
+
+/* Search */
+
+#search p {color: #fff; font-size: 85%; text-align: right; background-color: transparent;}
+#search input {margin: 0 2px 0 0; color: #666; vertical-align: middle;}
+#search select {margin: 0 2px 0 0; vertical-align: middle;}
+#search-site {width: 160px;}
+#search a {color: #fff; background-color: transparent;}
+#search a:hover {color: #a1b4cd;}
+
+/* Login */
+
+#login p {font-size: 75%; padding: 0.25em 8px 0.25em 0; text-align: right; color: #e6e6e6; background-color: transparent; letter-spacing: 1px;}
+#login a {color: #fff;}
+#login a.here {text-decoration: underline;}
+
+/* Tabs */
+
+#nav li {position: relative; float: left; height: 40px; background-image: url(../i-p/nav-tabs.gif); /* repeated here to avoid IE6/Win flicker */ background-repeat: no-repeat;}
+
+#nav a {float: left; height: 40px; text-indent: -5000px; background-image: url(../i-p/nav-tabs.gif); background-repeat: no-repeat; text-decoration: none;}
+
+#home a, li#home {width: 99px; background-position: 0 0;}
+#home a:hover {background-position: 0 -40px;}
+#home a.current, #home a.current:hover {background-position: 0 -80px;}
+#res a, li#res {width: 73px; background-position: -99px 0;}
+#res a:hover {background-position: -99px -40px;}
+#res a.current {background-position: -99px -80px;}
+#vis a, li#vis {width: 59px; background-position: -172px 0;}
+#vis a:hover {background-position: -172px -40px;}
+#vis a.current {background-position: -172px -80px;}
+#bus a, li#bus {width: 71px; background-position: -231px 0;}
+#bus a:hover {background-position: -231px -40px;}
+#bus a.current {background-position: -231px -80px;}
+#gov a, li#gov {width: 99px; background-position: -302px 0;}
+#gov a:hover {background-position: -302px -40px;}
+#gov a.current {background-position: -302px -80px;}
+#emp a, li#emp {width: 100px; background-position: -401px 0;}
+#emp a:hover {background-position: -401px -40px;}
+#emp a.current {background-position: -401px -80px;}
+#dept a, li#dept {width: 98px; background-position: -501px 0;}
+#dept a:hover {background-position: -501px -40px;}
+#dept a.current {background-position: -501px -80px;}
+#done a, li#done {width: 137px; background-position: -599px 0;}
+#done a:hover {background-position: -599px -40px;}
+#done a.current {background-position: -599px -80px;}
+	
+/* Breadcrumbs */
+	
+#urhere p {text-align: left; font-size: 90%; font-weight: normal; padding: 2px 0 4px 7px; margin: 0; color: #5e83a9; background-color: transparent; border-bottom: 1px solid #194e84;}
+#urhere a {color: #a1b4cd; background-color: transparent; font-weight: normal; text-decoration: none;}
+#urhere a:hover {color: #5e83a9;text-decoration: underline;}
+	
+
+/*--- Rules for Left ---*/
+
+#leftcol p {margin: 0;padding: 0;}
+#leftcol p a.plus, #leftcol p a.minus {font-size: 75%; color: #fff; text-transform: uppercase; letter-spacing: 1px; font-weight: normal; padding: 0.35em 5px 0.35em 0.5em; margin: 0; background: #194e84 url(../i-p/plus.gif) no-repeat right 50%; display: block;}
+#leftcol p a.minus {background: #194e84 url(../i-p/minus.gif) no-repeat right 50%;}
+/* drop down dept link list */
+#deptlinks { margin: 0; padding: 0; font-size: 80%; font-style: normal; color: #919ea4; border-bottom: 1px solid #194e84;}
+#deptlinks a {text-align: left; border-top: 1px solid #fefefe; border-bottom: 1px solid #c3c8cb;}
+#deptlinks a:link, #deptlinks a:visited {display: block; padding: 0.25em 5px 0.25em 0.5em; background-color: #eaeeee; color: #194e84; text-decoration: none;}
+#deptlinks a:hover {color: #5e83a9; background-color: #fff; border-top: 1px solid #d6dadd;}
+#deptlinks a.here {display: block; font-weight: bold; padding: 0.25em 5px 0.25em 0.5em; border-left: 5px solid #5e83a9; background-color: #fff; color: #5e83a9; text-decoration: none;}
+
+/* first layer of primary links */
+#sectionlinks {margin: 0; padding: 0; font-size: 80%; font-style: normal; color: #919ea4;}
+#sectionlinks a {text-align: left; border-top: 1px solid #fefefe; border-bottom: 1px solid #c3c8cb;}
+#sectionlinks a:link, #sectionlinks a:visited {display: block; padding: 0.25em 5px 0.25em 0.5em; background-color: #eaeeee; color: #194e84; text-decoration: none;}
+#sectionlinks a:hover {color: #5e83a9; background-color: #fff; border-top: 1px solid #d6dadd;}
+#sectionlinks a.here {display: block; font-weight: bold; padding: 0.25em 5px 0.25em 0.5em; border-left: 5px solid #5e83a9; background-color: #fff; color: #5e83a9; text-decoration: none;}
+/* list of secondary pages for dept */
+div.deptpagelinks {background-color: #fff; padding-top:0.25em; padding-bottom: 0.5em; border-bottom: 1px solid #c3c8cb;}
+div.deptpagelinks a {display: block; font-size: 80%; font-weight: normal; line-height: 1.25em; background-color: transparent; border: none; padding: 0.3em 5px 0.3em 9px; margin: 0; text-decoration: none;}
+div.deptpagelinks a:hover {text-decoration: underline; background: #ebf0f4;}
+div.deptpagelinks a.here {text-decoration: underline;}
+/* second layer of primary links */
+#leftcol div.morelinks {margin: 0; padding: 0; font-size: 80%; font-style: normal; color: #919ea4; background-color: #fff;}
+#leftcol div.morelinks a {text-align: left; border-top: 1px solid #fefefe; border-bottom: 1px solid #c3c8cb;}
+#leftcol div.morelinks a:link, #leftcol div.morelinks a:visited {display: block; padding: 2px 5px 2px 0.5em; background-color: #eaeeee; color: #194e84; text-decoration: none;}
+#leftcol div.morelinks a:hover {color: #5e83a9; background-color: #fff; border-top: 1px solid #d6dadd;}
+#leftcol div.morelinks a.here {display: block; font-weight: bold; padding: 0.25em 5px 0.25em 0.5em; border-left: 5px solid #5e83a9; background-color: #fff; color: #5e83a9; text-decoration: none;}
+/* list of related items like links and documents */
+#leftcol div.relatedlinks {margin: 0; padding-bottom: 0.75em; border-top: 1px solid #fefefe; border-bottom: 1px solid #c3c8cb; background-color: #f1f1f1;}
+#leftcol div.relatedlinks h3 {padding: 10px 5px 2px 9px; color: #666; font-size: 80%; background-color: transparent; border: none;}
+#leftcol div.relatedlinks a {display: block; font-size: 80%; font-weight: normal; line-height: 1.25em; background-color: transparent; border: none; padding: 0.3em 5px 0 9px; margin: 0; text-decoration: none;}
+#leftcol div.relatedlinks a:hover {text-decoration: underline;}
+#leftcol div.relatedlinks a.here {text-decoration: underline;}
+/* adverts */
+#leftcol div.advert {margin: 0; padding: 0; border-bottom: 1px solid #c3c8cb; background-color: transparent;}
+#leftcol div.advert img {display: block; margin: 5px auto; border: none;}
+#leftcol div.advert img a {display: block; margin: 5px auto; border: none;}
+.gido {width: 200px; background: url(../i-p/boxbtm.gif) no-repeat bottom left; margin-bottom: 0.5em;}
+.gido h3
+{
+	font-size: 125%;
+	text-align: center;
+	color: #194e84;
+	border-bottom: 1px solid #a1b4cd;
+	background: url(../i-p/boxtop.gif) no-repeat top left;
+	padding-right: 10px;
+	padding-left: 10px;
+	padding-bottom: 15px;
+	padding-top: 15px;
+}
+.gido h5 {padding: 6px 7px 4px 7px; font-size: 95%; color: #999;}
+.gido h5.rss {padding: 0 7px 4px 7px; font-size: 95%; color: #999;}
+.gido p
+{
+	font-size: 256%;
+	color: #000;
+	padding: 0 0.75em 0.25em 0.75em;
+}
+.gido ul {margin: 0; padding: 0;}
+.gido ul.doit {list-style: none; padding-bottom: 0.65em; padding-top: 0.5em;}
+.gido ul.doit li {background: url(../i-p/doit.gif) no-repeat 0 0; font-size: 85%; line-height: 1.2em; padding-left: 15px; padding-bottom: 0.4em; margin-left: 7px; margin-right: 7px;}
+.gido img {border: none; border-left: 1px solid #b3c5d6;}
+.gido img a {border: none; border-left: 1px solid #b3c5d6;}
+.gido img.boxhit {border: none; margin: 5px auto 0 auto; padding: 5px 0;}
+.gido ul.justlinks {list-style: none; padding-bottom: 0.35em; padding-top: 0.35em;}
+.gido ul.justlinks li {background: url(../i-p/doit.gif) no-repeat 0 50%; font-size: 85%; line-height: 1.2em; padding-left: 15px; padding-bottom: 0.5em; margin-left: 7px; margin-right: 7px;}
+.gido img.video {margin-top: 0.5em; margin-bottom: 0.5em; border: none;}
+.gido ul.rss {list-style: none; padding-bottom: 0.65em; padding-top: 0.5em;}
+.gido ul.rss li {background: url(../i-p/rss.gif) no-repeat 0 0; font-size: 85%; line-height: 1.2em; padding-left: 45px; padding-bottom: 0.4em; margin-left: 7px; margin-right: 7px;}
+
+/*--- Rules for Right ---*/
+
+.box {width: 200px; background: url(../i-p/boxbtm.gif) no-repeat bottom left; margin-bottom: 0.5em;}
+.box h3 {padding: 6px 10px 4px 10px; font-size: 95%; text-align: center; color: #194e84; border-bottom: 1px solid #a1b4cd; background: url(../i-p/boxtop.gif) no-repeat top left;}
+.box h5 {padding: 6px 7px 4px 7px; font-size: 95%; color: #999;}
+.box h5.rss {padding: 0 7px 4px 7px; font-size: 95%; color: #999;}
+.box p {font-size: 80%; line-height: 1.25em; color: #000; padding: 0 0.75em 0.25em 0.75em;}
+.box ul {margin: 0; padding: 0;}
+.box ul.doit {list-style: none; padding-bottom: 0.65em; padding-top: 0.5em;}
+.box ul.doit li {background: url(../i-p/doit.gif) no-repeat 0 0; font-size: 85%; line-height: 1.2em; padding-left: 15px; padding-bottom: 0.4em; margin-left: 7px; margin-right: 7px;}
+.box img {border: none; border-left: 1px solid #b3c5d6;}
+.box img a {border: none; border-left: 1px solid #b3c5d6;}
+.box img.boxhit {border: none; margin: 5px auto 0 auto; padding: 5px 0;}
+.box ul.justlinks {list-style: none; padding-bottom: 0.35em; padding-top: 0.35em;}
+.box ul.justlinks li {background: url(../i-p/doit.gif) no-repeat 0 50%; font-size: 85%; line-height: 1.2em; padding-left: 15px; padding-bottom: 0.5em; margin-left: 7px; margin-right: 7px;}
+.box img.video {margin-top: 0.5em; margin-bottom: 0.5em; border: none;}
+.box ul.rss {list-style: none; padding-bottom: 0.65em; padding-top: 0.5em;}
+.box ul.rss li {background: url(../i-p/rss.gif) no-repeat 0 0; font-size: 85%; line-height: 1.2em; padding-left: 45px; padding-bottom: 0.4em; margin-left: 7px; margin-right: 7px;}
+
+/* Action */
+
+.action {font-size: 80%; color: #194e84; text-align: center; padding: 1em 0; margin: 1em 0; border-top: 1px dotted #a1b4cd; border-bottom: 1px dotted #a1b4cd; clear: both;}
+.action a.print {padding: 2px 0 2px 20px; background: url(../i-p/item-print.gif) no-repeat left center;}
+.action a.email {padding: 2px 0 2px 20px; background: url(../i-p/item-email.gif) no-repeat left center; margin-left: 1em;}
+.action a.totop {padding: 2px 0 2px 20px; background: url(../i-p/item-totop.gif) no-repeat left center; margin-left: 1em;}
+
+/*--- Rules for Footer ---*/
+
+#footer a {text-decoration: none; color: #333333; font-weight: bold;}
+#footer a:hover {text-decoration: underline;}
+#footer a.here {text-decoration: underline;}
+#footer p.copyright {font-size: 80%; line-height: 1.2em; text-align: left; color: #999; background-color: transparent;}
+#footer p.btmlinks {font-size: 80%; line-height: 1.2em; text-align: center; color: #666; background-color: transparent;}
+.validated {text-align: left; margin-top: 0.35em;}
+.validated img {border-style: none; padding-top: 5px; margin-right: 5px; display: inline;}
+#top-img
+{
+	position: static;
+}
+
+
+
+
+
+.justblue {
+	color: #194e84;
+	font-weight: bold;
+} 

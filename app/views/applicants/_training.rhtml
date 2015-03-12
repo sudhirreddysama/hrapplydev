@@ -1,0 +1,16 @@
+<% if training[:target] %>
+	<a name="target"></a>
+<% end %>
+<div class="training-form">
+	<div class="field">
+		<label>Course / Program:</label>
+		<%= text_field_tag 'obj[new_trainings][][description]', training.description, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Hours:</label>
+		<%= text_field_tag 'obj[new_trainings][][hours]', training.hours, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Remove This Course / Program', :name => 'obj[new_trainings][][remove]', :onclick => "if(confirm('Are you sure you want to remove this item?')) $(this.parentNode.parentNode).remove(); return false;" %>
+	</div>
+</div>

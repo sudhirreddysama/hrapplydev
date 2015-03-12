@@ -1,0 +1,33 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj, :url => {:anchor => 'new_attachment'}, :html => { :multipart => true }) { |f| %>
+	<h2>File Attachments</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<p>Use this section to attach documents to your application (school transcripts, etc.).</p>
+	<p><span class="attention">ATTENTION:</span> Read the exam announcement(s) carefully! Your exam(s) may require specific information / files that should be attached to this application.</p>
+	<% @obj.attachments.each_with_index { |a, i| %>
+		<div id="<%= a.id %>" class="subform">
+			<h3>Attachment # <%= i + 1 %></h3>
+			<div class="field">
+				<%= submit_tag 'Remove This Attachment', :name => "obj[new_attachments][#{a.id}][remove]", :confirm => 'Are you sure you want to remove this item?' %>
+			</div>
+			<div class="field">
+				<label>File: <%= link_to a.name.blank? ? 'Uploaded Document' : a.name, {:controller => :applicants, :action => :attachment, :id => @obj.id, :id2 => a.id}, :target => '_blank' %></label>
+			</div>
+		</div>
+	<% } %>
+	<% unless @noform %>
+		<div class="field" id="new_attachment">
+			<% if @obj.new_attachment_error %>
+				<div class="errors"><%= @obj.new_attachment_error %></div>
+			<% end %>
+			<label>Upload a File:</label>
+			<%= file_field_tag 'obj[new_attachment]' %> <%= submit_tag 'Upload & Attach File', :name => 'obj[new_attachment_check]' %>
+			<div>Click &quot;browse&quot; to select a file on your computer, then hit &quot;Upload &amp; Attach File&quot; to upload the file. You may attach multiple files.</div>
+			<div><b>Only PDF, JPG, PNG, GIF, TIF and BMP files under 3MB are accepted.</b></div>
+		</div>
+	<% end %>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>

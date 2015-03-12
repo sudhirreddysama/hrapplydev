@@ -1,0 +1,11 @@
+Your application for one or more exams for Monroe County HR has been rejected. The exam(s) you have not been approved for are:
+
+<% @exam_prices.each { |ep| -%>
+	<%= ep.exam.no %>, <%= ep.exam.name %>
+<% } -%>
+
+You should receive additional details as to why you were not approved for these exams via email or postal mail. You can login at any time to view the status of your exam applications at the following address:
+
+<%= @url %>
+
+Monroe County HR

@@ -1,0 +1,63 @@
+<h1>Application Shopping Cart</h1>
+<% if @exams.empty? %>
+	<p style="text-align: center; font-weight: bold; padding: 2em;">Your cart is empty.</p>
+<% else %>
+	<table width="100%" class="dg2">
+		<thead>
+			<tr>
+				<th></th>
+				<th width="1%">#</th>
+				<th width="96%">Name</th>
+				<th width="1%" class="nobr">Application Deadline</th>
+				<th width="1%" class="nobr">Exam Date</th>
+				<th width="1%" class="rt">Application Fee</th>
+			</tr>
+		</thead>
+		<% @exams.each { |e| %>
+			<tbody>
+				<tr>
+					<td>
+						<%= form_tag %>
+							<%= hidden_field_tag 'remove', e.id %>
+							<%= submit_tag 'Remove' %>
+						</form>
+					</td>
+					<td class="nobr"><%= h e.no %></td>
+					<td><%= link_to_function h(e.name), "$('exam-#{e.id}').toggle()", :href => url_for(:controller => :apply, :action => :exam, :id => e.id) %></td>
+					<td class="nobr"><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+					<td class="nobr"><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
+					<td class="nobr rt"><%= e.price == 0 ? 'N/A' : m(e.price) %></td>
+				</tr>
+			<tbody id="exam-<%= e.id %>" style="display: none;">
+				<tr>
+					<td colspan="6">
+						<p><strong>Category:</strong> <%= e.category ? h(e.category.name) : 'N/A' %></p>
+						<% if e.description.blank? %>
+							<p>No additional information is available for this item.</p>
+						<% else %>
+							<%= e.description %>
+						<% end %>
+					</td>
+				</tr>
+			</tbody>
+		<% } %>
+		<tfoot>
+			<% if @payment_fee %>
+				<tr>
+					<td colspan="5" class="rt">Payment Fee: </td>
+					<td class="rt"><%= m @payment_fee %></td>
+				</tr>
+			<% end %>
+			<tr>
+				<td colspan="5" class="rt">Total: </td>
+				<td class="rt"><%= m @total %></td>
+			</tr>
+		</tfoot>
+	</table>
+	<div style="text-align: center; padding: 1em; margin-bottom: 2em;">
+		<%= form_tag :action => :checkout %>
+			<%= submit_tag 'Apply' %>
+		</form><br />
+		<%= link_to 'Add More Exams / Jobs', :action => :index %>
+	</div>
+<% end %>

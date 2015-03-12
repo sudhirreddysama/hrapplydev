@@ -1,0 +1,7 @@
+<div class="tabs">
+	<%= tab 'My Applications', :controller => :account, :action => :applications %>
+	<%= tab 'My Messages', :controller => :account, :action => :messages %>
+	<%= tab @obj.label, {:controller => :account, :id => @obj.id}, :action => :application_view if @obj and @obj.class == Applicant %>
+	<%= tab @obj.label, {:controller => :account, :id => @obj.id}, :action => :message_view if @obj and @obj.class == Message %>
+	<div class="clear"></div>
+</div>

@@ -1,0 +1,631 @@
+<%= render :partial => 'applicants/applicant_nav' %>
+<% unless @noform %>
+	<script type="text/javascript">
+		
+		function toggle_armed_forces() {
+			$('armed_forces')[$('obj_army_served_true').checked ? 'show' : 'hide']();
+		}
+		
+		function toggle_right_to_work() {
+			$('right_to_work')[$('obj_us_citizen_false').checked ? 'show' : 'hide']();
+		}
+		
+		function toggle_right_to_work_class() {
+			$('right_to_work_class')[$('obj_us_right_to_work_true').checked ? 'show' : 'hide']();
+		}
+		
+		function toggle_waiver() {
+			$('waiver_reason')[$('obj_waiver_requested').checked ? 'show' : 'hide']();
+		}
+		
+		function toggle_residence() {
+			$('residence')[$('obj_residence_different').checked ? 'show' : 'hide']();
+		}
+		
+		function toggle_typing_waiver() {
+			$('typing_waiver')[$('obj_typing_waiver').checked ? 'show' : 'hide']();
+		}
+		
+		function toggle_error_list() {
+			$('error-list').toggle();
+		}
+		
+	</script>
+	
+	<% unless @noform %>
+		<p>Please fill out this application as complete and accurate as possible. Missing information will not be resolved in your favor. When complete, scroll down to the &quot;Save or Submit&quot; section at the bottom of this form and submit your application to Monroe County HR.</p>
+	<% end %>
+	
+	<% unless @obj.errors.empty? %>
+		<p class="errors" id="errors">
+			<a href="#error-list" onclick="toggle_error_list(); return false;" style="display: block;">Your application is missing some required information. Click here to view all errors.</a>
+			<span id="error-list" style="display: block;">
+				&nbsp;<br />Click on a field to jump to the relevant part of this form:<br />
+				<% @obj.errors.each { |f, m| %>
+					<a href="#obj_<%= f %>"><%= h m %></a><br />
+				<% } %>
+			</span>
+			<script type="text/javascript">
+				toggle_error_list();
+			</script>
+		</p>
+	<% else %>
+		<% if @obj.validated %>
+			<p class="notice">All required fields have been entered. You may <a href="#save">submit your application to HR</a>, but before doing so please make sure you have entered all information you wish to provide us.</p>
+		<% end %>
+	<% end %>
+	
+	<p><span class="req">* Required Fields</span></p>
+	
+<% end %>
+
+<% form_for(:obj, :url => {:anchor => 'target'}, :html => {:id => 'applicant-form', :multipart => true, :onsubmit => 'window.onbeforeunload = null'}) { |f| %>
+	<%= submit_tag 'Save & Keep Editing', :name => 'obj[save_continue]', :style => 'display: none;' %><br />
+	
+	<% if @rps %>
+		<fieldset id="address">
+			<legend>Address Verification</legend>
+			<p>The following addresses were found by searching the RPS database by name and the residence address:</p>
+			<% if @rps.blank? %>
+				<p>None found!</p>
+			<% else %>
+				<ul style="padding-left: 5em;"><%= @rps %></ul>
+			<% end %>
+		</fieldset>
+	<% end %>
+	<fieldset id="exams">
+		<legend>Exams</legend>
+		<table class="dg2">
+			<tr>
+				<% unless @noform %>
+					<th width="1%">Remove</th>
+				<% else %>
+					<th width="1%">Status</th>
+				<% end %>
+				<th width="96%">Exam</th>
+				<th width="1%">Deadline</th>
+				<th width="1%" class="nobr">Exam Date</th>
+				<th width="1%" class="rt">Fee</th>
+			</tr>
+			<% @obj.exam_prices.each { |ep| %>
+				<tr>
+					<% unless @noform %>
+						<td><%= submit_tag 'Remove', :name => "obj[remove_exam_price_id][#{ep.id}]", :onclick => 'return confirm("Are you sure you want to remove this exam from this application?")' %></td>
+					<% else %>
+						<td><div class="apstatus <%= ep.status %>"><%= ep.status %></div></td>
+					<% end %>
+					<td><%= h ep.exam.no %>, <%= ep.exam.name %></td>
+					<td><%= ep.exam.deadline ? ep.exam.deadline.to_s(:dt) : 'NA'  %></td>
+					<td><%= ep.exam.exam_date ? ep.exam.exam_date.to_s(:dt) : 'NA' %></td>
+					<td class="rt"><%= m ep.price %></td>
+				</tr>
+			<% } %>
+			<tr>
+				<% if @obj.has_payment_fee %>
+					<tr>
+						<td class="rt" colspan="4">Payment Fee:</td>
+						<td class="rt"><%= m @obj.payment_fee %></td>
+					</tr>
+				<% end %>
+				<td class="rt" colspan="4">Total:</td>
+				<td class="rt"><%= m @obj.total %></td>
+			</tr>
+		</table>
+		<% unless @noform %>
+			<div class="field">
+				Exam No: <%= text_field_with_auto_complete :obj, :add_exam_no, {}, {:method => :get} %> <%= submit_tag 'Add Exam', :name => 'obj[add_exam]' %>
+			</div>
+		<% end %>
+	</fieldset>
+	
+	<fieldset id="general">
+		<legend>General Information</legend>
+		<div class="field">
+			<label>First Name: <span class="req">*</span></label>
+			<%= f.text_field :first_name, :style => 'width: 80%' %>
+		</div>
+		<div class="field">
+			<label>Middle Name:</label>
+			<%= f.text_field :middle_name, :style => 'width: 80%' %>
+		</div>
+		<div class="field">
+			<label>Last Name: <span class="req">*</span></label>
+			<%= f.text_field :last_name, :style => 'width: 80%' %>
+		</div>
+		<div class="field">
+			<label>Any other name, assumed name or nickname, by which you are/have been known:</label>
+			<%= f.text_field :nickname, :style => 'width: 80%' %>
+		</div>
+		<div class="field">
+			<label>Mailing Address: <span class="req">*</span></label>
+			<%= f.text_field :address, :style => 'width: 80%' %><br />
+			<%= f.text_field :address2, :style => 'width: 80%' %>
+		</div>
+		<div class="field">
+			<label>Mailing Address City, State, Zip Code: <span class="req">*</span></label>
+			<%= f.text_field :city %> <%= f.select :state, State::NAMES %> <%= f.text_field :zip, :size => 11, :maxlength => 11 %>
+		</div>
+		<div class="field">
+			<label>Mailing Address County: <span class="req">*</span></label>
+			<%= f.text_field :county, :style => 'width: 80%' %>
+		</div>
+		<div class="field">
+			<label><%= f.check_box :residence_different, :onclick => 'toggle_residence();', :onchange => 'toggle_residence();' %> My residence is different than my mailing address, or I use a P.O. Box.</label>
+		</div>
+		<% unless @noform and !@obj.residence_different %>
+			<div id="residence">
+				<div class="field">
+					<label>Residence Address: <span class="req">*</span></label>
+					<%= f.text_field :res_address, :style => 'width: 80%' %>
+					<div>(P.O. Box will not be accepted, must use current home address)</div>
+				</div>
+				<div class="field">
+					<label>Residence City, State, Zip Code: <span class="req">*</span></label>
+					<%= f.text_field :res_city %> <%= f.select :res_state, State::NAMES %> <%= f.text_field :res_zip, :size => 11, :maxlength => 11 %>
+				</div>
+				<div class="field">
+					<label>Residence County: <span class="req">*</span></label>
+					<%= f.text_field :res_county, :style => 'width: 80%' %>
+				</div>
+			</div>
+			<script type="text/javascript">
+				toggle_residence();
+			</script>
+		<% end %>
+		<div class="field">
+			<label>Home Telephone Number: <span class="req">*</span></label>
+			<%= f.text_field :home_phone, :size => '16' %> <span class="format-help">(###-###-#### or ########## + extension)</span>
+		</div>
+		<div class="field">
+			<label>Work Telephone Number:</label>
+			<%= f.text_field :work_phone, :size => '16' %> <span class="format-help">(###-###-#### or ########## + extension)</span>
+		</div>
+		<div class="field" id="obj_county_resident_4_mo">
+			<label>Have you been a resident of Monroe County for the past four months? <span class="req">*</span></label>
+			<label><%= f.radio_button :county_resident_4_mo, true %> Yes</label> <label><%= f.radio_button :county_resident_4_mo, false %> No</label>
+		</div>
+		<div class="field">
+			<label>Social Security No.: </label>
+			<%= f.text_field :ssn, :size => 12, :maxlength => 11 %> <span class="format-help">###-##-#### or #########</span>
+		</div>
+		<div class="field">
+			<label>Date of Birth:</label>
+			<%= f.calendar_date_select :dob %>
+			<div>Only required if applying for Police Officer, Deputy Sheriff or Firefighter positions.</div>
+		</div>
+		<div class="field" id="obj_us_citizen">
+			<label>Are you a citizen of the United States? <span class="req">*</span></label>
+			<label><%= f.radio_button :us_citizen, true, :onclick => 'toggle_right_to_work();', :onchange => 'toggle_right_to_work();' %> Yes</label> <label><%= f.radio_button :us_citizen, false, :onclick => 'toggle_right_to_work();', :onchange => 'toggle_right_to_work();' %> No</label>
+		</div>
+		<% unless @noform and !@obj.us_citizen %>
+			<div class="field" id="right_to_work">
+				<label id="obj_us_right_to_work">If no, do you have a legal right to work in the U.S.?</label>
+				<div>
+					<label class="inline"><%= f.radio_button :us_right_to_work, true, :onclick => 'toggle_right_to_work_class();', :onchange => 'toggle_right_to_work_class();' %> Yes:</label>
+					<% unless @noform and !@obj.us_right_to_work %>
+						<span id="right_to_work_class"><%= f.text_field :us_right_to_work_class, :size => '25' %> (please specify class)</span>
+					<% end %>
+				</div>
+				<label><%= f.radio_button :us_right_to_work, false, :onclick => 'toggle_right_to_work_class();', :onchange => 'toggle_right_to_work_class();' %> No</label>
+			</div>
+		<% end %>
+		<% unless @noform %>
+			<script type="text/javascript">toggle_right_to_work(); toggle_right_to_work_class();</script>
+		<% end %>
+		<div class="field" id="obj_state_drivers_license">
+			<label>Do you have a valid New York State Driver's license? <span class="req">*</span></label>
+			<label><%= f.radio_button :state_drivers_license, true %> Yes</label> <label><%= f.radio_button :state_drivers_license, false %> No</label>
+		</div>
+		<div class="field" id="obj_accept_part_time_work">
+			<label>Will you accept part-time work? <span class="req">*</span></label>
+			<label><%= f.radio_button :accept_part_time_work, true %> Yes</label> <label><%= f.radio_button :accept_part_time_work, false %> No</label>
+		</div>
+		<div class="field" id="obj_temporary_work">
+			<label>Will you accept temporary work? <span class="req">*</span></label>
+			<label><%= f.radio_button :accept_temp_work, true %> Yes</label> <label><%= f.radio_button :accept_temp_work, false %> No</label>
+		</div>
+		<hr />
+		<p>An answer of YES to any of the following questions does not represent an automatic bar to employment.  Each case is considered and evaluated in relation to the 
+			duties and responsibilities of the position for which you are applying:
+		</p>
+		<div class="field" id="obj_law_violation">
+			<label>Were you ever convicted of any violation of law other than a minor traffic violation? <span class="req">*</span></label>
+			<label><%= f.radio_button :law_violation, true %> Yes</label> <label><%= f.radio_button :law_violation, false %> No</label>
+		</div>
+		<div class="field" id="obj_removed_employment">
+			<label>Were you ever removed from any type of employment? <span class="req">*</span></label>
+			<label><%= f.radio_button :removed_employment, true %> Yes</label> <label><%= f.radio_button :removed_employment, false %> No</label>
+		</div>
+	</fieldset>
+	<% if @obj.form_target == :certifications %><a name="target"></a><% end %>
+	<fieldset id="licenses">
+		<legend>Licenses / Certification</legend>
+		<p>if you have a license, certification, or other authorization to practice a trade or profession, please list them below.</p>
+		<% if @noform and @obj.new_certifications.empty? %>
+			<p>(None specified)</p>
+		<% end %>
+		<%= render :partial => 'applicants/certification', :collection => @obj.new_certifications %>
+		<% unless @noform %>
+			<div class="field">
+				<% blank = render :partial => 'applicants/certification', :object => Certification.new %>
+				<%= submit_tag 'Add a License / Certification', :name => 'obj[new_certification]', :onclick => "$(this).insert({before:#{h(blank.to_json)}}); return false;" %> (You may add more than 1)
+			</div>
+		<% end %>
+	</fieldset>
+	
+	<% if @obj.form_target == :educations %><a name="target"></a><% end %>
+	<fieldset id="education">
+		<legend id="obj_educations">Education</legend>		
+		<div class="field">
+			<label>Education Level: <span class="req">*</span></label>
+			<%= f.select :education, Applicant::EDUCATION_LEVELS, {:include_blank => true} %>
+		</div>
+		<% unless @noform and ['lths', 'ged'].include?(@obj.education) %>
+			<div id="edu_under">
+				<div class="field">
+					<label>Highest Grade Completed:</label>
+					<%= f.select :education_grade, ['12', '11', '10', '9', '8'], :include_blank => true %>
+					<div>If you did not graduate high school, please indicate the highest grade completed.</div>
+				</div>
+			</div>
+		<% end %>
+		<% unless @noform and (@obj.blank? or ['lths', 'ged'].include?(@obj.education)) %>
+			<div id="edu_over">
+				<div class="field">
+					<label>Education above High School:</label>
+				</div>
+				<% if @noform and @obj.new_educations.empty? %>
+					<p>(None specified)</p>
+				<% end %>
+				<%= render :partial => 'applicants/education', :collection => @obj.new_educations %>
+				<% unless @noform %>
+					<div class="field">
+						<% blank = render :partial => 'applicants/education', :object => Education.new %>
+						<%= submit_tag 'Add a College / School', :name => 'obj[new_education]', :onclick => "$(this).insert({before:#{h(blank.to_json)}}); return false;" %> (You may add more than 1)
+					</div>
+				<% end %>
+			</div>
+		<% end %>
+	</fieldset>
+	
+	<% if @obj.form_target == :trainings %><a name="target"></a><% end %>
+	<fieldset id="training">
+		<legend>Training</legend>
+		<p>If you have received other training (i.e., work training programs, Armed Forces training) you may list it below. please estimate training hours received.</p>
+		<% if @noform and @obj.new_trainings.empty? %>
+			<p>(None specified)</p>
+		<% end %>
+		<%= render :partial => 'applicants/training', :collection => @obj.new_trainings %>
+		<% unless @noform %>
+			<div class="field">
+				<% blank = render :partial => 'applicants/training', :object => Training.new %>
+				<%= submit_tag 'Add a Course / Program', :name => 'obj[new_training]', :onclick => "$(this).insert({before:#{h(blank.to_json)}}); return false;" %> (You may add more than 1)
+			</div>
+		<% end %>
+	</fieldset>
+	
+	<% if @obj.form_target == :employments %><a name="target"></a><% end %>
+	<fieldset id="work">
+		<legend id="obj_employments">Work Experience</legend>
+		<p>Describe your employment, including military experience, beginning with your current or most recent employment. Submission of a resume does not relieve you of the 
+		responsibility for completing all sections of this application. The resume is a supplement to the application, and not a substitute for it.  To receive credit for a job, basic 
+		employment information such as address, name and title of supervisor, average number of hours in the workweek, final salary, reason for leaving, specific job duties, your job 
+		title, etc. must be shown.</p>
+		<% if @noform and @obj.new_employments.empty? %>
+			<p>(None specified)</p>
+		<% end %>
+		<%= render :partial => 'applicants/employment', :collection => @obj.new_employments %>
+		<% unless @noform %>
+			<div class="field">
+				<% blank = render :partial => 'applicants/employment', :object => Employment.new %>
+				<%= submit_tag 'Add a Job / Employer', :name => 'obj[new_employment]', :onclick => "$(this).insert({before:#{h(blank.to_json)}}); return false;" %> (You may add more than 1)
+			</div>
+		<% end %>
+	</fieldset>
+	
+	<% if @obj.form_target == :other_exams %><a name="target"></a><% end %>
+	<fieldset id="multi">
+		<legend>Application for Exams by both the City and County</legend>
+		<p>If you have applied for one or more examinations offered by the City of Rochester, New York State or other County 
+		Civil Service Commissions on the same date, you must complete this section. Arrangements must be made to take ALL examinations at ONE test site.</p>
+		<% if @noform and @obj.new_other_exams.empty? %>
+			<p>(None specified)</p>
+		<% end %>
+		<%= render :partial => 'applicants/other_exam', :collection => @obj.new_other_exams %>
+		<% unless @noform %>
+			<div class="field">
+				<% blank = render :partial => 'applicants/other_exam', :object => OtherExam.new %>
+				<%= submit_tag 'Add an Exam', :name => 'obj[new_other_exam]', :onclick => "$(this).insert({before:#{h(blank.to_json)}}); return false;" %> (You may add more than 1)
+			</div>
+		<% end %>
+	</fieldset>
+	
+	<fieldset id="veteran">
+		<legend>Armed Forces / Veterans Credits</legend>	
+		<div class="field">
+			<label>Have you ever served in the Armed Forces of the U.S.A.?</label>
+			<label><%= f.radio_button :army_served, true, :onclick => 'toggle_armed_forces();', :onchange => 'toggle_armed_forces();' %> Yes</label> <label><%= f.radio_button :army_served, false, :onclick => 'toggle_armed_forces();', :onchange => 'toggle_armed_forces();' %> No</label>
+		</div>
+		<% unless @noform and !@obj.army_served %>
+			<div id="armed_forces">
+				<div class="field">
+					<label>Date of Enlistment or Induction:</label>
+					<%= f.calendar_date_select :army_enlisted %>
+				</div>
+				<div class="field">
+					<label>Dates of Active Service:</label>
+					From: <%= f.calendar_date_select :army_from %> To: <%= f.calendar_date_select :army_to %>
+				</div>
+<% if false %>
+				<div class="field">
+					<label>Address at Time of Service:</label>
+					<%= f.text_field :army_address, :style => 'width: 100%' %><br />
+					<%= f.text_field :army_address2, :style => 'width: 100%' %>
+				</div>
+				<div class="field">
+					<label>City, State, Zip Code:</label>
+					<%= f.text_field :army_city %> <%= f.select :army_state, State::NAMES %> <%= f.text_field :army_zip, :size => 11, :maxlength => 11 %>
+				</div>
+<% end %>
+				<div class="field">
+					<label>Were you discharged under honorable conditions?</label>
+					<label><%= f.radio_button :army_discharge_honorable, true %> Yes</label> <label><%= f.radio_button :army_discharge_honorable, false %> No</label>
+				</div>
+				<div class="field">
+					<label>Reason for discharge or release as stated on certificate:</label>
+					<%= f.text_field :army_discharge_reason, :style => 'width: 80%' %>
+				</div>
+				<div class="field">
+					<label>Have you ever, since January 1, 1951, been permanently appointed or promoted in the service of NY State or any of its civil divisions from an eligible list as a result 
+					of additional veterans credits granted you on such list?</label>
+					<label><%= f.radio_button :vc_used, true %> Yes</label> <label><%= f.radio_button :vc_used, false %> No</label>
+				</div>
+				<div class="field">
+					<label>If yes, name agency that established the eligible list:</label>
+					<%= f.text_field :vc_used_agency, :style => 'width: 100%' %>
+				</div>
+				<div class="field">
+					<label>I wish to claim:</label>
+					<label><%= f.radio_button :vc_type, 'none' %> No Credits</label>
+					<label><%= f.radio_button :vc_type, 'nondisabled' %> Non-Disabled Veterans Credits</label>
+					<label><%= f.radio_button :vc_type, 'disabled' %> Disabled Veterans Credits</label>
+				</div>
+				<div class="field">
+					<label>U.S. Veteran's Administration Claim No:</label>
+					<%= f.text_field :vc_disabled_claim_no, :style => 'width: 80%' %>
+				</div>
+				<div class="field">
+					<label>Date on which two copies of &quot;Authorization for Disability Record" (VC-4) were sent to Veteran's Administration:</label>
+					<%= f.calendar_date_select :vc_disabled_auth_date %>
+				</div>
+			</div>
+		<% end %>
+		<% unless @noform %>
+			<script type="text/javascript">toggle_armed_forces();</script>
+		<% end %>
+	</fieldset>
+	
+	<% if @obj.ask_loans %>
+		<fieldset id="supplement">
+			<legend>Application for Examination Supplement</legend>
+			<p>(To be filled in only if you are applying for a Civil Service Exam.)</p>
+			<p>Section 50-b of the New York State Civil Service Law requires that all applicants for examination be asked the 
+			following questions: </p>
+			<div class="field">
+				<label>Do you have any loans made or guaranteed by the New York State Higher Education Services 
+				Corporation, which are currently outstanding?</label>
+				<label><%= f.radio_button :loans_outstanding, true %> Yes </label>
+				<label><%= f.radio_button :loans_outstanding, false %> No </label>
+			</div>
+			<div class="field">
+				<label>If so, are you presently in default on any such loans? </label>
+				<label><%= f.radio_button :loans_default, true %> Yes </label>
+				<label><%= f.radio_button :loans_default, false %> No </label>
+			</div>
+		</fieldset>
+	<% end %>
+	
+	<% if @obj.ask_typing_waiver %>
+		<fieldset id="typing">
+			<legend>Typing Test Waiver</legend>
+			<div class="field">
+				<label><%= f.check_box :typing_waiver, :onclick => 'toggle_typing_waiver();', :onchange => 'toggle_typing_waiver();' %> I am requesting a waiver of the typing performance test.</label>
+			</div>
+			<div id="typing_waiver">
+				<p>Please select reason:</p>
+				<p><%= f.check_box :typing_waiver_1 %>1. I am providing documentation that I have been successful on a five (5) minute typing performance test at or  above the rate of speed required for the exam I am taking, with at least a 96% accuracy rate.</p>
+				<ul>
+					<li>The actual typing test date must be within five (5) years prior to or within thirty (30) days after the written exam.</li> 
+					<li>Documentation may be from a high school continuing education, college, business school, employment agency or local civil service agency.</li>
+					<li>Proper documentation consists of:
+							<ul>
+								<li>Name </li>
+								<li>Social security number </li>
+								<li>Date of performance test </li>
+								<li>Statement saying typing test was five (5) minutes in length </li>
+								<li>Speed in words per minute</li> 
+								<li>Number of errors </li>
+								<li>On official letterhead with the signature, title and phone number of the person providing the documentation</li>
+							</ul>
+					</li>
+					<li>Please use the <a href="#attachments">&quot;Attachments&quot; section of this form </a> to upload your documentation.</li>
+				</ul>
+				<p><%= f.check_box :typing_waiver_2 %>2. I am currently employed by Monroe County or a public agency or jurisdiction served by the Monroe County Civil Service Commission and presently hold permanent or contingent permanent competitive status in a title that required a typing performance test at or above the rate of speed required for the exam I am taking.</p>
+			</div>
+			<script type="text/javascript">
+				toggle_typing_waiver();
+			</script>
+		</fieldset>
+	<% end %>
+	
+	<fieldset id="waiver">
+		<legend>Application Fee Waiver</legend>
+		<div class="field">
+			<label><%= f.check_box :waiver_requested, :onclick => 'toggle_waiver();', :onchange => 'toggle_waiver();' %>I am requesting that the application fee be waived.</label>
+		</div>
+		<% unless @noform and !@obj.waiver_requested %>
+			<div id="waiver_reason">
+				<p>Reason (check all that apply):</p>
+				<div class="field">
+					<label><%= f.check_box :waiver_unemployed %> I am totally unemployed and primarily responsible for the support of my household.</label>
+				</div>
+				<div class="field">
+					<label><%= f.check_box :waiver_public_assistance %> I am receiving public assistance from the Monroe County Department of Human and Health Services. Indicate type of assistance.</label>
+					<div style="padding-left: 40px;">
+						<label><%= f.check_box :waiver_safety_net %> Safety Net</label>
+						<label><%= f.check_box :waiver_family_assistance %> Family Assistance</label>
+						<label>Case Number: <%= f.text_field :waiver_case_number %></label>
+					</div>
+				</div>
+				<div class="field">
+					<label><%= f.check_box :waiver_ssi %> I am receiving Supplemental Security Income (SSI)</label>
+				</div>
+				<div class="field">
+					<label><%= f.check_box :waiver_wia %> I am WIA eligible.</label>
+					<div style="padding-left: 40px;">
+						<label class="inline">Caseworker's Name: <%= f.text_field :waiver_wia_caseworker, :size => '16' %></label> <label class="inline">Phone: <%= f.text_field :waiver_wia_phone, :size => '16' %></label>
+					</div>
+				</div>
+				<div class="field">
+					<label><%= f.check_box :waiver_county %> I am a full-time employee represented by the Monroe County unit of CSEA. I am employed in a Monroe County Department at grade 10 or below.</label>
+					<div style="padding-left: 40px;">
+						<label>Job title and grade: <%= f.text_field :waiver_county_job %></label>
+					</div>
+				</div>
+				<div class="field">
+					<label><%= f.check_box :waiver_social_workers_job %> I am represented by the Federation of Social Workers.  I am employed at grade 52 or below or this exam is in my career path.</label>
+					<div style="padding-left: 40px;">
+						<label>Job title and grade: <%= f.text_field :waiver_social_workers_job %></label>
+					</div>
+				</div>
+			</div>
+		<% end %>
+		<% unless @noform %>
+			<script type="text/javascript">toggle_waiver();</script>
+		<% end %>
+	</fieldset>
+	
+	<fieldset id="equal">
+		<legend>Equal Employment Opportunity Data Collection Form</legend>
+		<p>Completion of this form is voluntary for all applicants for positions within the Monroe County system.  The information provided is filled 
+		with the Department of Affirmative Action/Human Relations and is maintained separately and confidentially.  The information is not for 
+		selection purpose, but only to assist in the evaluation of the County's efforts relative to equal employment opportunity.</p>
+		<div class="field">
+			<label>Gender:</label>
+			<%= f.radio_button :gender, 'M' %> Male <%= f.radio_button :gender, 'F' %> Female
+		</div>
+		<div class="field">
+			<label>Race / Ethnicity (check one only):</label>
+		</div>
+		<div class="field">
+			 <label><%= f.radio_button :race, 'white' %> White (Not of Hispanic origin)</label>
+			<div>(All persons of European, North African or Middle Eastern origin)</div>
+		</div>
+		<div class="field">
+			 <label><%= f.radio_button :race, 'black' %> Black (Not of Hispanic origin)</label>
+			<div>(All persons having origin in any of the Black racial groups of Africa)</div>
+		</div>
+		<div class="field">
+			 <label><%= f.radio_button :race, 'hispanic' %> Hispanic</label>
+			<div>(All persons of Mexican, Puerto Rican, Cuban, Central or South America or other Spanish culture or origin regardless of race)</div>
+		</div>
+		<div class="field">
+			 <label><%= f.radio_button :race, 'asian' %> Asian or Pacific Islander</label>
+			<div>(All persons having origins in any of the original people of the Far East, Southeast Asia the Indian subcontinent or the Pacific 
+			Island.  This area includes, for example, China, Japan, Korea, the Philippine Islands, and Samoa)</div>
+		</div>
+		<div class="field">
+			 <label><%= f.radio_button :race, 'americanindian' %> American Indian or Alaskan Native</label>
+			<div>(All persons having origin in any of the original people of North America, and who maintains cultural identification through 
+			tribal affiliation or community recognition)</div>
+		</div>
+		<div class="field">
+			<label><%= f.radio_button :race, 'other' %>Other</label>
+		</div>
+		<div class="field">
+			<label>Have a disability?</label>
+			<label><%= f.radio_button :disabled, true %> Yes</label>
+			<label><%= f.radio_button :disabled, false %> No</label>
+			<div>Definition - Have a physical or mental impairment which substantially limits one or more major life activities or have a record of such impairment or agency.</div>
+		</div>
+		<div class="field">
+			<label>Vietnam Era Veteran:</label>
+			<label><%= f.radio_button :army_vietnam, true %> Yes </label>
+			<label><%= f.radio_button :army_vietnam, false %> No </label>
+			<div>(Definition - A person who served as a member of the Armed Forces of the United States on full-time active duty other than for training, 
+			any part of which occurred between  January, 1, 1963 and May 7, 1975, and was honorably or released under honorable circumstances.) </div>
+		</div>
+		<div class="field">
+			<label>List below where you learned about the exam (example: newspaper, radio (name station) a friend, etc.)</label>
+			<%= f.text_field :heard_from, :style => 'width: 80%' %>
+		</div>
+	</fieldset>
+	
+	<% if @obj.form_target == :attachments %><a name="target"></a><% end %>
+	<fieldset id="attachments">
+		<legend>File Attachments</legend>
+		<p>Use this section to attach documents to your application (school transcripts, etc.).</p>
+		<p><span class="attention">ATTENTION:</span> Read the exam announcement(s) carefully! Your exam(s) may require specific information / files that should be attached to this application.</p>
+		<% if @noform and @obj.attachments.empty? %>
+			<p>(Nothing attached)</p>
+		<% end %>
+		<%= render :partial => 'applicants/attachment', :collection => @obj.attachments %>
+		<% unless @noform %>
+			<div class="field">
+				<label>Upload File:</label>
+				<%= file_field_tag 'obj[add_attachment_file]' %> <%= submit_tag 'Upload', :name => 'obj[add_attachment]' %>
+			</div>
+		<% end %>
+	</fieldset>
+	
+	<fieldset id="info">
+		<legend>Additional Information / Comments</legend>
+		<p>Please use the field below to specify any additional information or add comments to your application.</p>
+		<p><span class="attention">ATTENTION:</span> Read the exam announcement(s) carefully! Your exam(s) may require specific information, such as number of course hours on a particular subject. If the exam announcement indicates specific information is required, please enter that information below.</p>
+		<% if @noform and @obj.info.blank? %>
+			<p>(Nothing entered)</p>
+		<% end %>
+		<div class="field">
+			<%= f.text_area :info, :style => 'width:80%;', :rows => '8' %>
+		</div>
+	</fieldset>
+	
+	<% unless @noform %>
+		<fieldset id="save">
+			<legend>Save or Submit</legend>
+			<div class="field">
+				<p>Before submitting your application, please look over the form to make sure you have entered all of your information correctly and completely. If you missed any required fields,
+				you will not be able to submit your application. If you want to complete your application later, click the &quot;Save &amp; Exit&quot; button. You will be able to login at a later date
+				to complete your application.</p>
+				<%= submit_tag 'Save & Keep Editing', :name => 'obj[save_continue]', :style => 'margin: .5em;' %><br />
+				<%= submit_tag 'Save & Exit', :name => 'obj[save_exit]', :style => 'margin: .5em;' %><br />
+				<%= submit_tag 'Save & Validate', :name => 'obj[save_validate]', :style => 'margin: .5em;' %><br />
+				<%= submit_tag 'I\'m Done, Submit Application to HR', :name => 'obj[submit]', :style => 'margin: .5em;' %>
+			</div>
+		</fieldset>
+	<% end %>
+	
+<% } %>
+
+<% unless @noform %>
+	<script type="text/javascript">
+		$$('input', 'select', 'textarea').each(function(i) { 
+			var typ = i.getAttribute('type');
+			if(typ != 'submit') {
+				$(i).observe('change', function() { 
+					window.onbeforeunload = function() { 
+						return 'Scroll to the bottom of this form to save your changes.'; 
+					}
+					$('print-tab').onclick = function() {
+						return confirm('This will print the last saved version of this application. You can save your changes at the bottom of this form. Hit "ok" to continue, or "cancel" if you want to save your application first.');
+					}
+				});
+			}
+			else {
+				$(i).observe('click', function() {
+					window.onbeforeunload = null;
+				});
+			}
+		});
+	</script>
+<% end %>

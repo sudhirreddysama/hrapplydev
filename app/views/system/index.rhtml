@@ -1,0 +1,10 @@
+<h1>System Settings</h1>
+<% form_for(:obj) { |f| %>
+	<div class="field">
+		<label>Payment Fee:</label>
+		<%= f.text_field :payment_fee, :size => 10 %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Submit' %>
+	</div>
+<% } %>

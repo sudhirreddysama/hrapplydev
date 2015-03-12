@@ -1,0 +1,29 @@
+<% if certification[:target] %>
+	<a name="target"></a>
+<% end %>
+<div class="certification-form">
+	<div class="field">
+		<label>Name of Trade or Profession:</label>
+		<%= text_field_tag 'obj[new_certifications][][name]', certification.name, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>License / Certificate Number:</label>
+		<%= text_field_tag 'obj[new_certifications][][no]', certification.no, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Licensing Agency:</label>
+		<%= text_field_tag 'obj[new_certifications][][agency]', certification.agency, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Is this certification Permanent?</label>
+		<label><%= radio_button_tag 'obj[new_certifications][][permanent]', true, certification.permanent %> Yes</label> 
+		<label><%= radio_button_tag 'obj[new_certifications][][permanent]', false, certification.permanent %> No</label>
+	</div>
+	<div class="field">
+		<label>Licensed Dates:</label>
+		From <%= calendar_date_select_tag 'obj[new_certifications][][from_date]', certification.from_date %> To: <%= calendar_date_select_tag 'obj[new_certifications][][to_date]', certification.to_date %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Remove This License / Certification', :name => 'obj[new_certifications][][remove]', :onclick => "if(confirm('Are you sure you want to remove this item?')) $(this.parentNode.parentNode).remove(); return false;" %>
+	</div>
+</div>

@@ -1,0 +1,66 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<h2>Equal Employment Opportunity Data Collection Form</h2>
+	<p>Completion of this form is voluntary for all applicants for positions within the Monroe County system.  The information provided is filled 
+	with the County's Equal Employment Opportunity Unit and will be kept confidential. The information is not for 
+	selection purpose, but only to assist in the evaluation of the County's efforts relative to equal employment opportunity.</p>
+	<% if false %>
+		<div class="field">
+			<label>Gender:</label>
+			<%= f.radio_button :gender, 'M' %> Male <%= f.radio_button :gender, 'F' %> Female
+		</div>
+	<% end %>
+	<div class="field">
+		<label>Race / Ethnicity * (check one only):</label>
+	</div>
+	<div class="field">
+		 <label><%= f.radio_button :race, 'white' %> White (Not of Hispanic origin):</label>
+		<div>All persons having origins in any of the original peoples of of European, North African or the Middle East.</div>
+	</div>
+	<div class="field">
+		 <label><%= f.radio_button :race, 'black' %> Black (Not of Hispanic origin):</label>
+		<div>All persons having origins in any of the Black racial groups of Africa.</div>
+	</div>
+	<div class="field">
+		 <label><%= f.radio_button :race, 'hispanic' %> Hispanic:</label>
+		<div>All persons of Mexican, Puerto Rican, Cuban, Central or South American or other Spanish culture or origin, regardless of race.</div>
+	</div>
+	<div class="field">
+		 <label><%= f.radio_button :race, 'asian' %> Asian or Pacific Islander:</label>
+		<div>All persons having origins in any of the original people of the Far East, Southeast Asia, the Indian Subcontinent or the Pacific 
+		Islands.  This area includes, for example, China, India, Japan, Korea, the Philippine Islands, and Samoa.</div>
+	</div>
+	<div class="field">
+		 <label><%= f.radio_button :race, 'americanindian' %> American Indian or Alaskan Native:</label>
+		<div>All persons having origin in any of the original peoples of North America, and who maintain cultural identification through 
+		tribal affiliation or community recognition.</div>
+	</div>
+	<% if false %>
+		<div class="field">
+			<label><%= f.radio_button :race, 'other' %>Other</label>
+		</div>
+		<div class="field">
+			<label>Have a disability?</label>
+			<label><%= f.radio_button :disabled, true %> Yes</label>
+			<label><%= f.radio_button :disabled, false %> No</label>
+			<div>Definition - Have a physical or mental impairment which substantially limits one or more major life activities or have a record of such impairment or agency.</div>
+		</div>
+		<div class="field">
+			<label>Vietnam Era Veteran:</label>
+			<label><%= f.radio_button :army_vietnam, true %> Yes </label>
+			<label><%= f.radio_button :army_vietnam, false %> No </label>
+			<div>(Definition - A person who served as a member of the Armed Forces of the United States on full-time active duty other than for training, 
+			any part of which occurred between  January, 1, 1963 and May 7, 1975, and was honorably or released under honorable circumstances.) </div>
+		</div>
+		<div class="field">
+			<label>List below where you learned about the exam (example: newspaper, radio (name station) a friend, etc.)</label>
+			<%= f.text_field :heard_from, :style => 'width: 80%' %>
+		</div>
+	<% end %>
+	<%= submit_tag 'Save & Continue' %>
+	
+			<p>* The concept of race as used by the U.S. Equal Employment Opportunity Commission does not denote clear-cut scientific definitions of anthropological origins. For the purposes of the required EEO-4 report, an employee may be included in the group to which he or she appears to belong, identifies with, or is regarded in the community as belonging. However, no person may be counted in more than one race/ethnic category.</p>
+			<p>NOTE: The category &quot;HISPANIC&quot;, while not a race identification, is included as a separate race/ethnic category because of the employment discrimination often encountered by this group; for this reason do not include HISPANIC under either &quot;white&quot; or &quot;black&quot;.</p>	
+<% } %>
+<p>&nbsp;</p>

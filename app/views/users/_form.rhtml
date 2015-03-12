@@ -1,0 +1,38 @@
+<%= render :partial => 'partial/errors', :locals => {:errors => @obj.errors.full_messages} %>
+<% form_for(:obj) { |f| %>
+	<div class="field">
+		<label>Username: <span class="required">*</span></label>
+		<%= f.text_field :username %>
+	</div>
+	<div class="field">
+		<label>Password: <span class="required">*</span></label>
+		<%= f.password_field :password, 'autocomplete' => 'off' %>
+	</div>
+	<div class="field">
+		<label>Confirm Password: <span class="required">*</span></label>
+		<%= f.password_field :password_confirmation %>
+	</div>
+	<div class="field">
+		<label>Email: <span class="required">*</span></label>
+		<%= f.text_field :email %>
+	</div>
+	<div class="field">
+		<label>First Name: <span class="required">*</span></label>
+		<%= f.text_field :first_name %>
+	</div>
+	<div class="field">
+		<label>Last Name: <span class="required">*</span></label>
+		<%= f.text_field :last_name %>
+	</div>
+	<div class="field">
+		<label>Level: <span class="required">*</span></label>
+		<%= f.select :level, User::LEVELS, :include_blank => true %>
+	</div>
+	<div class="field">
+		<label>Activated:</label>
+		<%= f.check_box :activated %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Submit' %>
+	</div>
+<% } %>

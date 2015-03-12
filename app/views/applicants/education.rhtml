@@ -1,0 +1,70 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<div style="display: none;"><%= submit_tag %></div>
+	<h2>Education</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<div class="field">
+		<label>Education Level: <span class="req">*</span></label>
+		<%= f.select :education, Applicant::EDUCATION_LEVELS, {:include_blank => true} %>
+		<%= err 'education' %>
+	</div>
+	<div class="field">
+		<label>Highest Grade Completed:</label>
+		<%= f.select :education_grade, ['12', '11', '10', '9', '8'], :include_blank => true %>
+		<div>If you did not graduate high school, please indicate the highest grade completed.</div>
+		<%= err 'education_grade' %>
+	</div>
+	<div class="field">
+		<label>Education above High School:</label>
+		<p>Use the &quot;Add a College / School&quot; button to add your information. You may enter any number of college / schools - just click the same button for as many as you would like to add.</p>
+		<%= err 'education_higher' %>
+	</div>
+		<% @obj.educations.each_with_index { |e, i| fields_for("obj[new_educations][#{e.id}]", e) { |ff| %>
+		<div class="subform" id="<%= e.id %>">
+			<h3>College / School # <%= i + 1 %></h3>
+			<div class="field">
+				<%= submit_tag 'Remove This College / School', :name => "obj[new_educations][#{e.id}][remove]", :confirm => 'Are you sure you want to remove this item?' %>
+				<% if has_err(e.id) %>
+					<div class="field-error">If you are not using this item and wish to continue, click this button to remove it</div><div class="clear"></div>
+				<% end %>
+			</div>
+			<div class="field">
+				<label>Name of School: <span class="req">*</span></label>
+				<%= ff.text_field :school_name, :style => 'width: 80%' %>
+				<%= err 'school_name', e.id %>
+			</div>
+			<div class="field">
+				<label>State: <span class="req">*</span></label>
+				<%= ff.select :state, State::NAMES %>
+				<%= err 'state', e.id %>
+			</div>
+			<div class="field">
+				<label>Major: <span class="req">*</span></label>
+				<%= ff.text_field :major, :style => 'width: 80%' %>
+				<%= err 'major', e.id %>
+			</div>
+			<div class="field">
+				<label>Credits Completed: <span class="req">*</span></label>
+				<%= ff.text_field :credits_semester, :size => 5 %> Semester Hours<br />
+				<%= ff.text_field :credits_quarter, :size => 5 %> Quarter Hours
+				<%= err 'credits', e.id %>
+			</div>
+			<div class="field">
+				<label>Type of Degree / Certificate Received: <span class="req">*</span></label>
+				<%= ff.text_field :degree, :style => 'width: 80%' %>
+				<%= err 'degree', e.id %>
+			</div>
+			<div class="field">
+				<label>Graduation Date:</label>
+				<%= ff.calendar_date_select :graduation_date, :style => 'width: 40%' %>
+			</div>
+		</div>
+		<% }} %>
+	<div class="field">
+		<%= submit_tag 'Add a College / School', :name => 'obj[new_education]' %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>

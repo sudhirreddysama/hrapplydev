@@ -1,0 +1,38 @@
+<%= render :partial => 'nav' %>
+<% form_for(:filter) { |f| %>
+	<div class="filter">
+		<table>
+			<tr>
+				<th>Search:</th>
+				<td>
+					<%= f.text_field :search %>
+					<%= submit_tag 'Apply Filter' %> <%= submit_tag 'Clear Filter', :name => 'filter[clear]' %>
+					<div class="field-help">(username, first and last name)</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+<% } %>
+<table class="dg2" width="100%">
+	<tr>
+		<th width="1%">ID</th>
+		<th width="1%">Username</th>
+		<th width="29%">First Name</th>
+		<th width="30%">Last Name</th>
+		<th width="30%">Email</th>
+		<th width="1%">Level</th>
+		<th width="1%">Created</th>
+	</tr>
+	<% @objs.each { |o| %>
+		<tr>
+			<td><%= o.id %></td>
+			<td class="nobr"><%= link_to h(o.username), :action => :view, :id => o.id %></td>
+			<td><%= h o.first_name %></td>
+			<td><%= h o.last_name %></td>
+			<td><%= h o.email %></td>
+			<td><%= User::LEVELS.rassoc(o.level)[0] %></td>
+			<td><%= o.created_at.strftime '%m/%d/%y' if o.created_at %></td>
+		</tr>
+	<% } %>
+</table>
+<%= will_paginate @objs %>

@@ -1,0 +1,40 @@
+<h1>Exam/Job E-mail Notification</h1>
+<p>If you wish to receive automatic email notifications when new exams / jobs are posted, please enter your email address and select
+the categories of exams / jobs you are interested in below.</p>
+<p style="font-weight: bold; background-color: #ffffdd; padding: 3px;">NOTE: Spam filters may prevent you from receiving these emails. If your email system/client uses a spam filter, please make sure that
+&quot;noreply@monroecounty.gov&quot; is an allowed email address.</p>
+<%= render :partial => 'partial/errors', :locals => {:errors => @obj.errors.full_messages} %>
+<% form_for(:obj) { |f| %>
+	<div class="field">
+		<label>Your Email: <span class="required">*</span></label>
+		<%= f.text_field :email %>
+	</div>
+	<h3>Categories:</h3>
+	<div class="field">
+		<label>
+			<%= check_box_tag 'select_all', 1, false %>
+			Select All Categories
+		</label>
+	</div>
+	<% @objs.each { |o| %>
+		<div class="field">
+			<label>
+				<%= check_box_tag 'obj[new_category_ids][]', o.id, @obj.new_category_ids.include?(o.id), :class => 'check' %> 
+				<%= h o.name %>
+			</label>
+		</div>
+	<% } %>
+	<div class="field">
+		<%= submit_tag 'Subscribe' %>
+	</div>
+<% } %>
+<script type="text/javascript">
+	
+	var select_all = $('select_all')
+	$('select_all').observe('click', function() {
+		$$('input.check').each(function(c) {
+			c.checked = select_all.checked;
+		})
+	})
+
+</script>

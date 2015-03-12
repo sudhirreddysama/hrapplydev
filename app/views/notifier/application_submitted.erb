@@ -1,0 +1,17 @@
+This is a confirmation that you have submitted an online application to Monroe County Human Resources. You have applied for:
+
+<% @a.exams.each { |e| -%>
+	<%= e.no.blank? ? '' : "#{e.no}, " %><%= e.name %>
+<% } -%>
+
+For Exam Applications: 
+Once your application has been processed, you will receive notification from us indicating whether your application has been approved or rejected.
+
+For Job Announcement Applications:
+Applications will be reviewed in order to select a limited number of applicants who will be interviewed for the position. If you are selected for an interview we will contact you to make arrangements.
+
+At any time you can login to your account to view the status of your applications at:
+
+<%= @url %>
+
+Monroe County

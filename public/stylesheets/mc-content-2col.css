@@ -1,0 +1,209 @@
+/*
+Copyright 2005-2006 Monroe County, NY 
+CSS Import
+$Revision: 1.01 $
+Use as global content stylesheet.
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*--- Rules for Global Content ---*/
+
+#content-2col {font-family: "Lucida Grande", Verdana, Lucida, Helvetica, Arial, sans-serif;}
+#content-2col div.text {z-index: 30; position: relative; background-color: transparent;}
+#contactinfo {z-index: 100; position: relative; padding: 7px; float: right; margin-left: 1.5em; margin-bottom: 1em; width: 168px; border: 1px solid #a1b4cd;}
+
+#content a.external {
+	background: url(../i-p/ext-link.gif) no-repeat right top;
+	padding-right: 10px;
+}
+#content .text ul li a.external {
+	background: url(../i-p/ext-link.gif) no-repeat right top;
+	padding-right: 10px;
+}
+#content #leftcol a.external {
+	background: url(../i-p/ext-link-col.gif) no-repeat right 50%;
+	padding-right: 10px;
+}
+#content-2col h1 {color: #194e84; text-align: center; margin-top: 0; margin-bottom: 1em; padding-bottom: 0.25em; border-bottom: 1px dotted #a1b4cd; clear: both;}
+.text h2 {color: #7595b5; margin: 0; padding: 0.5em 0 0.25em 0; line-height: 1.25em; background-color: transparent;}
+.text h2:first {padding-top: 0;}
+.text h3 {color: #666; padding: 0.5em 0; font-weight: normal; line-height: 1.25em; background-color: transparent;}
+.text h4 {color: #333; padding: 0.25 0; line-height: 1.25em; background-color: transparent;}
+.text h5 {color: #000; padding: 0.25 0; line-height: 1.25em; background-color: transparent;}
+.text h5.red {color: #c00; background-color: transparent;}
+.text p {font-size: 90%; line-height: 1.5em; margin-bottom: 0.5em;}
+
+.text p.red {
+	color: #f00;
+	font-weight: bold;
+}
+
+.text p+h4 {padding-top: 0.75em;}
+
+/* contact info */
+
+
+#contactinfo img {margin-bottom: 0.25em; margin-top: 0.25em; border-top: 1px dotted #a1b4cd; padding-top: 0.35em;}
+#contactinfo h4 {margin: 0px; padding: 0 0 .25em 0; font-size: 80%; font-style: italic; color: #666;}
+#contactinfo h3 {margin: 0; padding: 0; font-size: 90%; color: #666; border: none;}
+#contactinfo h2 {margin: 0; padding: 0; font-size: 100%; color: #194e84;}
+#contactinfo h5 {font-size: 80%; font-weight: bold; margin-top: 1em; border-top: 1px dotted #a1b4cd; padding-top: 0.35em;}
+#contactinfo p {padding: 0; font-size: 80%; line-height: 1.2em;}
+#contactinfo p.phone {margin-top: 0.5em;}
+#contactinfo a {margin: 0; padding: 0; text-decoration: none; color: #194e84;}
+#contactinfo a:hover {text-decoration: underline;}
+#content-2col div.photos img {padding: 7px; border: 1px solid #999; margin-bottom: 5px; margin-top: 5px;}
+.extra {margin-top: 1em; border-top: 1px dotted #a1b4cd; padding-top: 0.35em;}
+.desc {padding: 9px 9px 0 9px; background: url(../i-p/openboxleft.gif) no-repeat 0 0;}
+.download {padding-left: 12px; background: url(../i-p/download.gif) no-repeat 0 0;}
+
+#content a.external {
+	background: url(../i-p/ext-link.gif) no-repeat right top;
+	padding-right: 10px;
+}
+#content .text ul li a.external {
+	background: url(../i-p/ext-link.gif) no-repeat right top;
+	padding-right: 10px;
+}
+#content #leftcol a.external {
+	background: url(../i-p/ext-link-col.gif) no-repeat right 50%;
+	padding-right: 10px;
+}
+
+
+/* lists */
+
+#content-2col div.text ul {list-style: none; padding-left: 0; padding-bottom: 0.5em; background-color: transparent;}
+#content-2col div.text ul li {line-height: 1.5em; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 15px; margin-left: 0px; font-size: 100%; background-image: url(../i-p/li-diamond.gif); background-repeat: no-repeat; background-position: 0 0; background-color: transparent;}
+#content-2col div.text ul.spaced li {line-height: 1.5em; padding-top: 0px; padding-right: 0px; padding-bottom: 0px; padding-left: 15px; margin-left: 0px; margin-bottom: 0.75em; font-size: 100%; background-image: url(../i-p/li-diamond.gif); background-repeat: no-repeat; background-position: 0 0; background-color: transparent;}
+#content-2col div.text ul ul {margin-left: 15px; background-color: transparent;}
+#content-2col div.text ul li a {margin-left: 0px; font-size: 100%; text-decoration: none; background-repeat: no-repeat; background-position: 0 0; background-color: transparent;}
+#content-2col div.text ul li a:hover {text-decoration: underline; background-color: #ebf0f4;}
+#content-2col div.text ol {padding-bottom: 0.5em; margin-left: 30px; list-style: decimal; background-color: transparent;}
+#content-2col div.text ol li {font-size: 100%; line-height: 1.5em; background-color: transparent;}
+#content-2col div.text p.pull {float: left; width: 300px; text-align: center; background: #eef3f7; border-top: 1px dotted #ccc; border-bottom: 1px dotted #ccc; padding: 0.75em; margin: 0.75em 30px 1.25em 30px;}
+#content-2col div.text p.pullgo {width: 85%; text-align: center; background: #eef3f7; border-top: 1px dotted #ccc; border-bottom: 1px dotted #ccc; padding: 0.75em; margin: 0.75em 30px 1.25em 30px;}
+	
+/* images */
+
+#content-2col img.right {float: right; padding: 3px; margin: 0 0 1em 1em; border: 1px solid #999; background-color: #fff;}
+#content-2col img.left {float: left; padding: 3px; margin: 1em 1em 0 0; border: 1px solid #999; background-color: #fff;}
+#content-2col div.text img {float: right; padding: 5px; border: 1px solid #a1b4cd; margin-left: 1em; margin-bottom: 0.5em;}
+#content-2col div.text img.left {float: left; padding: 5px; border: 1px solid #a1b4cd; margin-right: 1em; margin-bottom: 0.5em; margin-left: 0;}
+	
+/* right image with caption */
+	
+#content-2col div.text div.imageright {width: 190px; float: right; border: 1px solid #a1b4cd; margin-left: 30px; margin-bottom: 20px; padding: 0;}
+#content-2col div.text div.imageright img {border: none; padding: 5px; margin: 0;}
+#content-2col div.text div.imageright p, div.imageright img {margin-left: 10px; margin-right: 10px;}
+#content-2col div.text div.imageright p {font-size: 80%; padding: 0 5px 5px 5px; margin: 0; text-align: right; color: #666; line-height: 1.2em; font-weight: 300;}
+
+/* left image with caption */
+	
+#content-2col div.text div.imageleft {width: 190px; float: left; border: 1px solid #a1b4cd; margin-right: 30px; margin-bottom: 20px; padding: 0;}
+#content-2col div.text div.imageleft img {border: none; padding: 5px; margin: 0;}
+#content-2col div.text div.imageleft p, div.imageleft img {margin-left: 10px; margin-right: 10px;}
+#content-2col div.text div.imageleft p {font-size: 80%; padding: 0 5px 5px 5px; margin: 0; text-align: left; color: #666; line-height: 1.2em; font-weight: 300;}
+
+/* service letters */
+
+#content-2col div.text p.alphabet {
+	text-align: center;
+	color: #999;
+	border-bottom: 1px dotted #ccc;
+	border-top: 1px dotted #ccc;
+	padding: 0.5em;
+	margin: 0.75em 30px 1.25em 30px;
+	background-color: transparent;
+	}
+
+/* date */
+
+#content-2col h3.day {
+font-size: 85%;
+font-weight: normal;
+	color: #CC0000;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+
+/* right image any width with caption */
+	
+#content-2col div.text div.imagerightflex {width: 440px; float: right; border: 1px solid #a1b4cd; margin-left: 30px; margin-bottom: 20px; padding: 0;}
+#content-2col div.text div.imagerightflex img {border: none; padding: 5px; margin: 0;}
+#content-2col div.text div.imagerightflex p, div.imagerightflex img {margin-left: 10px; margin-right: 10px;}
+#content-2col div.text div.imagerightflex p {font-size: 80%; padding: 0 5px 5px 5px; margin: 0; text-align: right; color: #666; line-height: 1.2em; font-weight: 300;}
+
+#content-2col div.text div.top-story-imageright {width: 330px; float: right; border: 1px solid #a1b4cd; margin-left: 30px; margin-bottom: 20px; padding: 0;}
+#content-2col div.text div.top-story-imageright img {border: none; padding: 5px; margin: 0;}
+#content-2col div.text div.top-story-imageright p, div.imagerightflex img {margin-left: 10px; margin-right: 10px;}
+#content-2col div.text div.top-story-imageright p {font-size: 80%; padding: 0 5px 5px 5px; margin: 0; text-align: right; color: #666; line-height: 1.2em; font-weight: 300;}
+
+/* quick hits */
+
+div.quickhits {width: 100%; padding: 1em; clear: both; padding: 0; margin: 0;}
+div.quickhits img {display: inline; border: none; padding: 0 2px; margin: 0; margin-bottom: 1em;}

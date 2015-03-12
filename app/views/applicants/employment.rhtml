@@ -1,0 +1,94 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<div style="display: none;"><%= submit_tag %></div>
+	<h2>Work Experience</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<p>Describe your employment, including military experience, beginning with your current or most recent employment. Submission of a resume does not relieve you of the 
+		responsibility for completing all sections of this application. The resume is a supplement to the application, and not a substitute for it.  To receive credit for a job, basic 
+		employment information such as address, name and title of supervisor, average number of hours in the workweek, final salary, reason for leaving, specific job duties, your job 
+		title, etc. must be shown.</p>
+	<p>Use the &quot;Add a Job / Employer&quot; button to add your information. You may enter any number of jobs / employers - just click the same button for as many as you would like to add.</p>
+	<% @obj.employments.each_with_index { |e, i| fields_for("obj[new_employments][#{e.id}]", e) { |ff| %>
+		<div id="<%= e.id %>" class="subform">
+			<h3>Job / Employer # <%= i + 1 %></h3>
+			<div class="field">
+				<%= submit_tag 'Remove This Job / Employer', :name => "obj[new_employments][#{e.id}][remove]", :confirm => 'Are you sure you want to remove this item?' %>
+				<% if has_err(e.id) %>
+					<div class="field-error">If you are not using this item and wish to continue, click this button to remove it</div><div class="clear"></div>
+				<% end %>
+			</div>
+			<div class="field">
+				<label>Employer's Name: <span class="req">*</span></label>
+				<%= ff.text_field :name, :style => 'width: 80%' %>
+				<%= err 'name', e.id %>
+			</div>
+			<div class="field">
+				<label>Address: <span class="req">*</span></label>
+				<%= ff.text_field :address, :style => 'width: 80%' %><br />
+				<%= ff.text_field :address2, :style => 'width: 80%' %>
+				<%= err 'address', e.id %>
+			</div>
+			<div class="field">
+				<label>City, State, Zip: <span class="req">*</span></label>
+				<%= ff.text_field :city %>
+				<%= ff.select :state, State::NAMES %> 
+				<%= ff.text_field :zip, :size => 11, :maxlength => 11 %>
+				<%= err 'city', e.id %>
+			</div>
+			<div class="field">
+				<label>Dates of Employment: <span class="req">*</span></label>
+				<label><%= ff.check_box :currently_employed %> Currently Employed (if so, don't enter a &quot;to&quot; date below)</label>
+				From: <%= ff.calendar_date_select :start_date %> To: <%= ff.calendar_date_select :end_date %>
+				<%= err 'dates', e.id %>
+				<div>NOTE: You must enter a full date.</div>
+			</div>
+			<div class="field">
+				<label>Salary: <span class="req">*</span></label>
+				<%= ff.text_field :salary, :style => 'width: 80%' %>
+				<%= err 'salary', e.id %>
+			</div>
+			<div class="field">
+				<label>Hours Worked Per Week: <span class="req">*</span></label>
+				<%= ff.text_field :hours, :style => 'width: 80%' %>
+				<%= err 'hours', e.id %>
+			</div>
+			<div class="field">
+				<label>Reason(s) for Leaving: <span class="req">*</span></label>
+				<%= ff.text_area :reason_left, :rows => 2, :style => 'width: 80%' %>
+				<%= err 'reason_left', e.id %>
+			</div>
+			<div class="field">
+				<label>Your Job Title: <span class="req">*</span></label>
+				<%= ff.text_field :title, :style => 'width: 80%' %>
+				<%= err 'title', e.id %>
+			</div>
+			<div class="field">
+				<label>Immediate Supervisor's Name: <span class="req">*</span></label>
+				<%= ff.text_field :supervisor_name, :style => 'width: 80%' %>
+				<%= err 'supervisor_name', e.id %>
+			</div>
+			<div class="field">
+				<label>Supervisor's Title: <span class="req">*</span></label>
+				<%= ff.text_field :supervisor_title, :style => 'width: 80%' %>
+				<%= err 'supervisor_title', e.id %>
+			</div>
+			<div class="field">
+				<label>Supervisor's Phone: <span class="req">*</span></label>
+				<%= ff.text_field :supervisor_phone, :size => '16' %>
+				<%= err 'supervisor_phone', e.id %>
+			</div>
+			<div class="field">
+				<label>Description of Duties: <span class="req">*</span></label>
+				<%= ff.text_area :description, :rows => 4, :style => 'width: 80%' %>
+				<%= err 'description', e.id %>
+			</div>
+		</div>
+	<% }} %>
+	<div class="field">
+		<%= submit_tag 'Add a Job / Employer', :name => 'obj[new_employment]' %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Save & Continue' %>
+	</div>
+<% } %>

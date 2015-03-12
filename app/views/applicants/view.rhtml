@@ -1,0 +1,45 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<h2>Application Sections</h2>
+<% if @obj.exams_expired and false %>
+	<p><span class="attention">NOTE:</span> One or more exams / jobs have been removed from this application because the application deadline has passed.</em></p>
+<% end %>
+<% a, notice= @obj.has_applied_before %>
+
+<p>Click on a section below to view / edit. Before submitting &amp; paying for your application, you will have to complete each section.</p>
+<% if a %>
+    <p><span class="attention"><%= notice %></em></p>
+<% end %>
+<p><%= link_to 'Printable Version (pdf)', :controller => :applicants, :action => :pdf, :id => @obj.id %></p>
+<p id="sections-key">Key: <%= image_tag 'tick.png' %> - complete, <%= image_tag 'cross.png' %> - incomplete / errors, <%= image_tag 'bullet_orange.png' %> - unopened</p>
+
+<% e = @obj.saved_errors.group_by(&:section) %>
+<%= link_to 'Exams / Jobs and Application Fees', {:action => :exams, :id => @obj.id}, :class => 'section-link ' + (e['exams'] ? 'section-error ' : '') + (@obj.exams_complete ? 'section-complete' : '') %>
+<%= link_to 'General Information', {:action => :general, :id => @obj.id}, :class => 'section-link ' + (e['general'] ? 'section-error ' : '') + (@obj.general_complete ? 'section-complete' : '') %>
+<%= link_to 'Licenses / Certification', {:action => :certifications, :id => @obj.id}, :class => 'section-link ' + (e['certifications'] ? 'section-error ' : '') + (@obj.certifications_complete ? 'section-complete' : '') %>
+<%= link_to 'Education', {:action => :education, :id => @obj.id}, :class => 'section-link ' + (e['education'] ? 'section-error ' : '') + (@obj.education_complete ? 'section-complete' : '') %>
+<%= link_to 'Training', {:action => :training, :id => @obj.id}, :class => 'section-link ' + (e['training'] ? 'section-error ' : '') + (@obj.training_complete ? 'section-complete' : '') %>
+<%= link_to 'Work Experience / Past Employment', {:action => :employment, :id => @obj.id}, :class => 'section-link ' + (e['employment'] ? 'section-error ' : '') + (@obj.employment_complete ? 'section-complete' : '') %>
+<% if @obj.nonseasonal_fields? %>
+	<% if @obj.ask_veterans %>
+		<%= link_to 'Armed Forces / Veterans Credits', {:action => :veteran, :id => @obj.id}, :class => 'section-link ' + (e['veteran'] ? 'section-error ' : '') + (@obj.veteran_complete ? 'section-complete' : '') %>
+	<% end %>
+	<%= link_to 'Equal Employment Opportunity Data Collection Form', {:action => :equal, :id => @obj.id}, :class => 'section-link ' + (e['equal'] ? 'section-error ' : '') + (@obj.equal_complete ? 'section-complete' : '') %>
+<% end %>
+<%= link_to 'File Attachments', {:action => :attachments, :id => @obj.id}, :class => 'section-link ' + (e['attachments'] ? 'section-error ' : '') + (@obj.attachments_complete ? 'section-complete' : '') %>
+<%= link_to 'Additional Information / Comments', {:action => :comments, :id => @obj.id}, :class => 'section-link ' + (e['comments'] ? 'section-error ' : '') + (@obj.comments_complete ? 'section-complete' : '') %>
+<% if @obj.nonseasonal_fields? %>
+	<% if false && @obj.ask_loans %>
+		<%= link_to 'Student Loan Questionnaire', {:action => :supplement, :id => @obj.id}, :class => 'section-link ' + (e['supplement'] ? 'section-error ' : '') + (@obj.supplement_complete ? 'section-complete' : '') %>
+	<% end %>
+	<% if @obj.ask_typing_waiver %>
+		<%= link_to 'Typing Test Waiver', {:action => :typing, :id => @obj.id}, :class => 'section-link ' + (e['typing'] ? 'section-error ' : '') + (@obj.typing_complete ? 'section-complete' : '') %>
+	<% end %>
+	<% if @obj.ask_fee_waiver %>
+		<%= link_to 'Application Fee Waiver', {:action => :waiver, :id => @obj.id}, :class => 'section-link ' + (e['waiver'] ? 'section-error ' : '') + (@obj.waiver_complete ? 'section-complete' : '') %>
+	<% end %>
+	<% if @obj.ask_crossfiler %>
+		<%= link_to 'Crossfiler Form', {:action => :other_exams, :id => @obj.id}, :class => 'section-link ' + (e['other_exams'] ? 'section-error ' : '') + (@obj.other_exams_complete ? 'section-complete' : '') %>
+	<% end %>
+<% end %>
+<%= link_to ((@obj.total.to_f > 0) ? 'Submit & Pay for Application' : 'Submit Application'), {:action => :submit, :id => @obj.id}, :class => 'section-link ' + (e['submit'] ? 'section-error ' : '') + (@obj.submit_complete ? 'section-complete' : '') %>

@@ -1,0 +1,8 @@
+<h1>Delete Application # <%= @obj.id %></h1>
+<%= render :partial => 'nav' %>
+<%= render :partial => 'subnav_applicant' %>
+<p>Are you sure you want to delete your exam / job application? This action is irreversible!</p>
+<%= form_tag %>
+	<%= submit_tag 'Yes, delete application' %> <%= link_to 'No, don\'t delete', :action => :application_view, :id => @obj.id %>
+</form>
+<p>&nbsp;</p>

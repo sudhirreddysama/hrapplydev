@@ -1,0 +1,9 @@
+<h1>View Message</h1>
+<%= render :partial => 'nav' %>
+<p>
+	<strong>Subject:</strong> <%= h @obj.subject %><br />
+	<strong>Sent:</strong> <%= @obj.created_at.to_s(:dt) %><br />
+	<strong>From:</strong> <%= mail_to @obj.from_email %><br />
+	<strong>To:</strong> <%= mail_to @obj.to_email %>
+</p>
+<p><%= nl2br_h @obj.body %></p>

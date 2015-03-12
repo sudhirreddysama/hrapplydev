@@ -1,0 +1,6 @@
+<div class="tabs">
+	<%= tab 'List Applications', :action => :index %>
+	<%#= tab 'New Application', :action => :new %>
+	<%= tab(@obj.label, {:id => @obj.id}, :action => :view) if @obj and not @obj.new_record? %>
+	<div class="clear"></div>
+</div>

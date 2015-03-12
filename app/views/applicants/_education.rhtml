@@ -1,0 +1,33 @@
+<% if education[:target] %>
+	<a name="target"></a>
+<% end %>
+<div class="education-form">
+	<div class="field">
+		<label>Name of School: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_educations][][school_name]', education.school_name, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>State: <span class="req">*</span></label>
+		<%= select_tag 'obj[new_educations][][state]', options_for_select([[]] + State::NAMES, education.state) %>
+	</div>
+	<div class="field">
+		<label>Major: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_educations][][major]', education.major, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Credits Completed: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_educations][][credits_semester]', education.credits_semester, :size => 5 %> Semester Hours<br />
+		<%= text_field_tag 'obj[new_educations][][credits_quarter]', education.credits_quarter, :size => 5 %> Quarter Hours
+	</div>
+	<div class="field">
+		<label>Type of Degree / Certificate Received: <span class="req">*</span></label>
+		<%= text_field_tag 'obj[new_educations][][degree]', education.degree, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Graduation Date: <span class="req">*</span></label>
+		<%= calendar_date_select_tag 'obj[new_educations][][graduation_date]', education.graduation_date, :style => 'width: 40%' %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Remove This College / School', :name => 'obj[new_educations][][remove]', :onclick => "if(confirm('Are you sure you want to remove this item?')) $(this.parentNode.parentNode).remove(); return false;" %>
+	</div>
+</div>

@@ -1,0 +1,12 @@
+This is a confirmation that you have been approved for one or more exams for Monroe County HR. The exam(s) you have been approved for are:
+
+<% @exam_prices.each { |e| -%>
+	<%= e.exam.no %>, <%= e.exam.name %>
+	Date of Exam: <%= e.exam.exam_date.strftime '%m/%d/%y %I:%M%p' %>
+<% } -%>
+
+You should receive additional details and a physical confirmation letter via email or postal mail. You can login at any time to view the status of your exam applications at the following address:
+
+<%= @url %>
+
+Monroe County HR

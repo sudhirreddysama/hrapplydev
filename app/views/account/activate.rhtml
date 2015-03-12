@@ -1,0 +1,19 @@
+<h1>Account Activation</h1>
+<p>An activation key has been sent to your email address. Either enter the key in the field below, or click the link contained in the email to activate and login to your new account.</p>
+<%= render :partial => 'partial/errors', :locals => {:errors => @errors} %>
+<%= form_tag %>
+	<div class="field">
+		<label>Activation Key:</label>
+		<%= text_field_tag 'id', params[:id] %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Submit' %>
+	</div>
+</form>
+<h2>What if I did not receive the activation email?</h2>
+<p>Option 1:</p>
+<p><%= link_to 'Click here to resend activation email', :action => :resend %></p>
+<p>Option 2:</p>
+<p><%= link_to 'Click here to try a different email address.', :action => :change_email %> If you have more than one email, try entering a different one.</p>
+<p>Option 3:</p>
+<p><%= link_to 'Click here to proceed without activation.', :action => :skip_activation %> Account activation is to ensure you have a working email address that can receive email from our system. If you do not receive the activation email you may not receive exam application confirmation emails or be able to recover your password if it is lost.</p>

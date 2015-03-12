@@ -1,0 +1,215 @@
+<%= render :partial => 'applicant_nav' %>
+<h2 >Exams</h2>
+<table class="dg2">
+	<tr>
+		<th width="1%">Status</th>
+		<th width="1%">No.</th>
+		<th width="95%">Name</th>
+		<th width="1%">Deadline</th>
+		<th class="nobr" width="1%">Exam Date</th>
+		<th width="1%">Fee</th>
+	</tr>
+	<% @obj.exam_prices.each { |ep| %>
+		<tr>
+			<td><div class="apstatus <%= ep.status %>"><%= ep.status %></div></td>
+			<td class="nobr"><%= ep.exam.no %></td>
+			<td><%= ep.exam.name %></td>
+			<td class="nobr"><%= ep.exam.deadline.strftime '%m/%d/%y %I%M%p' %></td>
+			<td class="nobr"><%= ep.exam.exam_date.strftime '%m/%d/%y %I%M%p' %></td>
+			<td><%= m ep.price %></td>
+		</tr>
+	<% } %>
+	<tr>
+		<td colspan="5" class="rt">Total:</td>
+		<td><%= m @obj.total %></td>
+	</tr>
+</table>
+<h2>General Information</h2>
+<table class="form" width="100%">
+	<tr>
+		<th width="50%">Full Name:</th>
+		<th width="50%">Other / Assumed / Nickname:</th>
+	</tr>
+	<tr>
+		<td><%= h "#{@obj.first_name} #{@obj.middle_name} #{@obj.last_name}" %></td>
+		<td><%= h @obj.nickname %></td>
+	</tr>
+	<tr>
+		<th>Mailing Address:</th>
+		<th>Residence Address:</th>
+	</tr>
+	<tr>
+		<td>
+			<%= h @obj.address %> <%= "<br />@obj.address2" unless @obj.address2.blank? %><br />
+			<%= h @obj.city %>, <%= h @obj.state %> <%= @obj.zip %>
+		</td>
+		<td>
+			<%= h @obj.res_address %><br />
+			<%= h @obj.res_city %>, <%= h @obj.res_state %> <%= @obj.res_zip %><br />
+			County: <%= h @obj.res_county %>
+		</td>
+	</tr>
+	<tr>
+		<th>Home Phone:</th>
+		<th>Work Phone:</th>
+	</tr>
+	<tr>
+		<td><%= h @obj.home_phone %></td>
+		<td><%= h @obj.work_phone %></td>
+	</tr>
+	<tr>
+		<th>SSN:</th>
+		<th>Date of Birth:</th>
+	</tr>
+	<tr>
+		<td><%= h @obj.ssn %></td>
+		<td><%= @obj.dob.strftime '%m/%d/%y' if @obj.dob %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Are you a citizen of the United States?</th>
+	</tr>
+	<tr>
+		<td colspan="2"><%= yn @obj.us_citizen %></td>
+	</tr>
+	<tr>
+		<th colspan="2">If no, do you have a legal right to work in the U.S.?</th>
+	</tr>
+	<tr>
+		<td colspan="2"><%= yn @obj.us_right_to_work %> <%= @obj.us_right_to_work_class %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Do you have a valid New York State Driver's license?</th>
+	</tr>
+	<tr>
+		<td colspan="2"><%= yn @obj.state_drivers_license %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Will you accept part-time work?</th>
+	</tr>
+	<tr>
+		<td colspan="2"><%= yn @obj.accept_part_time_work %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Will you accept temporary work?</th>
+	</tr>
+	<tr>
+		<td colspan="2"><%= yn @obj.accept_temp_work %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Were you ever convicted of any violation of law other than a minor traffic violation?</th>
+	</tr>
+	<tr>
+		<td colspan="2"><%= yn @obj.law_violation %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Were you ever removed from any type of employment?</th>
+	</tr>
+	<tr>
+		<td colspan="2"><%= yn @obj.removed_employment %></td>
+	</tr>
+</table>
+<h2>Licenses / Certification</h2>
+<% @obj.certifications.each { |c| %>
+<% } %>
+<h2>Education</h2>
+<% @obj.educations.each { |e| %>
+
+<% } %>
+<h2>Training</h2>
+<% @obj.trainings.each { |t| %>
+
+<% } %>
+<h2>Work Experience</h2>
+<% @obj.employments.each { |e| %>
+
+<% } %>
+<h2>Application for Exams by both the City and County</h2>
+<% @obj.other_exams.each { |oe| %>
+
+<% } %>
+<h2>Armed Forces / Veterans Credits</h2>
+<table class="form" width="100%">
+	<tr>
+		<th width="50%">Date of Enlistment of Induction:</th>
+		<th width="50%">Dates of Active Service</th>
+	</tr>
+	<tr>
+		<td><%= @obj.army_enlisted.strftime '%m/%d/%y' if @obj.army_enlisted %></td>
+		<td><%= @obj.army_from.strftime '%m/%d/%y' if @obj.army_from %> to <%= @obj.army_to.strftime '%m/%d/%y' if @obj.army_to %></td>
+	</tr>
+	<tr>
+		<th>Address at Time of Service:</th>
+		<th></th>
+	</tr>
+	<tr>
+		<td>
+			<%= h @obj.army_address %><br />
+			<%= "#{h(@obj.army_address2)}<br />" unless @obj.army_address2.blank? %>
+			<%= h @obj.army_city %>, <%= h @obj.army_state %> <%= @obj.zip %>
+		</td>
+	</tr>
+	<tr>
+		<th colspan="2">Were you discharged under honorable conditions?</th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Reason for discharge or release as stated on certificate:</th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Have you ever, since January 1, 1951, been permanently appointed or promoted in the service of NY State or any of its civil divisions from an eligible list as a result of additional veterans credits granted you on such list?</th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2">If yes, name agency that established the eligible list:</th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2">I wish to claim:</th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2">U.S. Veteran's Administration Claim No:</th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2">Date on which two copies of "Authorization for Disability Record" (VC-4) were sent to Veteran's Administration:</th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2"></th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2"></th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+	<tr>
+		<th colspan="2"></th>
+	</tr>
+	<tr>
+		<td><%= %></td>
+	</tr>
+</table>
+<h2>Application for Examination Supplement</h2>
+<h2>Application Fee Waiver</h2>
+<h2>Equal Employment Opportunity Data Collection Form</h2>
+<h2>Payment Information</h2>

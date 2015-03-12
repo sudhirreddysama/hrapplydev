@@ -1,0 +1,30 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<h2>Student Loan Questionnaire</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<p>(To be filled in only if you are applying for a Civil Service Exam.)</p>
+	<p>Section 50-b of the New York State Civil Service Law requires that all applicants for examination be asked the 
+	following questions: </p>
+	<div class="field">
+		<label>Do you have any loans made or guaranteed by the New York State Higher Education Services 
+		Corporation, which are currently outstanding?</label>
+		<label><%= f.radio_button :loans_outstanding, true %> Yes </label>
+		<label><%= f.radio_button :loans_outstanding, false %> No </label>
+		<%= err 'loans_outstanding' %>
+	</div>
+	<div class="field">
+		<label>If so, are you presently in default on any such loans? </label>
+		<label><%= f.radio_button :loans_default, true %> Yes </label>
+		<label><%= f.radio_button :loans_default, false %> No </label>
+		<%= err 'loans_default' %>
+	</div>
+	<div>
+	<div class="field">
+		<label><%= f.check_box :loans_confirmed %> I affirm under penalties of perjury that all statements made on this application supplement are true.</label>
+	</div>
+	<%= err 'loans_confirmed' %>
+	</div>
+	<%= submit_tag 'Save & Continue' %>
+<% } %>
+<p>&nbsp;</p>

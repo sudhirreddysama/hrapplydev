@@ -1,0 +1,78 @@
+<% content_for(:head) { %>
+	<%= javascript_include_tag 'fckeditor/fckeditor' %>
+<% } %>
+<%= render :partial => 'partial/errors', :locals => {:errors => @obj.errors.full_messages} %>
+<% form_for(:obj) { |f| %>
+	<div class="field">
+		<label>No.:</label>
+		<%= f.text_field :no %>
+	</div>
+	<div class="field">
+		<label>Name: <span class="required">*</span></label>
+		<%= f.text_field :name %>
+	</div>
+	<div class="field">
+		<label>Type: <span class="required">*</span></label>
+		<%= f.select :exam_type_id, ExamType.find(:all, :order => 'name').collect { |t| [t.name, t.id] }, :include_blank => true %>
+	</div>
+	<div class="field">
+		<label>Category: </label>
+		<%= f.select :new_category_ids, NewCategory.find(:all, :order => 'name').collect { |c| [c.name, c.id] }, {}, :multiple => true %>
+		<div>Ctrl-click to select multiple items</div>
+	</div>
+	<div class="field">
+		<label>Price: </label>
+		<%= f.text_field :price %>
+		<div>Exam fee users will be charged for when applying online.</div>
+	</div>
+	<div class="field">
+		<label><%= f.check_box :published %> Published</label>
+		<div>Leave this unchecked to hide this exam. Publish and deadline dates (below) will be ignored.</div>
+	</div>
+	<div class="field">
+		<label><%= f.check_box :can_apply %> Can Apply Online</label>
+		<div>Uncheck this box to disable the apply-online functionality for this exam.</div>
+	</div>
+	<div class="field">
+		<label>Publish: </label>
+		<%= f.calendar_date_select :publish %>
+		<div>Date when exam will show up on the public listing (if published is checked). Leave blank to publish immediately.</div>
+	</div>
+	<div class="field">
+		<label>Application Deadline: </label>
+		<%= f.calendar_date_select :deadline %>
+		<div>Date when applicants will no longer be able to apply for this exam. Will disappear from the public listing. Leave blank to never expire.</div>
+	</div>
+	<div class="field">
+		<label>Exam Date: </label>
+		<%= f.calendar_date_select :exam_date %>
+	</div>
+	<div class="field">
+		<label>Description: </label>
+		<%= fckeditor_textarea :obj, :description, :width => '100%', :height => '300px' %>
+		<div>Return creates a new paragraph. Press shift-return to create a one-line break. You can use the link button to upload files.</div>
+	</div>
+	<% if false %>
+		<div class="field">
+			<label><%= f.check_box :ask_loans %> Ask Loans Question</label>
+			<div>Check this box to ask the user, when applying, if they have any outstanding loans made or guarantees by the NY State Higher Education Services Corporation.</div>
+		</div>
+	<% end %>
+	<div class="field">
+		<label><%= f.check_box :ask_typing_waiver %> Ask Typing Waiver Question</label>
+		<div>Check this box to ask the user, when applying, if they would like to waiver the typing test.</div>
+	</div>
+	
+	<div class="field">
+		<label><%= f.check_box :ask_veterans %> Ask Veterans Question</label>
+		<div>Check this box to ask the user, when applying, if they want to apply for veterans credits.</div>
+	</div>	
+	
+	<div class="field">
+		<label>Who May Apply:</label>
+		<%= f.text_field :who_may_apply %>
+	</div>
+	<div class="field">
+		<%= submit_tag 'Submit' %>
+	</div>
+<% } %>

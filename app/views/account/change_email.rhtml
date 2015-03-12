@@ -1,0 +1,6 @@
+<h1>Change Registration Email</h1>
+<%= render :partial => 'partial/errors', :locals => {:errors => @errors} %>
+<%= form_tag %>
+	Different Email Address: <%= text_field_tag 'email', params[:email] %> <%= submit_tag 'Submit' %>
+</form>
+&nbsp;<br />&nbsp;<br />

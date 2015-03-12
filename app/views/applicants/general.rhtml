@@ -1,0 +1,342 @@
+<h1>Application # <%= @obj.id %></h1>
+<%= render :partial => 'applicants/readonly' %>
+<% form_for(:obj) { |f| %>
+	<h2>General Information</h2>
+	<%= render :partial => 'applicants/section_errors' %>
+	<div class="field">
+		<label>Last Name: <span class="req">*</span></label>
+		<%= f.text_field :last_name, :style => 'width: 80%' %>
+		<%= err 'last_name' %>
+	</div>
+	<div class="field">
+		<label>First Name: <span class="req">*</span></label>
+		<%= f.text_field :first_name, :style => 'width: 80%' %>
+		<%= err 'first_name' %>
+	</div>
+	<div class="field">
+		<label>Middle Name:</label>
+		<%= f.text_field :middle_name, :style => 'width: 80%' %>
+	</div>
+	<div class="field">
+		<label>Any other name, assumed name or nickname, by which you are/have been known:</label>
+		<%= f.text_field :nickname, :style => 'width: 80%' %>
+	</div>
+		<div class="field">
+		<label>Mailing Address Street: <span class="req">*</span> <span id="mailing-i" style="display: none; font-weight: normal;"><%= image_tag 'ajax-loader.gif', :size => '16x11', :style => 'margin: 0; padding: 0; border: 0;' %> searching...</span></label>
+		<div>
+			<div style="float: left; width: 120px; font-size: 80%;">Line 1 (#, street):</div><%= f.text_field :address, :style => 'width: 60%' %>
+			<div id="mailing-ac" class="autocomplete"></div>
+		</div>
+		<div class="clear"></div>
+
+		<div id="mailing-info" style="display: none;">
+			<%= render :partial => 'applicants/res_info' %>
+		</div>
+
+		<div>
+			<div style="float: left; width: 120px; font-size: 80%;">Line 2 (Apt #, etc.):</div><%= f.text_field :address2, :style => 'width: 60%' %>
+		</div>
+		<div class="clear"></div>
+		<% if false %><div><span class="attention">Notice:</span>Use abbreviated street type (&quot;Rd&quot;, not &quot;Road&quot;) and street direction (&quot;E Main&quot;, not &quot;East Main&quot;; &quot;Kings Hwy N&quot;, not &quot;Kings Highway North&quot;)</div><% end %>
+		<%= err 'address' %>
+	</div>
+	<div class="field">
+		<label>City, State, Zip Code: <span class="req">*</span></label>
+		<%= f.text_field :city %> <%= f.select :state, State::NAMES %> <%= f.text_field :zip, :size => 11, :maxlength => 11 %>
+		<%= err 'city' %>
+	</div>
+	<div class="field">
+		<label>Mailing Address County: <span class="req">*</span></label>
+		<%= f.select :county, [['Monroe', 'MONROE'], ['Other', 'OUT OF COUNTY']], {:include_blank => true} %>
+		<%= err 'county' %>
+	</div>
+    <div class="field">
+      <label><%= f.check_box :residence_different %> Check here if your residence address is different than your mailing address (for example, if you use a P.O. Box).</label>
+    </div>
+
+    <div id="res-stuff">
+		<div class="field">
+			<label>Residence Address: <span class="req">*</span> <span id="residence-i" style="display: none; font-weight: normal;"><%= image_tag 'ajax-loader.gif', :size => '16x11', :style => 'margin: 0; padding: 0; border: 0;' %> searching...</span></label>
+			<%= f.text_field :res_address, :style => 'width: 80%' %>
+			<div id="residence-ac" class="autocomplete"></div>
+
+			<div id="residence-info" style="display: none;">
+				<%= render :partial => 'applicants/res_info' %>
+			</div>
+
+			<div>(P.O. Box will not be accepted, must use current home address)</div>
+			<% if false %><div><span class="attention">Notice:</span>Use abbreviated street type (&quot;Rd&quot;, not &quot;Road&quot;) and street direction (&quot;E Main&quot;, not &quot;East Main&quot;; &quot;Kings Hwy N&quot;, not &quot;Kings Highway North&quot;)</div><% end %>
+			<%= err 'res_address' %>
+		</div>
+		<div class="field">
+			<label>Residence City, State, Zip Code: <span class="req">*</span></label>
+			<%= f.text_field :res_city %> <%= f.select :res_state, State::NAMES %> <%= f.text_field :res_zip, :size => 11, :maxlength => 11 %>
+			<%= err 'res_city' %>
+		</div>
+		<div class="field">
+			<label>Residence County: <span class="req">*</span></label>
+			<%= f.select :res_county, [['Monroe', 'MONROE'], ['Other', 'OUT OF COUNTY']], {:include_blank => true} %>
+			<%= err 'res_county' %>
+		</div>
+	</div>
+	<div class="field">
+		<label>Home Telephone Number: <span class="req">*</span></label>
+		<label><%= f.text_field :home_phone, :size => '16' %> <span class="format-help">(###-###-#### or ########## + extension)</span></label>
+		<%= err 'home_phone' %>
+	</div>
+	<div class="field">
+		<label>Work/Alternate Telephone Number:</label>
+		<%= f.text_field :work_phone, :size => '16' %> <span class="format-help">(###-###-#### or ########## + extension)</span>
+		<%= err 'work_phone' %>
+	</div>
+	<% if @obj.nonseasonal_fields? %>
+		<div class="field" id="obj_county_resident_4_mo">
+			<label>Have you been a resident of Monroe County for the past four months? <span class="req">*</span></label>
+			<label><%= f.radio_button :county_resident_4_mo, true %> Yes</label> <label><%= f.radio_button :county_resident_4_mo, false %> No</label>
+			<%= err 'county_resident_4_mo' %>
+		</div>
+	<% end %>
+	<div class="field">
+		<label>Social Security No.: <span class="req">*</span></label>
+		<label><%= f.text_field :ssn, :size => 12, :maxlength => 11 %> <span class="format-help">###-##-####</span></label>
+		<%= err 'ssn' %>
+	</div>
+	<% if @obj.nonseasonal_fields? %>
+		<div class="field">
+			<label>Date of Birth:</label>
+			<%= f.calendar_date_select :dob %>
+			<div>Only required if applying for Police Officer, Deputy Sheriff or Firefighter positions.</div>
+			<%= err 'dob' %>
+		</div>
+		<div class="field" id="obj_us_citizen">
+			<label>Are you a citizen of the United States? <span class="req">*</span></label>
+			<label><%= f.radio_button :us_citizen, true %> Yes</label> <label><%= f.radio_button :us_citizen, false %> No</label>
+			<%= err 'us_citizen' %>
+		</div>
+		<div class="field">
+			<label>If no, do you have a legal right to work in the U.S.?</label>
+			<div>
+				<label class="inline"><%= f.radio_button :us_right_to_work, true %> Yes:</label>
+				<%= f.text_field :us_right_to_work_class, :size => '25' %> (please specify class)
+			</div>
+			<label><%= f.radio_button :us_right_to_work, false %> No</label>
+			<%= err 'us_right_to_work' %>
+		</div>
+	<% end %>
+	
+	<% if @obj.seasonal_fields? %>
+		<div class="field" id="obj_state_drivers_license">
+			<label>Are you 18 years of age or older? <span class="req">*</span></label>
+			<label><%= f.radio_button :over_18, true %> Yes</label>
+			<label><%= f.radio_button :over_18, false %> No</label>
+			<%= err 'over_18' %>
+		</div>		
+	<% end %>
+	
+	<div class="field" id="obj_state_drivers_license">
+		<label>Do you have a valid New York State Driver's license? <span class="req">*</span></label>
+		<label><%= f.radio_button :state_drivers_license, true %> Yes</label>
+		<label><%= f.radio_button :state_drivers_license, false %> No</label>
+		<%= err 'state_drivers_license' %>
+	</div>
+	
+	<% if @obj.seasonal_fields? %>
+		<div class="field">
+			<label>If so, please specify drivers license class: <span class="req">*</span></label>
+			<label><%= f.text_field :drivers_license_class, :size => 10 %></label>
+			<%= err 'drivers_license_class' %>
+		</div>
+		<div class="field">
+			<label>Can you obtain daily transportation to any work site in Monroe County? <span class="req">*</span></label>
+			<label><%= f.radio_button :has_transportation, true %> Yes</label>
+			<label><%= f.radio_button :has_transportation, false %> No</label>
+			<%= err 'has_transportation' %>
+		</div>		
+	<% end %>
+	
+	<% if @obj.nonseasonal_fields? %>
+		<div class="field" id="obj_accept_part_time_work">
+			<label>Will you accept part-time work? <span class="req">*</span></label>
+			<label><%= f.radio_button :accept_part_time_work, true %> Yes</label> <label><%= f.radio_button :accept_part_time_work, false %> No</label>
+			<%= err 'accept_part_time_work' %>
+		</div>
+		<div class="field" id="obj_temporary_work">
+			<label>Will you accept temporary work? <span class="req">*</span></label>
+			<label><%= f.radio_button :accept_temp_work, true %> Yes</label> <label><%= f.radio_button :accept_temp_work, false %> No</label>
+			<%= err 'accept_temp_work' %>
+		</div>
+	<% end %>
+	
+	<% if @obj.seasonal_fields? %>
+		<div class="field">
+			<label>What date can you begin work?<span class="req">*</span></label>
+				<label>Date: <%= f.text_field :begin_work, :size => 15 %></label>
+				<%= err 'begin_work' %>
+			</div>
+			<div class="field">
+				<label>Need to end work? <span class="req">*</span></label>
+				<label>Date: <%= f.text_field :end_work, :size => 15 %></label>
+				<%= err 'end_work' %>
+			</label>		
+		</div>
+		<div class="field" id="obj_temporary_work">
+			<label>Can you work weekends? <span class="req">*</span></label>
+			<label><%= f.radio_button :work_weekends, true %> Yes</label> <label><%= f.radio_button :work_weekends, false %> No</label>
+			<%= err 'work_weekends' %>
+		</div>		
+	<% end %>
+	
+	<div class="field">
+      	<label>How do you prefer to receive future correspondence from Monroe County?</label>
+		<label><%= f.radio_button :contact_via, 'email' %> Via Email</label> 
+		<label><%= f.radio_button :contact_via, 'postal' %> Via Postal Mail</label>
+		<label><%= f.radio_button :contact_via, 'both' %> Both</label>
+	</div>
+
+	<div class="field" id="obj_applied_before">
+		<label>Have you applied for a position/exam at Monroe County before? <span class="req">*</span></label>
+		<label><%= f.radio_button :applied_before, true, :onclick => 'applied_fields()' %> Yes</label> <label><%= f.radio_button :applied_before, false, :onclick => 'applied_fields()' %> No</label>
+		<%= err 'applied_before' %>
+	</div>	
+	
+	<div id="name_changed"<% unless @obj.applied_before %> style="display: none;"<% end %>>
+		<div class="field" id="obj_applied_before">
+			<label>Has your first or last name changed since your last application? <span class="req">*</span></label>
+			<label><%= f.radio_button :name_changed, true, :onclick => 'applied_fields()' %> Yes</label> <label><%= f.radio_button :name_changed, false, :onclick => 'applied_fields()' %> No</label>
+			<%= err 'name_changed' %>
+		</div>		
+		
+		<div id="previous_name"<% unless @obj.name_changed %> style="display: none;"<% end %>>
+			<div class="field">
+				<label>Please enter your name as it appeared on your most recent application to Monroe County:</label>
+			</div>
+			
+			<div class="field">
+				<label>Previous Last Name: <span class="req">*</span></label>
+				<%= f.text_field :previous_last_name, :style => 'width: 80%' %>
+				<%= err 'previous_last_name' %>
+			</div>
+			<div class="field">
+				<label>Previous First Name: <span class="req">*</span></label>
+				<%= f.text_field :previous_first_name, :style => 'width: 80%' %>
+				<%= err 'previous_first_name' %>
+			</div>	
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+	
+		function applied_fields() {
+			
+			$('name_changed')[$('obj_applied_before_true').checked ? 'show' : 'hide']();
+			$('previous_name')[$('obj_name_changed_true').checked ? 'show' : 'hide']();
+			
+		}
+		
+		var rd = $('obj_residence_different');
+		var m_adr = $('obj_address');
+		var r_adr = $('obj_res_address');
+		
+		m_adr.observe('focus', function(ev, el) { 
+			if(!rd.checked && !m_adr._open) {
+				Effect.BlindDown('mailing-info', {duration: 0.2});
+				m_adr._open = true;
+			} 
+		});
+		
+		m_adr.observe('blur', function(ev, el) {
+			if(!rd.checked) { 
+				setTimeout(function() {
+					if(!(m_adr == document.activeElement)) {
+						Effect.BlindUp('mailing-info', {duration: 0.2});
+						m_adr._open = false;
+					}
+				}, 300);
+			}
+		});
+		
+		r_adr.observe('focus', function(ev, el) { 
+			if(!r_adr._open) {
+				Effect.BlindDown('residence-info', {duration: 0.2}); 
+				r_adr._open = true;
+			}
+		});
+		
+		r_adr.observe('blur', function(ev, el) { 
+			setTimeout(function() {
+				if(!(r_adr == document.activeElement)) {
+					Effect.BlindUp('residence-info', {duration: 0.2});
+					r_adr._open = false;
+				}
+			}, 300);
+		});
+		
+
+		
+		var m_ac = new Ajax.Autocompleter('obj_address', 'mailing-ac', <%= url_for(:action => 'address_ac').to_json %>, {
+			paramName: 'adr',
+			indicator: 'mailing-i',
+			select: 'adr',
+			afterUpdateElement: function(inp, li) {
+				$('obj_city').value = $(li).down('.cty').innerHTML;
+				$('obj_zip').value = $(li).down('.zip').innerHTML;
+			}
+		})
+		
+		var r_ac = new Ajax.Autocompleter('obj_res_address', 'residence-ac', <%= url_for(:action => 'address_ac').to_json %>, {
+			paramName: 'adr',
+			indicator: 'residence-i',
+			select: 'adr',
+			afterUpdateElement: function(inp, li) {
+				$('obj_res_city').value = $(li).down('.cty').innerHTML;
+				$('obj_res_zip').value = $(li).down('.zip').innerHTML;
+			}
+		})		
+		
+
+		
+		var toggle_res_stuff = function() {
+			if(rd.checked) {
+				$('res-stuff').show();
+				m_ac.disable = true;
+			}
+			else {
+				$('res-stuff').hide();
+				m_ac.disable = false;
+			}
+		}
+		
+		toggle_res_stuff();
+		rd.observe('change', toggle_res_stuff);
+		
+		
+	</script>
+	
+	
+	
+	
+	<hr />
+	<p>An answer of YES to any of the following questions does not represent an automatic bar to employment.  Each case is considered and evaluated in relation to the 
+		duties and responsibilities of the position for which you are applying:
+	</p>
+	<div class="field" id="obj_law_violation">
+		<label>Were you ever convicted of any violation of law other than a minor traffic violation? <span class="req">*</span> **</label>
+		<label><%= f.radio_button :law_violation, true %> Yes</label> <label><%= f.radio_button :law_violation, false %> No</label>
+		<%= err 'law_violation' %>
+	</div>
+	<div class="field" id="obj_pending_criminal_charges">
+		<label>Do you currently have any criminal charges pending against you? <span class="req">*</span></label>
+		<label><%= f.radio_button :pending_criminal_charges, true %> Yes</label> <label><%= f.radio_button :pending_criminal_charges, false %> No</label>
+		<%= err 'pending_criminal_charges' %>
+	</div>	
+	<% if @obj.nonseasonal_fields? %>
+		<div class="field" id="obj_removed_employment">
+			<label>Were you ever removed from any type of employment? <span class="req">*</span></label>
+			<label><%= f.radio_button :removed_employment, true %> Yes</label> <label><%= f.radio_button :removed_employment, false %> No</label>
+			<%= err 'removed_employment' %>
+		</div>
+	<% end %>
+	<div style="font-size: 90%; margin: 1em 0;">**This question refers to all crimes, violations or offenses in any jurisdiction, including Federal and military offenses, except minor traffic infractions. It also includes Juvenile Offender status convictions. You do not need to include adjudications of Juvenile Delinquency or Youthful Offender status or arrests that did not lead to a conviction.</div>
+	<%= submit_tag 'Save & Continue' %>
+<% } %>
+<p>&nbsp;</p>

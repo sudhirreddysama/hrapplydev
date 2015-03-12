@@ -1,0 +1,27 @@
+<!-- MEDIA LANDSCAPE YES -->
+<% @exams.each { |e| %>
+	<%= new_page %>
+	<h3><%= e.name %></h3>
+	<table cellspacing="2" cellpadding="0" border="0">
+		<tr>
+			<th align="left">Name</th>
+			<th align="left">Mailing Address</th>
+			<th align="left">Home Phone</th>
+			<th align="left">Work Phone</th>
+			<th align="left">Email</th>
+		</tr>
+		<% @objs_indexed[e.id].each { |o| %>
+			<tr>
+				<td valign="top"><%= h o.last_name %>, <%= h o.first_name %></td>
+				<td valign="top">
+					<%= h o.address %>, 
+					<% unless o.address2.blank? %><%= h o.address2 %>, <% end %>
+					<%= h o.city %>, <%= h o.state %> <%= h o.zip %>
+				</td>
+				<td valign="top"><%= o.home_phone %></td>
+				<td valign="top"><%= o.work_phone %></td>
+				<td valign="top"><%= o.user.email %></td>
+			</tr>
+		<% } %>
+	</table>
+<% } %>
