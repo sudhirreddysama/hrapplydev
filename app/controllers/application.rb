@@ -50,9 +50,10 @@ class ApplicationController < ActionController::Base
 		if require_login
 			if @current_user.level < l
 				render :nothing => true
+				return false
 			end
 		else
-			render :nothing => true
+			return false
 		end
 	end
 	
