@@ -23,6 +23,7 @@
 		<label>Type of Degree / Certificate Received: <span class="req">*</span></label>
 		<%= text_field_tag 'obj[new_educations][][degree]', education.degree, :style => 'width: 80%' %>
 	</div>
+	
 	<div class="field">
 		<label>Graduation Date: <span class="req">*</span></label>
 		<%= calendar_date_select_tag 'obj[new_educations][][graduation_date]', education.graduation_date, :style => 'width: 40%' %>

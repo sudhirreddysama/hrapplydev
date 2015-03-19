@@ -55,10 +55,12 @@
 				<%= ff.text_field :degree, :style => 'width: 80%' %>
 				<%= err 'degree', e.id %>
 			</div>
-			<div class="field">
-				<label>Graduation Date:</label>
-				<%= ff.calendar_date_select :graduation_date, :style => 'width: 40%' %>
-			</div>
+			<% if @obj.require_graduation_date %>
+				<div class="field">
+					<label>Graduation Date: <span class="req">*</span></label>
+					<%= ff.calendar_date_select :graduation_date, :style => 'width: 40%' %>
+				</div>
+			<% end %>
 		</div>
 		<% }} %>
 	<div class="field">

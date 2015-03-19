@@ -134,7 +134,9 @@
 								</tr>
 							</table>
 							<% if !seasonal %>
-								<p>&nbsp;<br />If applying for Police Officer, Deputy Sheriff or Firefighter positions, please indicate date of birth: <b><%= h @obj.dob.strftime('%m/%d/%Y') if @obj.dob %></b></p>
+								<% if @obj.minimum_age %>
+									<p>&nbsp;<br />If applying for Police Officer, Deputy Sheriff or Firefighter positions, please indicate date of birth: <b><%= h @obj.dob.strftime('%m/%d/%Y') if @obj.dob %></b></p>
+								<% end %>
 							<% end %>
 						</td>
 					</tr>
@@ -254,7 +256,7 @@
 										<td><%= h e.major %></td>
 										<td><%= h e.credits_semester %></td>
 										<td><%= h e.credits_quarter %></td>
-										<td><%= h e.degree %></td>
+										<td><%= h e.degree %><% if @obj.require_graduation_date && e.graduation_date %> (<%= e.graduation_date.strftime('%m/%d/%Y') %>)<% end %></td>
 									</tr>
 								<% } %>
 							</table>

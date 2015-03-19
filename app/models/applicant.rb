@@ -166,6 +166,10 @@ class Applicant < ActiveRecord::Base
   def minimum_age
     print_exam_prices.collect { |e| e.exam.minimum_age }.reject(&:blank?).max
   end
+  
+  def require_graduation_date
+		print_exam_prices.to_a.find { |ep| ep.exam.require_degree }  
+  end
 
   def ask_typing_waiver
     print_exam_prices.to_a.find { |e| e.exam.ask_typing_waiver }
@@ -536,7 +540,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'degree', 'Type of degree / certificate received is required', o.id if o.degree.blank?
           has_graduation_date ||= o.graduation_date
         }
-        if exam_prices.to_a.find { |ep| ep.exam.require_degree } && !has_graduation_date
+        if require_graduation_date && !has_graduation_date
         	err 'education_higher', 'At least one college and graduation date is required'
         end
         update_attribute :education_complete, !@err
