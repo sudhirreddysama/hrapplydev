@@ -611,7 +611,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         end
         update_attribute :other_exams_complete, !@err
       when 'submit'
-        err 'confirmed', 'You must check this box to indicate you agree to the terms of this application' unless confirmed
+        err 'confirmed', 'You must check the box below to indicate you agree to the terms of this application' unless confirmed
         if self.save_view
           self.section = 'view'
           return

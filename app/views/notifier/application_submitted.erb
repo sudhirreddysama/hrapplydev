@@ -14,4 +14,8 @@ At any time you can login to your account to view the status of your application
 
 <%= @url %>
 
+<% if @a.special_accommodations -%>
+Special Accommodations: <%= render :partial => 'applicants/special_text', :locals => {:html => false} %>
+
+<% end -%>
 Monroe County

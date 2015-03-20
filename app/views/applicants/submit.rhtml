@@ -14,6 +14,15 @@
 			<li><%= link_to 'Back to sections overview', {:action => :view, :id => @obj.id} %></li>
 		</ul>
 		<div class="field">
+			<label><%= f.check_box :special_accommodations %> Please check here if you are requesting special arrangements for an examination.</label>
+			<div id="special" style="display: <% if @obj.special_accommodations %>block<% else %>none<% end %>;"><%= render :partial => 'applicants/special_text', :locals => {:html => true} %></div>
+			<script type="text/javascript">
+				$('obj_special_accommodations').observe('change', function(e) {
+					$('special')[this.checked ? 'show' : 'hide']();
+				});
+			</script>
+		</div>
+		<div class="field">
 			<%= err 'confirmed' %>
 			<label><%= f.check_box :confirmed %>
 			I declare that the statements made in this application (including statements made in my accompanying papers) have been examined by me and to the best of my 

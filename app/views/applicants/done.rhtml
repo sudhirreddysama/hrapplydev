@@ -3,4 +3,7 @@
 approved or rejected, or if we need additional information from you, we will contact you via postal mail. 
 You may view your application at any time by logging into your account and viewing the &quot;My Applications&quot; page:</p>
 <p><%= link_to 'My Exam / Job Applications', :controller => :applicants, :action => :index %></p>
+<% if @obj.special_accommodations %>
+	<p><strong>Special Accommodations:</strong> <%= render :partial => 'special_text', :locals => {:html => true} %></p>
+<% end %>
 <p>&nbsp;</p>
