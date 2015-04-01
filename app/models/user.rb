@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
 	validates_format_of :username, :with => /\A[a-zA-Z0-9_]{3,100}\Z/
 	validates_uniqueness_of :username
 	validates_email_format_of :email
-	validates_uniqueness_of :email, :conditions => 'users.deleted = 0'
+	validates_uniqueness_of :email, :if => :not_deleted, :scope => :deleted
 	validates_presence_of :password, :on => :create
 	validates_confirmation_of :password, :if => :password
 	validates_length_of :password, :minimum => 4, :if => :password
@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   	end
   end  
   attr_reader :password
+  
+  def not_deleted; !deleted; end
   
   def self.authenticate u, p, noactivation = false
   	find_by_username u, :conditions => ['encrypted_password = ? and deleted = 0' + (noactivation ? '' : ' and activated = 1'), Digest::SHA1.hexdigest(p)]
