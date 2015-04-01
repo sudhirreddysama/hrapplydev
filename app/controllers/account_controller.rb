@@ -35,7 +35,7 @@ class AccountController < ApplicationController
 				end
 			elsif params[:lost]
 				@lost = params[:lost]
-				u = User.find :first, :conditions => ['username = ? or email = ?', @lost[:username], @lost[:username]]
+				u = User.find :first, :conditions => ['username = ? or email = ? and deleted = 0', @lost[:username], @lost[:username]]
 				if u
 					u.create_activation_key
 					Notifier.deliver_lost_password u, url_for(:action => :recover, :id => u.activation_key)
