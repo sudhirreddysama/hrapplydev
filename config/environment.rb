@@ -49,7 +49,7 @@ Rails::Initializer.run do |config|
   # Make sure the secret is at least 30 characters and all random, 
   # no regular words or you'll be exposed to dictionary attacks.
   config.action_controller.session = {
-    :session_key => '_hr_session',
+    :session_key => '_hr_session' + (RAILS_ENV == 'development' ? 'dev' : ''),
     :secret      => '208e1e73bd0bd677b796d7f122c984147eaf694bbb69af1bc00b887d4af513e16b3e8fbdedfb95b72c4765ff7ec8b14b02916b9c75c525bca347750eabbfba15'
   }
 

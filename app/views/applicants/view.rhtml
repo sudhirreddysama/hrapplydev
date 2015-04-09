@@ -22,7 +22,7 @@
 <%= link_to 'Work Experience / Past Employment', {:action => :employment, :id => @obj.id}, :class => 'section-link ' + (e['employment'] ? 'section-error ' : '') + (@obj.employment_complete ? 'section-complete' : '') %>
 <% if @obj.nonseasonal_fields? %>
 	<% if @obj.ask_veterans %>
-		<%= link_to 'Armed Forces / Veterans Credits', {:action => :veteran, :id => @obj.id}, :class => 'section-link ' + (e['veteran'] ? 'section-error ' : '') + (@obj.veteran_complete ? 'section-complete' : '') %>
+		<%= link_to 'Application for Veteran\'s Credits', {:action => :veteran, :id => @obj.id}, :class => 'section-link ' + (e['veteran'] ? 'section-error ' : '') + (@obj.veteran_complete ? 'section-complete' : '') %>
 	<% end %>
 	<%= link_to 'Equal Employment Opportunity Data Collection Form', {:action => :equal, :id => @obj.id}, :class => 'section-link ' + (e['equal'] ? 'section-error ' : '') + (@obj.equal_complete ? 'section-complete' : '') %>
 <% end %>

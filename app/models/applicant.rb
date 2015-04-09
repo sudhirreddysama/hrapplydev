@@ -491,6 +491,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           end
         end
         if nonseasonal_fields?
+        	err 'army_served', 'Please indicate if you have served in the armed forces.' if army_served.nil?
           err 'county_resident_4_mo', 'Please indicate if you have been a county resident for 4 months.' if county_resident_4_mo.nil?
           err 'us_citizen', 'Please indicate if you are a US citizen' if us_citizen.nil?
           err 'us_right_to_work', 'Please indicate if you have the right to work in the united states' if us_citizen == false and us_right_to_work.nil?
@@ -498,6 +499,14 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'accept_part_time_work', 'Please indicate if you will accept part time work' if accept_part_time_work.nil?
           err 'accept_temp_work', 'Please indicate if you will accept temporary work' if accept_temp_work.nil?
           err 'removed_employment', 'Please indicate if you have been removed from any type of employment' if removed_employment.nil?
+        	err 'army_served', 'Please indicate if you have served in the armed forces' if army_served.nil?
+        	if army_served
+        		err 'army_from', 'Date of active service start (from) date is required' if army_from.nil?
+        		err 'vc_used', 'Please indicate if you have previously been appointed from a civil service list where you were granted veterans credits' if vc_used.nil?
+        		if vc_used
+        			err 'vc_used_agency', 'Agency that established the eligible list is required' if vc_used_agency.blank?
+        		end
+        	end
         end
         if seasonal_fields?
           err 'over_18', 'Please indicate if you are over 18 years old' if over_18.nil?
@@ -567,6 +576,19 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         }
         update_attribute :employment_complete, !@err
       when 'veteran'
+      	if vc_type == 'disabled' || vc_type == 'nondisabled' || vc_type == 'active'
+      		err 'army_enlisted', 'Enlistment date is required' if army_enlisted.blank?
+      		if vc_type != 'active' && army_to.blank?
+      			err 'army_from', 'Active service dates are required'
+      		elsif army_from.blank?
+      			err 'army_from', 'Date of active service start (from) date is required'
+      		end
+      		err 'army_discharge_honorable', 'Please indicate if you were discharged under honorable conditions' if army_discharge_honorable.nil? && vc_type != 'active'
+					err 'vc_used', 'Please indicate if you have previously been appointed from a civil service list where you were granted veterans credits' if vc_used.nil?
+					if vc_used
+						err 'vc_used_agency', 'Agency that established the eligible list is required' if vc_used_agency.blank?
+					end
+      	end
         update_attribute :veteran_complete, !@err
       when 'equal'
         update_attribute :equal_complete, !@err

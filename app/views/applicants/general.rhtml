@@ -110,6 +110,31 @@
 				<%= err 'dob' %>
 			</div>
 		<% end %>
+		<div class="field">
+			<label>Have you ever served in the Armed Forces of the U.S.A.? <span class="req">*</span></label>
+			<label><%= f.radio_button :army_served, true, :onclick => 'army_fields()' %> Yes</label> <label><%= f.radio_button :army_served, false, :onclick => 'army_fields()' %> No</label>
+			<%= err 'army_served' %>
+		</div>	
+		<div id="armed_forces" <% unless @obj.army_served %>style="display: none;"<% end %>>
+			<div class="field">
+				<label>Dates of Active Service: <span class="req">*</span></label>
+				From: <%= f.calendar_date_select :army_from %> To: <%= f.calendar_date_select :army_to %>
+				<%= err 'army_from' %>
+			</div>
+			<p>Wartime Veterans and Active Duty members soon to be discharged wishing to claim additional examination credits as veterans or disabled veterans
+			must submit a form VC-1 and/or form VC-4 and a copy of their discharge papers (form DD-214) within 30 days after exam date. The &quot;Veteran's Credits&quot; section of this online form may be completed instead of form VC-1.</p>
+			<div class="field">
+				<label>Have you ever been appointed through the use of Veteran's Credits to any position in the State Civil Service or any City or Civil 
+				Division of New York State? <span class="req">*</span></label>
+				<label><%= f.radio_button :vc_used, true %> Yes</label> <label><%= f.radio_button :vc_used, false %> No</label>
+				<%= err 'vc_used' %>
+			</div>
+			<div class="field">
+				<label>If yes, where and when?</label>
+				<%= f.text_field :vc_used_agency, :style => 'width: 100%' %>
+				<%= err 'vc_used_agency' %>
+			</div>					
+		</div>
 		<div class="field" id="obj_us_citizen">
 			<label>Are you a citizen of the United States? <span class="req">*</span></label>
 			<label><%= f.radio_button :us_citizen, true %> Yes</label> <label><%= f.radio_button :us_citizen, false %> No</label>
@@ -234,6 +259,10 @@
 			$('previous_name')[$('obj_name_changed_true').checked ? 'show' : 'hide']();
 			
 		}
+		
+		function army_fields() {	
+			$('armed_forces')[$('obj_army_served_true').checked ? 'show' : 'hide']();
+		}		
 		
 		var rd = $('obj_residence_different');
 		var m_adr = $('obj_address');

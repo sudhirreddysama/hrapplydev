@@ -1,74 +1,76 @@
 <h1>Application # <%= @obj.id %></h1>
 <%= render :partial => 'applicants/readonly' %>
 <% form_for(:obj) { |f| %>
-	<h2>Armed Forces / Veterans Credits</h2>
+	<h2>Application for Veteran's Credits</h2>
 	<%= render :partial => 'applicants/section_errors' %>
-	<p>Please complete this section if you've served in the military and / or want to claim veterans credits. If this section does not apply to you, leave everything blank and click the &quot;Save &amp; Continue&quot; button at the bottom of this form.</p>
+	<p>Please complete this section if you are a Wartime Veteran and wish to claim veterans credits. If this section does not apply to you, leave everything blank and click the &quot;Save &amp; Continue&quot; button at the bottom of this form.</p>
 	<p>For more detailed instructions, please view the following PDF documents:</p>
 	<ul>
-		<li><%= link_to 'VC-1 Application for Veterans Credits', '/hrapply/uploads/File/VC-1 Form.pdf' %></li>
-		<li><%= link_to 'VC-4 Authorization for Veteran\'s Disability Record', '/hrapply/uploads/File/VC-4 Form.pdf' %>
+		<li><%= link_to 'VC-1 Application for Veterans Credits', '/hrapply/uploads/File/VC-1-Rev-12-14.pdf' %></li>
+		<li><%= link_to 'VC-4 Authorization for Veteran\'s Disability Record', '/hrapply/uploads/File/VC-4-Rev-12-14.pdf' %>
 	</ul>
-	<p>If you complete this online form, you do not need to print and complete the VC-1 Form. However if you are claiming disabled veterans credits, you still must print and complete the VC-4 form (see instructions within the PDF).</p>
+	<p>If you complete this online form, you do not need to print and complete the VC-1 Form. However if you are claiming Disabled Wartime Veteran's credits, you still must print and complete the VC-4 form (see instructions within the PDF).</p>	
 	<div class="field">
-		<label>Have you ever served in the Armed Forces of the U.S.A.?</label>
-		<label><%= f.radio_button :army_served, true %> Yes</label> <label><%= f.radio_button :army_served, false %> No</label>
+		<label>Veterans Status Claimed: (Check One)
 	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.radio_button :vc_type, 'nondisabled' %> Wartime Veteran</label>
+		<p style="padding-left: 20px;">Applicants for Wartime Veteran's Credits must complete this form (VC-1) for each examination 
+		and provide a copy of their DD-214 separation papers within 30 days after exam date. Candidates who have previously submitted 
+		a copy of their DD-214 to the Monroe County Department of Human Resources on or after January 1, 2013 do not need to resubmit 
+		them, but a new VC-1 form must be filed for each examination. DD-214 separation papers establishes proof the veteran:
+		</p>
+		<ul style="padding-left: 20px;">
+			<li>Served on active duty in wartime, as defined in &sect;85 of the State Civil Service Law (see back VC-1 PDF),</li>
+			<li>Was honorably discharged or released under honorable circumstances from such services, and</li>
+			<li>Is a resident of New York State at the time of the establishment of the eligible list.</li>
+		</ul>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.radio_button :vc_type, 'disabled' %> Disabled Wartime Veteran</label>
+		<p style="padding-left: 20px;">In addition to the proof above, applicants for Disabled Wartime Veteran's Credits must also 
+		submit a &quot;Veterans Disability Records Release&quot; form (VC-4), to a Veteran's Affairs office or the Monroe County Veterans Services 
+		Agency to show that they have a war-incurred disability of at least 10% which is certified to be in existence at the time of 
+		application for additional credits. This form should be forwarded in sufficient time so that the Commission will receive verification 
+		of the disability within 30 days after exam date.</p>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.radio_button :vc_type, 'active' %> Active Duty Military</label>
+		<p style="padding-left: 20px;">Wartime Veteran's Credits will be applied after you are discharged and provide your DD-214.</p>
+	</div>
+	<div class="field" style="padding-left: 20px;">
+		<label><%= f.radio_button :vc_type, 'none' %> No Veteran's Credits</label>
+		<p style="padding-left: 20px;">By selecting this you are indicating you are not applying for additional veteran's credits to your examination.</p>
+	</div>
+
 	<div id="armed_forces">
 		<div class="field">
 			<label>Date of Enlistment or Induction:</label>
 			<%= f.calendar_date_select :army_enlisted %>
+			<div><%= err 'army_enlisted' %></div>
 		</div>
 		<div class="field">
 			<label>Dates of Active Service:</label>
 			From: <%= f.calendar_date_select :army_from %> To: <%= f.calendar_date_select :army_to %>
+			<div><%= err 'army_from' %></div>
 		</div>
 		<div class="field">
 			<label>Were you discharged under honorable conditions?</label>
 			<label><%= f.radio_button :army_discharge_honorable, true %> Yes</label> <label><%= f.radio_button :army_discharge_honorable, false %> No</label>
+			<%= err 'army_discharge_honorable' %>
 		</div>
 		<div class="field">
-			<label>Reason for discharge or release as stated on certificate:</label>
-			<%= f.text_field :army_discharge_reason, :style => 'width: 80%' %>
-		</div>
-		<div class="field">
-			<label>Have you ever, since January 1, 1951, been permanently appointed or promoted in the service of NY State or any of its civil divisions from an eligible list as a result 
-			of additional veterans credits granted you on such list?</label>
+			<label>Have you ever been appointed through the use of Veteran's Credits to any position in the State Civil Service or and City or Civil Division of New York State?</label>
 			<label><%= f.radio_button :vc_used, true %> Yes</label> <label><%= f.radio_button :vc_used, false %> No</label>
+			<%= err 'vc_used' %>
 		</div>
 		<div class="field">
-			<label>If yes, name agency that established the eligible list:</label>
+			<label>If yes, where and when?</label>
 			<%= f.text_field :vc_used_agency, :style => 'width: 100%' %>
+			<%= err 'vc_used_agency' %>
 		</div>
-		<div class="field">
-			<label>I wish to claim:</label>
-			<label><%= f.radio_button :vc_type, 'none' %> No Credits</label>
-			<label><%= f.radio_button :vc_type, 'nondisabled' %> Non-Disabled Veterans Credits</label>
-			<label><%= f.radio_button :vc_type, 'disabled' %> Disabled Veterans Credits</label>
-		</div>
-		<div class="field">
-			<label>U.S. Veteran's Affairs Claim No:</label>
-			<%= f.text_field :vc_disabled_claim_no, :style => 'width: 80%' %>
-		</div>
-		<div class="field">
-			<label>If you are claiming disabled veterans credits, please specify the date on which two copies of &quot;Authorization for Disability Record" (VC-4) were sent to Veteran's Affairs:</label>
-			<%= f.calendar_date_select :vc_disabled_auth_date %>
-		</div>
-		<% if @noform %>
-			<p>In order to receive Veterans' Credits, you must submit a copy of your military discharge papers (DD-214 form) within thirty (30) days of the examination date.
-			You can mail a copy to our office at the address listed below: </p>
-		<% else %>
-			<p>In order to receive Veterans' Credits, you must submit a copy of your military discharge papers (DD-214 form) within thirty (30) days of the examination date.
-			You may attach a copy now by clicking the button below or you can mail a copy to our office at the address listed below: </p>
-			<div class="field">
-				<%= submit_tag 'Save & Attach File', :name => 'goto_attachments' %> <strong>OR Mail To:</strong>
-			</div>
-		<% end %>
-		<p>Monroe County Department of Human Resources<br />
-		210 County Office Building<br />
-		39 West Main Street<br />
-		Rochester, New York 14614</p>
+		<p>If you used your veteran's credit for permanent appointment or promotion in New York State or its civil divisions, you may not claim them again.</p>
+		<%= submit_tag 'Save & Continue' %>
 	</div>
-	<%= submit_tag 'Save & Continue' %>
 <% } %>
 <p>&nbsp;</p>
