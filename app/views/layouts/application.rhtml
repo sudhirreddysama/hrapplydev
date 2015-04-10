@@ -134,7 +134,7 @@ urchinTracker();
 									<a style="display: block; border-top: 1px solid #fff; font-weight: bold; padding: 2px 5px 1px 9px; border-bottom: 1px solid #C3C8CB; background-color: #EAEEEE;" href="https://www.monroecounty.gov/hr-index.php" title="Human Resources Home page">Human Resources Home</a>
 									<a href="https://www.facebook.com/MonroeCivilService" style="padding: 5px 5px 2px 5px;" target="_blank"><img alt="Find us on Facebook" src="http://www.monroecounty.gov/Image/facebook.jpg" style="width: 140px; height: 43px; display: block;"></a>
 									<a href="https://twitter.com/MonroeCivServ" style="padding: 3px 5px 3px 5px;"><img alt="Follow us on Twitter" src="http://www.monroecounty.gov/Image/twitter.gif" style="width: 140px; height: 24px; display: block;"></a>
-									<a href="/hrapply<%= 'dev' if RAILS_ENV == 'development' %>" <%= 'class="here"' if params[:controller] == 'apply' %>>Civil Service Exams - Apply Online</a>
+									<a href="/hrapply<%= 'dev' if RAILS_ENV == 'development' %>" <%= 'class="here"' if params[:controller] == 'apply' %>>Jobs and Exams - <span style="color: #ff0000;">Apply Online</span></a>
 									<% if @current_user %>
 										<%= link_to 'My Applications', {:controller => :applicants, :action => :index}, :class => params[:controller] == 'applicants' ? 'here' : '' %>
 										<%= link_to 'Edit My Account', {:controller => :account, :action => :edit}, :class => params[:controller] == 'account' ? 'here' : '' %>
@@ -143,8 +143,8 @@ urchinTracker();
 										<%= link_to 'Login', {:controller => :account, :action => :index}, :class => params[:controller] == 'account' ? 'here' : '' %>
 									<% end %>
 									<a href="/hrapply<%= 'dev' if RAILS_ENV == 'development' %>/subscribe">Email Notifications</a>
-									<a href="/mccs<%= 'dev' if RAILS_ENV == 'development' %>/lists">Civil Service Test Scores</a>
-									<a href="http://www.monroecounty.gov/hr-civilservice.php" title="Employment/Exam Application">Civil Service Background Information</a>
+									<a href="/mccs<%= 'dev' if RAILS_ENV == 'development' %>/lists">Exam Scores</a>
+									<a href="http://www.monroecounty.gov/hr-civilservice.php" title="Employment/Exam Application">Civil Service Information</a>
 									<a href="http://www.monroecounty.gov/hr-guides.php" title="Forms and Guides page">Forms and Study Guides</a>
 									<a href="http://www.monroecounty.gov/hr-faq.php">FAQ</a>
 								</div>
