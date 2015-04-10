@@ -38,11 +38,18 @@
 		<% o.exam_prices.each { |ep| e = ep.exam %>
 			<tbody>
 				<tr>
-					<td><%= h(e.no.blank? ? 'N/A' : e.no) %></td>
-					<td><%= h(e.name) %></td>
-					<td class="nobr"><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
-					<td class="nobr"><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
-					<td class="rt"><%= m ep.price %></td>
+					<% if e %>
+						<td><%= h(e.no.blank? ? 'N/A' : e.no) %></td>
+						<td><%= h(e.name) %></td>
+						<td class="nobr"><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+						<td class="nobr"><%= e.exam_date ? e.exam_date.to_s(:dt) : 'N/A' %></td>
+					<% else %>
+						<td>???</td>
+						<td>???</td>
+						<td>???</td>
+						<td>???</td>
+						<td class="rt"><%= m ep.price %></td>
+					<% end %>
 				</tr>
 			</tbody>
 		<% } %>
