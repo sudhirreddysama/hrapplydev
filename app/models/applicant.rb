@@ -11,7 +11,8 @@ class Applicant < ActiveRecord::Base
   has_many :other_exams, :order => 'other_exams.sort', :dependent => :destroy
   has_many :attachments, :order => 'attachments.sort', :dependent => :destroy
   has_many :saved_errors, :order => 'saved_errors.sort', :dependent => :destroy
-
+	has_one :cs_applicant, :foreign_key => 'web_applicant_id'
+	
   def name
     "#{first_name} #{last_name}"
   end
@@ -90,7 +91,32 @@ class Applicant < ActiveRecord::Base
         a.applied_before = true
         a.previous_first_name = a.first_name
         a.previous_last_name = a.last_name
+        
+        p = last && last.cs_applicant && last.cs_applicant.cs_person
+        if p
+        	a.first_name = p.first_name
+        	a.last_name = p.last_name
+        	a.home_phone = p.home_phone
+        	a.work_phone = p.work_phone
+        	a.user.email = p.email
+        	a.address = p.mailing_address
+        	a.address2 = p.mailing_address2
+        	a.city = p.mailing_city
+        	a.state = p.mailing_state
+        	a.zip = p.mailing_zip
+        	a.county = p.mailing_county
+        	a.residence_different = p.residence_different
+        	a.res_address = p.residence_address
+        	a.res_city = p.residence_city
+        	a.res_state = p.residence_state
+        	a.res_zip = p.residence_zip
+        	a.res_county = p.residence_county
+					a.dob = p.date_of_birth
+					a.gender = p.gender
+					a.contact_via = p.contact_via
+        end
         a.save
+        a.user.save
         msg = 'Application has been created. For convenience, the application has been populated with the information you entered in your last application.'
       else
         a = last
