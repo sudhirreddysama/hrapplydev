@@ -13,11 +13,13 @@
 		<link rel="alternate stylesheet" rev="stylesheet" href="/c/mc-medium.css" title="stylesheet 2" type="text/css" media="screen" charset="utf-8" />
 		<link rel="alternate stylesheet" rev="stylesheet" href="/c/mc-large.css" title="stylesheet 3" type="text/css" media="screen" charset="utf-8" />
 		<script type="text/javascript" src="/js/mc.js"></script>
-<script src="https://www.google-analytics.com/urchin.js" type="text/javascript"></script>
-<script type="text/javascript">
-_uacct = "UA-93385-4";
-urchinTracker();
-</script>		
+<% if false %>
+	<script src="https://www.google-analytics.com/urchin.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	_uacct = "UA-93385-4";
+	urchinTracker();
+	</script>		
+<% end %>
 	</head>
 	<body id="body">
 		<% if RAILS_ENV == 'development' %><div id="dev-bar">DEVELOPMENT SITE</div><% end %>
