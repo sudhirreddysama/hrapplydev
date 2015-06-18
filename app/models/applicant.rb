@@ -94,7 +94,14 @@ class Applicant < ActiveRecord::Base
         
         p = last && last.cs_applicant && last.cs_applicant.cs_person
         if p
-        	a.first_name = p.first_name
+        	if / [A-Z]\.$/.match(p.first_name)
+        		a.first_name = p.first_name[0..-4]
+        		if a.middle_name.blank?
+        			a.middle_name = p.first_name[-2,2]
+        		end
+        	else
+        		a.first_name = p.first_name
+        	end
         	a.last_name = p.last_name
         	a.home_phone = p.home_phone
         	a.work_phone = p.work_phone
