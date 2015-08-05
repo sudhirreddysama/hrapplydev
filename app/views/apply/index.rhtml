@@ -27,10 +27,8 @@
 </script>
 <p>For additional information, please refer to <a href="http://www.monroecounty.gov/hr-faq.php">Frequently Asked Questions</a>.</p>
 <% @types.each { |t| %>
-	<% if t.short_name != 'External' || Time.now > Time.parse('2015-08-05 12:00:00') %>
-		<h2><a name="<%= t.sort %>"></a><%= h t.name %></h2>
-		<%= t.description %>
-	<% end %>
+	<h2><a name="<%= t.sort %>"></a><%= h t.name %></h2>
+	<%= t.description %>
 	<% if t.short_name != 'External' %>
 		<% exams = t.exams.find :all, :order => 'exams.name', :conditions => '(exams.publish < now() or exams.publish is null) and (exams.deadline > now() or exams.deadline is null) and (exams.published = 1 or exams.published is null)' %>
 		<% old_exams = t.exams.find :all, :order => 'exams.name', :conditions => '(exams.publish < now() or exams.publish is null) and (exams.deadline < now() and exams.deadline is not null) and (exams.published = 1 or exams.published is null) and (exams.exam_date > now() and exams.exam_date is not null)' %>
