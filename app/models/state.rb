@@ -50,6 +50,7 @@ class State
     [ "Washington", "WA" ], 
     [ "West Virginia", "WV" ], 
     [ "Wisconsin", "WI" ], 
-    [ "Wyoming", "WY" ]
+    [ "Wyoming", "WY" ],
+		[ "Puerto Rico", "PR"]
   ]
 end
