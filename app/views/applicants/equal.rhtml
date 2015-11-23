@@ -15,27 +15,43 @@
 		<label>Race / Ethnicity * (check one only):</label>
 	</div>
 	<div class="field">
-		 <label><%= f.radio_button :race, 'white' %> White (Not of Hispanic origin):</label>
-		<div>All persons having origins in any of the original peoples of of European, North African or the Middle East.</div>
+		<label><%= f.radio_button :race, 'hispanic' %> Hispanic or Latino</label>
+		<div>A person of Cuban, Mexican, Puerto Rican, South or Central American,
+			or other Spanish culture or origin regardless of race.</div>
 	</div>
 	<div class="field">
-		 <label><%= f.radio_button :race, 'black' %> Black (Not of Hispanic origin):</label>
-		<div>All persons having origins in any of the Black racial groups of Africa.</div>
+		<label><%= f.radio_button :race, 'white' %> White (Non Hispanic or Latino)</label>
+		<div>All persons having origins in any of the original peoples of
+			Europe, North Africa or the Middle East.</div>
 	</div>
 	<div class="field">
-		 <label><%= f.radio_button :race, 'hispanic' %> Hispanic:</label>
-		<div>All persons of Mexican, Puerto Rican, Cuban, Central or South American or other Spanish culture or origin, regardless of race.</div>
+		<label><%= f.radio_button :race, 'black' %> Black or African American (Non Hispanic or Latino)</label>
+		<div>A person having origins in any of the
+			black racial groups of Africa.</div>
 	</div>
 	<div class="field">
-		 <label><%= f.radio_button :race, 'asian' %> Asian or Pacific Islander:</label>
-		<div>All persons having origins in any of the original people of the Far East, Southeast Asia, the Indian Subcontinent or the Pacific 
-		Islands.  This area includes, for example, China, India, Japan, Korea, the Philippine Islands, and Samoa.</div>
+		<label><%= f.radio_button :race, 'asian' %> Asian (Non Hispanic or Latino)</label>
+		<div>A person having origins in any of the original peoples of the
+			Far East, Southeast Asia, or the Indian Subcontinent, including, for example, Cambodia,
+			China, India, Japan, Korea, Malaysia, Pakistan, the Philippine Islands, Thailand, and Vietnam.</div>
 	</div>
 	<div class="field">
-		 <label><%= f.radio_button :race, 'americanindian' %> American Indian or Alaskan Native:</label>
-		<div>All persons having origin in any of the original peoples of North America, and who maintain cultural identification through 
-		tribal affiliation or community recognition.</div>
+		<label><%= f.radio_button :race, 'pacific' %> Native Hawaiian or Other Pacific Islander (Non Hispanic or Latino)</label>
+		<div>A person having
+			origins in any of the peoples of Hawaii, Guam, Samoa, or other Pacific Islands.</div>
 	</div>
+	<div class="field">
+		 <label><%= f.radio_button :race, 'americanindian' %> American Indian or Alaska Native (Non Hispanic or Latino)</label>
+		<div>A person having origins in any
+			of the original peoples of North and South America (including Central America), and who
+			maintain tribal affiliation or community attachment.</div>
+	</div>
+	<div class="field">
+		 <label><%= f.radio_button :race, 'plural' %> Two or More Races (Non Hispanic or Latino)</label>
+		<div>Persons who identify with two or more racial
+			categories named above.</div>
+	</div>	
+	
 	<% if false %>
 		<div class="field">
 			<label><%= f.radio_button :race, 'other' %>Other</label>
