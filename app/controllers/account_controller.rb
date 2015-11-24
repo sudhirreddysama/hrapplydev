@@ -3,7 +3,10 @@ class AccountController < ApplicationController
 	before_filter :require_login, :except => [:index, :activate, :recover, :resend, :change_email, :skip_activation]
 	
 	def index
-		redirect_after_login and return if @current_user
+		if @current_user
+			redirect_after_login
+			return 
+		end
 		if request.post?
 			if params[:login]
 				@login = params[:login]
