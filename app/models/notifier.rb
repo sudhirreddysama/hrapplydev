@@ -19,7 +19,7 @@ class Notifier < ActionMailer::Base
 	def application_created a, url
 		recipients a.user.email_with_name
 		from HR_FROM
-		subject 'Application Created'
+		subject 'Application Started'
 		body :a => a, :url => url
 	end
 	
