@@ -27,7 +27,8 @@ class Subscription < ActiveRecord::Base
 			exams.uniq!
 			logger.info 'Sending Subscription'			
 			begin
-				Notifier.deliver_subscription o, exams
+				m = Notifier.create_subscription o, exams
+				QueuedEmail.create :email => m
 			rescue
 				logger.info 'Could Not Deliver'
 			end
