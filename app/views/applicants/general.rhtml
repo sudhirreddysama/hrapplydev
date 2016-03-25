@@ -102,14 +102,12 @@
 		<%= err 'ssn' %>
 	</div>
 	<% if @obj.nonseasonal_fields? %>
-		<% if @obj.minimum_age %>
-			<div class="field">
-				<label>Date of Birth: <span class="req">*</span></label>
-				<%= f.calendar_date_select :dob %>
-				<div>Only required if applying for Police Officer, Deputy Sheriff or Firefighter positions.</div>
-				<%= err 'dob' %>
-			</div>
-		<% end %>
+		<div class="field">
+			<label>Date of Birth: <span class="req">*</span></label>
+			<%= f.calendar_date_select :dob %>
+			<div>Only required if applying for Police Officer, Deputy Sheriff or Firefighter positions.</div>
+			<%= err 'dob' %>
+		</div>
 		<div class="field">
 			<label>Have you ever served in the Armed Forces of the U.S.A.? <span class="req">*</span></label>
 			<label><%= f.radio_button :army_served, true, :onclick => 'army_fields()' %> Yes</label> <label><%= f.radio_button :army_served, false, :onclick => 'army_fields()' %> No</label>
