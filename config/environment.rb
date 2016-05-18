@@ -68,6 +68,7 @@ Rails::Initializer.run do |config|
   
   #config.action_controller.relative_url_root = '/hrapply'
   
+  
 end
 
 require 'digest'
@@ -79,7 +80,7 @@ require 'active_merchant'
 require 'net/http'
 require 'fastercsv'
 
-
+ActionController::AbstractRequest.relative_url_root = '/hrapply' + (RAILS_ENV == 'development' ? 'dev' : '')
 
 
 
