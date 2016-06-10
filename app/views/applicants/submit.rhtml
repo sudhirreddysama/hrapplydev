@@ -6,6 +6,10 @@
 	<h2>Submit Application</h2>
 <% end %>
 <% if @obj.can_submit? %>
+	<% if @obj.contact_via == 'email' && @obj.user.email =~ /@(hotmail|outlook).com$/i %>
+		<p style="color: #800;">NOTE: You have selected &quot;email&quot; as your contact preference. Due to problems with hotmail.com and outlook.com receiving emails, 
+		you will also receive correspondence via postal mail. If you wish to only receive emails, use the &quot;Edit My Account&quot; link to the left to change your email address.</p>
+	<% end %>
 	<% form_for(:obj) { |f| %>
 		<%= render :partial => 'applicants/section_errors' %>
 		<p>Before submitting your application, please review all information for accuracy and completeness and print a copy for your records. You will NOT be able to edit your application after submission.</p>

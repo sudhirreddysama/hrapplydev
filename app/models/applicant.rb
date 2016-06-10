@@ -681,6 +681,9 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         end
 
         if self.section == 'done'
+        	if contact_via == 'email' && user.email =~ /@(hotmail|outlook).com$/i
+        		self.contact_via = 'both'
+        	end
           update_attributes :submit_complete => true, :submitted_at => DateTime.now.to_s
           find_residency
         else
