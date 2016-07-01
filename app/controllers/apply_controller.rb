@@ -26,9 +26,8 @@ class ApplyController < ApplicationController
 	def load_cart_errors
 		errors = []
 		ids = session[:cart]
-		if !ids.blank?
+		if !ids.blank? && @current_user
 			ids.each { |id|
-				logger.info id
 				app = @current_user.applicants.find(:first, {
 					:order => 'applicants.created_at desc',
 					:include => {:exam_prices => {:exam => :exam_type}},
