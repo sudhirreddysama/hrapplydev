@@ -1,4 +1,9 @@
 <h1>Application Shopping Cart</h1>
+<% if !@errors.empty? %>
+	<div class="errors">
+		<%= nl2br_h @errors.join("\n\n") %>
+	</div>
+<% end %>
 <% if @exams.empty? %>
 	<p style="text-align: center; font-weight: bold; padding: 2em;">Your cart is empty.</p>
 <% else %>

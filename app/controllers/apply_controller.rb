@@ -23,6 +23,30 @@ class ApplyController < ApplicationController
 		end
 	end
 	
+	def load_cart_errors
+		errors = []
+		ids = session[:cart]
+		if !ids.blank?
+			ids.each { |id|
+				logger.info id
+				app = @current_user.applicants.find(:first, {
+					:order => 'applicants.created_at desc',
+					:include => {:exam_prices => {:exam => :exam_type}},
+					:conditions => [
+						'exams.id = ? and date_add(applicants.submitted_at, interval exam_types.month_rate month) > date(now())', 
+						id
+					]
+				})
+				logger.info app
+				if app
+					e = app.exam_prices[0].exam
+					errors << "You have already submitted an application for #{e.no} #{e.name}. You cannot submit another application at this time. Please remove this item from your cart."
+				end
+			}
+		end
+		return errors
+	end
+	
 	def cart
 		session[:cart] ||= SortedSet.new
 		if request.post?
@@ -42,6 +66,7 @@ class ApplyController < ApplicationController
 			end
 			redirect_to
 		else
+			@errors = load_cart_errors
 			@exams = session[:cart] ? Exam.find(:all, :conditions => ['id in (?)', session[:cart]]) : []
 			@total = @exams.sum { |e| e.price.to_f }
 			if @total > 0
@@ -55,10 +80,15 @@ class ApplyController < ApplicationController
 		if session[:cart].nil?
 			redirect_to :action => :cart
 		elsif @current_user
-			a, flash[:notice] = Applicant.setup_and_create @current_user, session[:cart], @system.payment_fee
-			Notifier.deliver_application_created a, url_for(:controller => :applicants, :action => :index, :id => nil)
-			session[:cart] = nil
-			redirect_to :controller => :applicants, :action => :view, :id => a.id
+			@errors = load_cart_errors
+			if @errors.empty? 
+				a, flash[:notice] = Applicant.setup_and_create @current_user, session[:cart], @system.payment_fee
+				Notifier.deliver_application_created a, url_for(:controller => :applicants, :action => :index, :id => nil)
+				session[:cart] = nil
+				redirect_to :controller => :applicants, :action => :view, :id => a.id
+			else
+				redirect_to :controller => :apply, :action => :cart
+			end
 		else
 			flash[:notice] = 'In order to apply online, you will need an account. Please either login or create a new account.'
 			session[:after_login] = url_for({})
