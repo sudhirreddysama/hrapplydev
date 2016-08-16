@@ -38,11 +38,18 @@ class AccountController < ApplicationController
 				end
 			elsif params[:lost]
 				@lost = params[:lost]
-				u = User.find :first, :conditions => ['username = ? or email = ? and deleted = 0', @lost[:username], @lost[:username]]
-				if u
-					u.create_activation_key
-					Notifier.deliver_lost_password u, url_for(:action => :recover, :id => u.activation_key)
+				usrs = User.find :all, :conditions => ['username = ? or email = ? and deleted = 0', @lost[:username], @lost[:username]]
+				if usrs.size > 0
+					usrs.each { |u|
+						u.create_activation_key
+						Notifier.deliver_lost_password u, url_for(:action => :recover, :id => u.activation_key)
+					}
+					if usrs.size > 1
+						flash[:notice] = 'Multiple user accounts found. A recovery email has been sent out for each account.'
+					end
 					redirect_to :action => :recover
+				elsif u.size > 1
+					u
 				else
 					@errors = ['Sorry, We don\'t have any user on file with that username or password.']
 				end
