@@ -48,8 +48,6 @@ class AccountController < ApplicationController
 						flash[:notice] = 'Multiple user accounts found. A recovery email has been sent out for each account.'
 					end
 					redirect_to :action => :recover
-				elsif u.size > 1
-					u
 				else
 					@errors = ['Sorry, We don\'t have any user on file with that username or password.']
 				end
