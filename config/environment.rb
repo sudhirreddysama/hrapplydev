@@ -86,7 +86,7 @@ ActionController::AbstractRequest.relative_url_root = '/hrapply' + (RAILS_ENV ==
 
 Time::DATE_FORMATS[:dt] = '%m/%d/%y %I:%M%p'
 
-ExceptionNotifier.exception_recipients = %w(jessesternberg@monroecounty.gov rgrape@monroecounty.gov sduritza@monroecounty.gov)
+ExceptionNotifier.exception_recipients = %w(jessesternberg@monroecounty.gov)# rgrape@monroecounty.gov sduritza@monroecounty.gov)
 ExceptionNotifier.sender_address = %("HRApply Error" <hrapply@monroecounty.gov>)
 
 ActionMailer::Base.delivery_method = :smtp
