@@ -131,3 +131,8 @@ class Date
 		alias_method_chain :_parse, :auto_year_adjust
 	end
 end 
+
+
+# Temporary solution for this PayPal error:
+# SSL_connect returned=1 errno=0 state=SSLv3 read server certificate B: certificate verify failed
+OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
