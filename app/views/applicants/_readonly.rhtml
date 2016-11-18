@@ -1,3 +1,3 @@
 <% if @noform %>
-<p id="readonly">This application has already been submitted and cannot be edited. This form is read-only.<br /><%= link_to 'Click here to go back to section overview', :action => :view, :id => @obj.id if params[:action] != 'view' %></p>
+<p id="readonly">This application <% if @obj.submit_complete %>has already been submitted and<% end %> cannot be edited. This form is read-only.<br /><%= link_to 'Click here to go back to section overview', :action => :view, :id => @obj.id if params[:action] != 'view' %></p>
 <% end %>

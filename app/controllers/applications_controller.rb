@@ -18,6 +18,7 @@ class ApplicationsController < ApplicationController
 	def view
 		@noform = true
 		@obj = Applicant.find params[:id]
+		@obj.section = params[:action]
 		render :template => "applicants/#{params[:action]}"
 	end
 	
