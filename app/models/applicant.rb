@@ -233,6 +233,9 @@ class Applicant < ActiveRecord::Base
   end
 
   def has_applied_before
+  	# Disabling code by returning early.
+  	return false, ''
+  	#
     exam_prices.each { |ep|
       result=DB.query("select applicants.id as id, applicants.submitted_at as sa from applicants inner join exam_prices on applicants.id = exam_prices.applicant_id
 where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and applicants.submitted_at is not null")
