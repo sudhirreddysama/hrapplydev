@@ -20,8 +20,10 @@
 		<td><%= @obj.deadline.blank? ? 'N/A' : @obj.deadline.to_s(:dt) %></td>		
 	</tr>
 	<tr>
-		<th>Exam Date:</th>
-		<td><%= @obj.exam_date.blank? ? 'N/A' : @obj.exam_date.to_s(:dt) %></td>
+		<% if params[:action] != 'job' %>
+			<th>Exam Date:</th>
+			<td><%= @obj.exam_date.blank? ? 'N/A' : @obj.exam_date.to_s(:dt) %></td>
+		<% end %>
 		<th>Price:</th>
 		<td><%= (@obj.price.blank? or @obj.price.zero?) ? 'N/A' : m(@obj.price) %></td>
 	</tr>
