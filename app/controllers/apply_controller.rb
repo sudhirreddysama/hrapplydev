@@ -13,6 +13,10 @@ class ApplyController < ApplicationController
 		@types = ExamType.find :all, :order => 'exam_types.`sort`'
 	end
 	
+	def jobs
+		@types = ExamType.find [4], :order => 'exam_types.`sort`'
+	end
+	
 	def exam
 		@obj = Exam.find params[:id]
 		if (@obj.publish and @obj.publish > Time.now) or (@obj.exam_date and @obj.exam_date < Time.now) or !@obj.published

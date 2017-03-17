@@ -1,0 +1,30 @@
+<h1>Civil Service Job Announcements</h1>
+<%= render :partial => 'cart' %>
+<% @types.each { |t| %>
+	<h2><a name="<%= t.sort %>"></a><%= h t.name %></h2>
+	<%= t.description %>
+	<% if t.short_name != 'External' %>
+		<% exams = t.exams.find :all, :order => 'exams.name', :conditions => '(exams.publish < now() or exams.publish is null) and (exams.deadline > now() or exams.deadline is null) and (exams.published = 1 or exams.published is null)' %>
+		<% if exams.empty? && old_exams.empty? %>
+			<p><em>Nothing is currently available in this category.</em></p>
+		<% else %>
+			<table width="100%" class="dg2">
+				<thead>
+					<th width="48%">Name</th>
+					<th width="48%">Who May Apply</th>
+					<th width="1%" class="nobr">Application<br />Deadline</th>
+					<th width="1%" class="rt">Application<br />Fee</th>
+				</thead>
+				<% exams.each { |e| %>
+					<tbody>
+						<tr>
+							<td><%= link_to h(e.name), :controller => :apply, :action => :exam, :id => e.id %></td>
+							<td><%= h e.who_may_apply %></td>
+							<td><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
+							<td class="nobr rt"><%= e.price.to_f == 0 ? 'N/A' : m(e.price) %></td>
+						</tr>
+				<% } %>
+			</table>
+		<% end %>
+	<% end %>
+<% } %>
