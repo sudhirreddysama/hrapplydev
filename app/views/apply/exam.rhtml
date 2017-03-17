@@ -3,8 +3,13 @@
 <%= render :partial => 'cart' %>
 <table class="form" width="100%">
 	<tr>
-		<th width="1%">No.:</th>
-		<td width="49%"><%= h(@obj.no.blank? ? 'N/A' : @obj.no) %></td>
+		<% if params[:action] == 'job' %>
+			<th width="1%">Location:</th>
+			<td width="49%">Rochester, NY</td>
+		<% else %>
+			<th width="1%">No.:</th>
+			<td width="49%"><%= h(@obj.no.blank? ? 'N/A' : @obj.no) %></td>
+		<% end %>
 		<th width="1%">Name:</th>
 		<td width="49%"><%= h @obj.name %></td>
 	</tr>

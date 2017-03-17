@@ -17,14 +17,20 @@ class ApplyController < ApplicationController
 		@types = ExamType.find [4], :order => 'exam_types.`sort`'
 	end
 	
+	def job
+		exam
+	end
+	
 	def exam
 		@obj = Exam.find params[:id]
 		if (@obj.publish and @obj.publish > Time.now) or (@obj.exam_date and @obj.exam_date < Time.now) or !@obj.published
 			# If the exam is not active, the user may still have an applicantion that includes this exam. Let them see it (javascript-disabled users should only be the ones who get here).
 			unless @obj.applicants.to_a.find { |a| a.user == @current_user }
 				render :nothing => true
+				return
 			end
 		end
+		render :action => 'exam'
 	end
 	
 	def load_cart_errors
