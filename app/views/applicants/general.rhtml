@@ -358,13 +358,11 @@
 		<label><%= f.radio_button :pending_criminal_charges, true %> Yes</label> <label><%= f.radio_button :pending_criminal_charges, false %> No</label>
 		<%= err 'pending_criminal_charges' %>
 	</div>	
-	<% if @obj.nonseasonal_fields? %>
-		<div class="field" id="obj_removed_employment">
-			<label>Were you ever removed from any type of employment? <span class="req">*</span></label>
-			<label><%= f.radio_button :removed_employment, true %> Yes</label> <label><%= f.radio_button :removed_employment, false %> No</label>
-			<%= err 'removed_employment' %>
-		</div>
-	<% end %>
+	<div class="field" id="obj_removed_employment">
+		<label>Were you ever removed from any type of employment? <span class="req">*</span></label>
+		<label><%= f.radio_button :removed_employment, true %> Yes</label> <label><%= f.radio_button :removed_employment, false %> No</label>
+		<%= err 'removed_employment' %>
+	</div>
 	<div style="font-size: 90%; margin: 1em 0;">**This question refers to all crimes, violations or offenses in any jurisdiction, including Federal and military offenses, except minor traffic infractions. It also includes Juvenile Offender status convictions. You do not need to include adjudications of Juvenile Delinquency or Youthful Offender status or arrests that did not lead to a conviction.</div>
 	<%= submit_tag 'Save & Continue' %>
 <% } %>

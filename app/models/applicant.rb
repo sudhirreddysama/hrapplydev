@@ -534,7 +534,6 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'us_right_to_work', 'Please indicate the class of your right to work in the US' if us_citizen == false and us_right_to_work == true and us_right_to_work_class.blank?
           err 'accept_part_time_work', 'Please indicate if you will accept part time work' if accept_part_time_work.nil?
           err 'accept_temp_work', 'Please indicate if you will accept temporary work' if accept_temp_work.nil?
-          err 'removed_employment', 'Please indicate if you have been removed from any type of employment' if removed_employment.nil?
         	err 'army_served', 'Please indicate if you have served in the armed forces' if army_served.nil?
         	if army_served
         		err 'army_from', 'Date of active service start (from) date is required' if army_from.nil?
@@ -559,7 +558,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         err 'state_drivers_license', 'Please indicate if you have a NY drivers license' if state_drivers_license.nil?
         err 'law_violation', 'Please indicate if you have been convicted of a crime other than a minor traffic violation' if law_violation.nil?
         err 'pending_criminal_charges', 'Please indicate if you have pending criminal charges' if pending_criminal_charges.nil?
-
+				err 'removed_employment', 'Please indicate if you have been removed from any type of employment' if removed_employment.nil?
         err 'applied_before', 'Please indicate if your have applied to Monroe County before' if applied_before.nil?
         err 'name_changed', 'Please indicate if your name has changed since your last application' if applied_before && name_changed.nil?
         err 'previous_first_name', 'Previous first name is required' if applied_before && name_changed && previous_first_name.blank?
