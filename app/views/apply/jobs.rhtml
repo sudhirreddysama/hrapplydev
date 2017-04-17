@@ -18,7 +18,7 @@
 				<% exams.each { |e| %>
 					<tbody>
 						<tr>
-							<td><%= link_to h(e.name), :controller => :apply, :action => :job, :id => e.id %></td>
+							<td><%= link_to h(e.name), :controller => :apply, :action => :view, :id => e.id %></td>
 							<td><%= h e.who_may_apply %></td>
 							<td><%= e.deadline ? e.deadline.to_s(:dt) : 'N/A' %></td>
 							<td class="nobr rt"><%= e.price.to_f == 0 ? 'N/A' : m(e.price) %></td>

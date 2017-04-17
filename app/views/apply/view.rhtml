@@ -1,9 +1,11 @@
+<% is_job = @obj.exam_type.short_name == 'Jobs' %>
+<% is_cr = @obj.exam_type.short_name == 'CR' %>
 <h1><%= h(@obj.label) %></h1>
 <p style="font-weight: bold; font-style: italic;">You are viewing a single job/exam. <a href="/hrapply<% if RAILS_ENV == 'development' %>dev<% end %>">Click here to view the full list of current opportunities</a></p>
 <%= render :partial => 'cart' %>
 <table class="form" width="100%">
 	<tr>
-		<% if params[:action] == 'job' %>
+		<% if is_job %>
 			<th width="1%">Location:</th>
 			<td width="49%">Rochester, NY</td>
 		<% else %>
@@ -17,12 +19,24 @@
 		<th>Type:</th>
 		<td><%= h @obj.exam_type.name %></td>
 		<th>Deadline:</th>
-		<td><%= @obj.deadline.blank? ? 'N/A' : @obj.deadline.to_s(:dt) %></td>		
+		<td>
+			<% if @obj.deadline %>
+				<span style="<% if @obj.deadline < Time.now %>color: #d00;<% end %>"><%= @obj.deadline.to_s(:dt) %></span>
+			<% else %>
+				<% if is_job %>Until Filled<% else %>N/A<% end %>
+			<% end %>
+		</td>		
 	</tr>
 	<tr>
-		<% if params[:action] != 'job' %>
+		<% if !is_job %>
 			<th>Exam Date:</th>
-			<td><%= @obj.exam_date.blank? ? 'N/A' : @obj.exam_date.to_s(:dt) %></td>
+			<td>
+				<% if @obj.exam_date %>
+					<%= @obj.exam_date.to_s(:dt) %>
+				<% else %>
+					<% if is_cr %>See Announcement<% else %>N/A<% end %>
+				<% end %>			
+			</td>
 		<% end %>
 		<th>Price:</th>
 		<td><%= (@obj.price.blank? or @obj.price.zero?) ? 'N/A' : m(@obj.price) %></td>
