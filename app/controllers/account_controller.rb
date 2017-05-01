@@ -143,4 +143,15 @@ class AccountController < ApplicationController
 		redirect_after_login
 	end
 	
+	def letters
+		@objs = MaxMessage.find_by_sql(["
+			select m.*, e.no exam_no, e.name exam_name, d.created_at delivered_at from #{MCCSDB}.messages m 
+			join #{MCCSDB}.applicants a on a.id = m.applicant_id 
+			join exams e on e.id = a.web_exam_id
+			join #{MCCSDB}.deliveries d on d.id = m.delivery_id
+			where a.web_applicant_id in (?)
+			order by d.created_at desc", 
+			@current_user.applicant_ids])
+	end
+	
 end

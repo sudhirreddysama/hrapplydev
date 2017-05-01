@@ -1,0 +1,23 @@
+<h1>Civil Service/Exam Letters</h1>
+<p>This page provides letters sent from the Monroe County Department of Human Resources regarding exam admissions, disqualification, results and placement on eligible lists only.  Correspondence from individual appointing authorities regarding openings and canvass letters may not be found here.</p>
+<p>If you have a change of mailing address or residence address please make sure to submit the <a href="//www2.monroecounty.gov/files/HR%20Forms/Change%20of%20Name-Address%20-Civil%20Service%20May%202014.pdf">Change of Address form</a> to our office.</p>
+<% if @objs.empty? %>
+	<p>You do not have any letters in the system yet.</p>
+<% else %>
+	<table class="dg2">
+		<thead>
+			<tr>
+				<th>Regarding Exam/Job (click to view letter)</th>
+				<th>Sent</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @objs.each { |o| %>
+				<tr>
+					<td><%= link_to "#{o.exam_no} #{o.exam_name}", "https://cs.monroecounty.gov/mccs/lists/msg/#{o.id}/#{o.download_key}", {:target => '_blank'} %></td>
+					<td><%= o.delivered_at.blank? ? o.created_at.strftime('%m/%d/%Y') : Date.parse(o.delivered_at).strftime('%m/%d/%Y') %></td>
+				</tr>
+			<% } %>
+		</tbody>
+	</table>
+<% end %>

@@ -141,7 +141,8 @@
 									<a href="/hrapply<%= 'dev' if RAILS_ENV == 'development' %>" <%= 'class="here"' if params[:controller] == 'apply' %>>Jobs and Exams - <span style="color: #ff0000;">Apply Online</span></a>
 									<% if @current_user %>
 										<%= link_to 'My Applications', {:controller => :applicants, :action => :index}, :class => params[:controller] == 'applicants' ? 'here' : '' %>
-										<%= link_to 'Edit My Account', {:controller => :account, :action => :edit}, :class => params[:controller] == 'account' ? 'here' : '' %>
+										<%= link_to 'My Letters', {:controller => :account, :action => :letters}, :class => params[:controller] == 'account' && params[:action] == 'letters' ? 'here' : '' %>
+										<%= link_to 'Edit My Account', {:controller => :account, :action => :edit}, :class => params[:controller] == 'account' && params[:action] == 'edit' ? 'here' : '' %>
 										<%= link_to 'Logout', {:controller => :account, :action => :logout} %>
 									<% else %>
 										<%= link_to 'Login', {:controller => :account, :action => :index}, :class => params[:controller] == 'account' ? 'here' : '' %>
