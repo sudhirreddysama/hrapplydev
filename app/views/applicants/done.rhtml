@@ -1,8 +1,15 @@
 <h1>Application # <%= @obj.id %></h1>
 <p>Your exam / job application has been submitted. Thank you for using our online service. Once your application has been 
-approved or rejected, or if we need additional information from you, we will contact you via postal mail. 
+approved or rejected, or if we need additional information from you, we will contact you via the method you specified (email/postal). 
 You may view your application at any time by logging into your account and viewing the &quot;My Applications&quot; page:</p>
 <p><%= link_to 'My Exam / Job Applications', :controller => :applicants, :action => :index %></p>
+
+<p>You can view letters from the Monroe County Department of Human Resources by logging into your account and viewing the &quot;My Letters&quot; page:</p>
+
+<p><%= link_to 'My Letters', :controller => :account, :action => :letters %></p>
+
+<p>Click on &quot;My Letters&quot; to view correspondence regarding admissions, disqualifications, results and extension of eligible lists.</p>
+
 <% if @obj.special_accommodations %>
 	<p><strong>Special Accommodations:</strong> <%= render :partial => 'special_text', :locals => {:html => true} %></p>
 <% end %>

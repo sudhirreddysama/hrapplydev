@@ -7,14 +7,14 @@
 	<table class="dg2">
 		<thead>
 			<tr>
-				<th>Regarding Exam/Job (click to view letter)</th>
+				<th>Exam/Job - Subject (click to view letter)</th>
 				<th>Sent</th>
 			</tr>
 		</thead>
 		<tbody>
 			<% @objs.each { |o| %>
 				<tr>
-					<td><%= link_to "#{o.exam_no} #{o.exam_name}", "https://cs.monroecounty.gov/mccs/lists/msg/#{o.id}/#{o.download_key}", {:target => '_blank'} %></td>
+					<td><%= link_to "#{o.exam_no} #{o.exam_name} - #{o.public_name}", "https://cs.monroecounty.gov/mccs/lists/msg/#{o.id}/#{o.download_key}", {:target => '_blank'} %></td>
 					<td><%= o.delivered_at.blank? ? o.created_at.strftime('%m/%d/%Y') : Date.parse(o.delivered_at).strftime('%m/%d/%Y') %></td>
 				</tr>
 			<% } %>
