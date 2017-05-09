@@ -102,6 +102,7 @@ class Applicant < ActiveRecord::Base
         	else
         		a.first_name = p.first_name
         	end
+        	a.middle_name = p.middle_name if !p.middle_name.blank?
         	a.last_name = p.last_name
         	a.home_phone = p.home_phone
         	a.work_phone = p.work_phone
