@@ -14,7 +14,7 @@ class ApplyController < ApplicationController
 	end
 	
 	def jobs
-		@types = ExamType.find [4], :order => 'exam_types.`sort`'
+		@types = ExamType.find [4, 3], :order => 'exam_types.`sort`'
 	end
 	
 	def job

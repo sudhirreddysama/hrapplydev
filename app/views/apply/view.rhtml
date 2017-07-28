@@ -1,4 +1,4 @@
-<% is_job = @obj.exam_type.short_name == 'Jobs' %>
+<% is_job = @obj.exam_type.short_name == 'Jobs' || @obj.exam_type.short_name == 'Summer' %>
 <% is_cr = @obj.exam_type.short_name == 'CR' %>
 <h1><%= h(@obj.label) %></h1>
 <p style="font-weight: bold; font-style: italic;">You are viewing a single job/exam. <a href="/hrapply<% if RAILS_ENV == 'development' %>dev<% end %>">Click here to view the full list of current opportunities</a></p>
