@@ -5,7 +5,7 @@
 	<%= t.description %>
 	<% if t.short_name != 'External' %>
 		<% exams = t.exams.find :all, :order => 'exams.name', :conditions => '(exams.publish < now() or exams.publish is null) and (exams.deadline > now() or exams.deadline is null) and (exams.published = 1 or exams.published is null)' %>
-		<% if exams.empty? && old_exams.empty? %>
+		<% if exams.empty? %>
 			<p><em>Nothing is currently available in this category.</em></p>
 		<% else %>
 			<table width="100%" class="dg2">
