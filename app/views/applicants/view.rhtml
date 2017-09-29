@@ -4,11 +4,11 @@
 <% if @obj.exams_expired and false %>
 	<p><span class="attention">NOTE:</span> One or more exams / jobs have been removed from this application because the application deadline has passed.</em></p>
 <% end %>
-<% a, notice= @obj.has_applied_before %>
+
 
 <p>Click on a section below to view / edit. Before submitting &amp; paying for your application, you will have to complete each section.</p>
-<% if a %>
-    <p><span class="attention"><%= notice %></em></p>
+<% if !@obj.applied_before_errors.empty? %>
+    <p><span class="attention"><%= @obj.applied_before_errors.join('<br>') %></em></p>
 <% end %>
 <p><%= link_to 'Printable Version (pdf)', :controller => :applicants, :action => :pdf, :id => @obj.id %></p>
 <p id="sections-key">Key: <%= image_tag 'tick.png' %> - complete, <%= image_tag 'cross.png' %> - incomplete / errors, <%= image_tag 'bullet_orange.png' %> - unopened</p>

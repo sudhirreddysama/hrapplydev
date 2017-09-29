@@ -50,7 +50,6 @@ class ApplyController < ApplicationController
 						id
 					]
 				})
-				logger.info app
 				if app
 					e = app.exam_prices[0].exam
 					errors << "You have already submitted an application for #{e.no} #{e.name}. You cannot submit another application at this time. Please remove this item from your cart."

@@ -674,7 +674,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           self.section = 'view'
           return
         end
-
+				
         if can_submit?
           if waiver_requested or self.total == 0
             self.section = 'done' unless @err
@@ -696,6 +696,29 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
     end
     self.section = 'view' if !@err || self.save_view
   end
+  
+  # unlike the check in ApplicantsController, this checks based on ssn, which is only available AFTER they start an application.
+  def applied_before_errors
+  	return @applied_before_errors if @applied_before_errors
+  	@applied_before_errors = []
+  	if !ssn.blank? && !['999-99-9999', '012-34-5678', '000-00-0000', '123-12-1234', '123-45-6789', '111-11-1111'].include?(ssn)
+			exam_prices.each { |ep|
+				app = Applicant.find(:first, {
+					:order => 'applicants.created_at desc',
+					:include => {:exam_prices => {:exam => :exam_type}},
+					:conditions => [
+						'exams.id = ? and date_add(applicants.submitted_at, interval exam_types.month_rate month) > date(now()) and applicants.ssn = ?', 
+						ep.exam_id, ssn
+					]
+				})
+				if app
+					e = app.exam_prices[0].exam
+					@applied_before_errors << "You have already submitted an application for #{e.no} #{e.name}. You will not be able to submit this application at this time."
+				end
+			}
+		end
+		return @applied_before_errors
+	end
 
   after_update :validate_section
 
@@ -716,6 +739,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
 
   def can_submit?
     can = !exam_prices(true).empty?
+    can &&= applied_before_errors.empty?
     can &&= (saved_errors.empty? or (saved_errors.length == 1 and saved_errors[0].field == 'confirmed'))
     can &&= general_complete && certifications_complete && education_complete && training_complete && employment_complete
     if nonseasonal_fields?
