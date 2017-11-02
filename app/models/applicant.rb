@@ -841,4 +841,12 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
 
 #	after_save :update_contact_via
 
+	def generate_survey_key
+		return unless survey_key.blank?
+		chars = 'bcdfghjkmnpqrstvwxz23456789'
+		self.survey_key = Array.new(9) { chars[rand(chars.length), 1] }.join
+	end
+	
+	before_save :generate_survey_key
+
 end

@@ -11,13 +11,17 @@ For Job Announcement Applications:
 Applications will be reviewed in order to select a limited number of applicants who will be interviewed for the position. If you are selected for an interview we will contact you to make arrangements.
 
 At any time you can login to your account to view the status of your applications at:
-
 <%= @url %>
 
 <% if @a.special_accommodations -%>
 Special Accommodations: <%= render :partial => 'applicants/special_text', :locals => {:html => false} %>
 
 <% end -%>
+HOW ARE WE DOING?
+
+Please take our short survey to let us know what you think of Monroe County's online application process:
+https://cs.monroecounty.gov/mccs/survey/take/<%= @a.id %>/<%= @a.survey_key %>
+
 Monroe County Department of Human Resources
 210 County Office Building
 39 W. Main St.
