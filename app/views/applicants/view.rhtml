@@ -7,7 +7,7 @@
 
 
 <p>Click on a section below to view / edit. Before submitting &amp; paying for your application, you will have to complete each section.</p>
-<% if !@obj.applied_before_errors.empty? %>
+<% if !@noform && !@obj.applied_before_errors.empty? %>
     <p><span class="attention"><%= @obj.applied_before_errors.join('<br>') %></em></p>
 <% end %>
 <p><%= link_to 'Printable Version (pdf)', :controller => :applicants, :action => :pdf, :id => @obj.id %></p>
