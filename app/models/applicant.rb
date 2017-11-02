@@ -106,7 +106,7 @@ class Applicant < ActiveRecord::Base
         	a.last_name = p.last_name
         	a.home_phone = p.home_phone
         	a.work_phone = p.work_phone
-        	a.user.email = p.email
+        	#a.user.email = p.email
         	a.address = p.mailing_address
         	a.address2 = p.mailing_address2
         	a.city = p.mailing_city
