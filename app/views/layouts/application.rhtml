@@ -159,7 +159,9 @@
 										<h3>Admin Tools:</h3>
 										<%= link_to 'Exams Admin', {:controller => 'exams', :action => :index}, :class => params[:controller] == 'exams' ? 'here' : '' %>
 										<%= link_to 'Applications Admin', {:controller => 'applications', :action => :index}, :class => params[:controller] == 'applications' ? 'here' : '' %>
-										<%= link_to 'Batch Print Applications', {:controller => :print, :action => :index}, :class => params[:controller] == 'print' ? 'here' : '' %>
+										<% if false %>
+											<%= link_to 'Batch Print Applications', {:controller => :print, :action => :index}, :class => params[:controller] == 'print' ? 'here' : '' %>
+										<% end %>
 										<% if @current_user.level >= 20 %>
 											<%= link_to 'Users Admin', {:controller => 'Users', :action => :index}, :class => params[:controller] == 'users' ? 'here' : '' %>
 											<%#= link_to 'System Settings', :controller => 'system', :action => :index %>

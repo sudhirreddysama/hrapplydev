@@ -538,7 +538,7 @@
 		
 		
 		
-		<% if @obj.nonseasonal_fields? && @pdf_mode.nil? or @pdf_mode == 'equal' %>
+		<% if false && (@obj.nonseasonal_fields? && @pdf_mode.nil? or @pdf_mode == 'equal') %>
 			<% unless @obj.race.blank? %>
 				<%= new_page %>
 				<table width="100%" cellspacing="0" cellpadding="0">

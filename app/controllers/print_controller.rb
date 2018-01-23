@@ -3,6 +3,9 @@ class PrintController < ApplicationController
 	before_filter :rl; def rl; require_level 10; end
 	
 	def index
+		render :nothing => true
+		return
+	
 		@objs = Print.paginate :order => 'prints.to desc', :page => params[:page], :per_page => 100
 		@exam_types = ExamType.find(:all, :order => :sort)
 		@objs2 = {}
