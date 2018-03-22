@@ -20,6 +20,24 @@
 	urchinTracker();
 	</script>		
 <% end %>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1549656988650169',
+      xfbml      : true,
+      version    : 'v2.12'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 	</head>
 	<body id="body">
 		<% if RAILS_ENV == 'development' %><div id="dev-bar">DEVELOPMENT SITE</div><% end %>
