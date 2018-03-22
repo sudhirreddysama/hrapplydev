@@ -20,6 +20,7 @@
 	urchinTracker();
 	</script>		
 <% end %>
+<% if false %>
 <script>
   window.fbAsyncInit = function() {
     FB.init({
@@ -38,6 +39,7 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
+<% end %>
 	</head>
 	<body id="body">
 		<% if RAILS_ENV == 'development' %><div id="dev-bar">DEVELOPMENT SITE</div><% end %>
