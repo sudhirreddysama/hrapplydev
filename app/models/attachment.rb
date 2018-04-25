@@ -20,8 +20,8 @@ class Attachment < ActiveRecord::Base
 	def pdf_editable
 		`pdftk #{pdf_path} output #{pdf_test_path}`
 		if File.exists? pdf_test_path
-			return true
 			`rm #{pdf_test_path}`
+			return true
 		else
 			return false
 		end
