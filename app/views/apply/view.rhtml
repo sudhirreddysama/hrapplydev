@@ -63,6 +63,9 @@
 	#exam-btns .exam-btn { margin: 1em 0; }
 </style>
 <div id="exam-btns">
+	<% if !@obj.recruitment_brochure.blank? %>
+		<div class="exam-btn"><a href="<%= @obj.recruitment_brochure %>" target="_blank">Download/View Recruitment Brochure (PDF)</a></div>
+	<% end %>
 	<% if !@obj.announcement_file.blank? %>
 		<div class="exam-btn"><a href="<%= @obj.announcement_file %>" target="_blank">Download/View Full Announcement (PDF)</a></div>
 	<% end %>
