@@ -1,3 +1,40 @@
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "JobPosting",
+	"baseSalary": {
+		"@type": "MonetaryAmount",
+		"currency": "USD",
+		"value": <%= @obj.salary.to_json %>
+	},
+<% if @obj.publish %>  "datePosted": "<%= @obj.publish.strftime('%Y-%m-%dT%H:%M:%S') %>",<% end %>
+  "description": <%= @obj.description.to_json %>,
+  "hiringOrganization": {
+  	"@type": "Organization",
+  	"name": "Monroe County, NY",
+		"logo": "https://www.monroecounty.gov/mc-logo-green-on-white-300x300.png",
+  	"sameAs": "http://www.monroecounty.gov"
+  },
+  "identifier": {
+  	"@type": "PropertyValue",
+  	"name": "Monroe County, NY",
+  	"value": "<%= @obj.id %>"
+  },
+  "jobLocation": {
+  	"@type": "Place",
+  	"address": {
+			"@type": "PostalAddress",
+			"streetAddress": "39 W. Main St.",
+			"addressLocality": "Rochester",
+			"addressRegion": "NY",
+			"postalCode": "14614",
+			"addressCountry": "US"
+  	}
+  },
+<% if @obj.deadline %>  "validThrough": "<%= @obj.deadline.strftime '%Y-%m-%dT%H:%M:%S' %>",<% end %>
+  "title": <%= @obj.name.to_json %>
+}
+</script>
 <% is_job = @obj.exam_type.short_name == 'Jobs' || @obj.exam_type.short_name == 'Summer' %>
 <% is_cr = @obj.exam_type.short_name == 'CR' %>
 <h1><%= h(@obj.label) %></h1>
