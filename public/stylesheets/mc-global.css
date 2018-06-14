@@ -128,9 +128,9 @@ div.divider {
 
 /* Tabs */
 
-#nav li {position: relative; float: left; height: 40px; background-image: url(../i-p/nav-tabs.gif); /* repeated here to avoid IE6/Win flicker */ background-repeat: no-repeat;}
+#nav li {position: relative; float: left; height: 40px; background-image: url(../i-p/nav-tabs2.gif); /* repeated here to avoid IE6/Win flicker */ background-repeat: no-repeat;}
 
-#nav a {float: left; height: 40px; text-indent: -5000px; background-image: url(../i-p/nav-tabs.gif); background-repeat: no-repeat; text-decoration: none;}
+#nav a {float: left; height: 40px; text-indent: -5000px; background-image: url(../i-p/nav-tabs2.gif); background-repeat: no-repeat; text-decoration: none;}
 
 #home a, li#home {width: 99px; background-position: 0 0;}
 #home a:hover {background-position: 0 -40px;}
@@ -147,15 +147,15 @@ div.divider {
 #gov a, li#gov {width: 99px; background-position: -302px 0;}
 #gov a:hover {background-position: -302px -40px;}
 #gov a.current {background-position: -302px -80px;}
-#emp a, li#emp {width: 100px; background-position: -401px 0;}
+#emp a, li#emp {width: 70px; background-position: -401px 0;}
 #emp a:hover {background-position: -401px -40px;}
 #emp a.current {background-position: -401px -80px;}
-#dept a, li#dept {width: 98px; background-position: -501px 0;}
-#dept a:hover {background-position: -501px -40px;}
-#dept a.current {background-position: -501px -80px;}
-#done a, li#done {width: 137px; background-position: -599px 0;}
-#done a:hover {background-position: -599px -40px;}
-#done a.current {background-position: -599px -80px;}
+#dept a, li#dept {width: 98px; background-position: -471px 0;}
+#dept a:hover {background-position: -471px -40px;}
+#dept a.current {background-position: -471px -80px;}
+#done a, li#done {width: 137px; background-position: -569px 0;}
+#done a:hover {background-position: -569px -40px;}
+#done a.current {background-position: -569px -80px;}
 	
 /* Breadcrumbs */
 	
