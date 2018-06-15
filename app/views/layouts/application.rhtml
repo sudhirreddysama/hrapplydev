@@ -4,7 +4,7 @@
 	<head>
 		<title>Monroe County HR</title>
 		<%= javascript_include_tag :defaults %>
-		<%= stylesheet_link_tag 'mc-content-2col', 'mc-global', 'datagrid2' %>
+		<%= stylesheet_link_tag 'mc-content-2col', 'mc-global.css?v2', 'datagrid2' %>
 		<%= stylesheet_link_tag 'mc-print.css', :media => 'print' %>
 		<%= stylesheet_link_tag 'hr.css', :media => 'all' %>
 		<%= calendar_date_select_includes %>
@@ -166,13 +166,15 @@
 										<%= link_to 'Edit My Account', {:controller => :account, :action => :edit}, :class => params[:controller] == 'account' && params[:action] == 'edit' ? 'here' : '' %>
 										<%= link_to 'Logout', {:controller => :account, :action => :logout} %>
 									<% else %>
-										<%= link_to 'Login', {:controller => :account, :action => :index}, :class => params[:controller] == 'account' ? 'here' : '' %>
+										<%= link_to 'Login / Create Account', {:controller => :account, :action => :index}, :class => params[:controller] == 'account' ? 'here' : '' %>
 									<% end %>
-									<a href="/hrapply<%= 'dev' if RAILS_ENV == 'development' %>/subscribe">Email Notifications</a>
-									<a href="/mccs<%= 'dev' if RAILS_ENV == 'development' %>/lists">Exam Scores</a>
-									<a href="http://www.monroecounty.gov/hr-civilservice.php" title="Employment/Exam Application">Civil Service Information</a>
-									<a href="http://www.monroecounty.gov/hr-guides.php" title="Forms and Guides page">Forms and Study Guides</a>
-									<a href="http://www.monroecounty.gov/hr-faq.php">FAQ</a>
+									<a href="/hrapply<%= 'dev' if RAILS_ENV == 'development' %>/subscribe">Get Job Alerts</a>
+									<a href="/mccs<%= 'dev' if RAILS_ENV == 'development' %>/lists">Lists &amp; Exam Scores</a>
+									<a href="https://www.monroecounty.gov/hr-civilservice.php" title="Employment/Exam Application">Civil Service Information</a>
+									<a href="https://www.monroecounty.gov/hr-guides.php" title="Forms and Guides page">Forms and Study Guides</a>
+									<a href="https://www2.monroecounty.gov/hr-openenrollment.php">Employee Benefits</a>
+									<a href="https://www.monroecounty.gov/hr-faq.php">FAQ</a>
+									<a href="https://cs.monroecounty.gov/mccs">MAX<span style="font-size: 8px;">- Log-in Required</span></a>
 								</div>
 								<% if @current_user and @current_user.level >= 10 %>
 									<div class="relatedlinks">
