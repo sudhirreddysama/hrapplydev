@@ -20,7 +20,8 @@ class ApplicationController < ActionController::Base
   local_addresses.clear
 
 	def ssl_required?
-		RAILS_ENV == 'production'
+		true
+		#RAILS_ENV == 'production'
 	end
   
 	def load_current_user

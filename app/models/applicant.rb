@@ -532,7 +532,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'county_resident_4_mo', 'Please indicate if you have been a county resident for 4 months.' if county_resident_4_mo.nil?
           err 'us_citizen', 'Please indicate if you are a US citizen' if us_citizen.nil?
           err 'us_right_to_work', 'Please indicate if you have the right to work in the united states' if us_citizen == false and us_right_to_work.nil?
-          err 'us_right_to_work', 'Please indicate the class of your right to work in the US' if us_citizen == false and us_right_to_work == true and us_right_to_work_class.blank?
+          #err 'us_right_to_work', 'Please indicate the class of your right to work in the US' if us_citizen == false and us_right_to_work == true and us_right_to_work_class.blank?
           err 'accept_part_time_work', 'Please indicate if you will accept part time work' if accept_part_time_work.nil?
           err 'accept_temp_work', 'Please indicate if you will accept temporary work' if accept_temp_work.nil?
         	err 'army_served', 'Please indicate if you have served in the armed forces' if army_served.nil?
@@ -544,12 +544,12 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         		end
         	end
         end
+        err 'drivers_license_class', 'Please enter the class of your drivers license' if state_drivers_license && drivers_license_class.blank?
         if seasonal_fields?
           err 'over_18', 'Please indicate if you are over 18 years old' if over_18.nil?
           err 'begin_work', 'Please indicate when you can begin summer work' if begin_work.blank?
           err 'end_work', 'Please indicate when you need to end summer work' if end_work.blank?
           err 'work_weekends', 'Please indicate if you can/cannot work weekends' if work_weekends.nil?
-          err 'drivers_license_class', 'Please enter the class of your drivers license' if state_drivers_license && drivers_license_class.blank?
           err 'has_transportation', 'Please indicate if you have transportation to any Monroe County work site' if has_transportation.nil?
         end
         err 'ssn', 'Social security number is required' if ssn.blank?
