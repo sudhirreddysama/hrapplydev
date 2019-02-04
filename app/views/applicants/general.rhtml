@@ -101,12 +101,14 @@
 		<label><%= f.text_field :ssn, :size => 12, :maxlength => 11 %> <span class="format-help">###-##-####</span></label>
 		<%= err 'ssn' %>
 	</div>
+	<% asked_dob = false %>
 	<% if @obj.nonseasonal_fields? %>
 		<div class="field">
 			<label>Date of Birth: <span class="req">*</span></label>
 			<%= f.calendar_date_select :dob %>
 			<div>Only required if applying for Police Officer, Deputy Sheriff or Firefighter positions.</div>
 			<%= err 'dob' %>
+			<% asked_dob = true %>
 		</div>
 		<div class="field">
 			<label>Have you ever served in the Armed Forces of the U.S.A.? <span class="req">*</span></label>
@@ -158,7 +160,7 @@
 			<label><%= f.radio_button :over_18, false %> No</label>
 			<%= err 'over_18' %>
 		</div>		
-		<% if @obj.exam_prices.to_a.find { |ep| ep.exam.minimum_age.to_i > 0 } %>
+		<% if asked_dob == false && @obj.exam_prices.to_a.find { |ep| ep.exam.minimum_age.to_i > 0 } %>
 			<div class="field">
 				<label>Date of Birth: <span class="req">*</span></label>
 				<div><%= f.calendar_date_select :dob %></div>
