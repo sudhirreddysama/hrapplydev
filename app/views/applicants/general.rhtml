@@ -158,6 +158,13 @@
 			<label><%= f.radio_button :over_18, false %> No</label>
 			<%= err 'over_18' %>
 		</div>		
+		<% if @obj.exam_prices.to_a.find { |ep| ep.exam.minimum_age.to_i > 0 } %>
+			<div class="field">
+				<label>Date of Birth: <span class="req">*</span></label>
+				<div><%= f.calendar_date_select :dob %></div>
+				<%= err 'dob' %>
+			</div>		
+		<% end %>
 	<% end %>
 	
 	<div class="field" id="obj_state_drivers_license">
