@@ -7,6 +7,7 @@ class Payment < ActiveRecord::Base
 		self.number4 = @number[-4, 4]
 	end
 	attr :number
+	attr :verification_value, true
 	
 	validates_presence_of :number, :first_name, :last_name, :address, :city, :state, :zip, :month, :year, :typ, :verification_value
 	validates_format_of :month, :year, :with => /\A\d\d\Z/, :allow_blank => true
