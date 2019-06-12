@@ -101,13 +101,13 @@
 </style>
 <div id="exam-btns">
 	<% if !@obj.recruitment_brochure.blank? %>
-		<div class="exam-btn"><a href="<%= @obj.recruitment_brochure %>" target="_blank">Download/View Recruitment Brochure (PDF)</a></div>
+		<div class="exam-btn"><a href="<%= @obj.recruitment_brochure %>" target="_blank">Download/View Recruitment Brochure</a></div>
 	<% end %>
 	<% if !@obj.announcement_file.blank? %>
-		<div class="exam-btn"><a href="<%= @obj.announcement_file %>" target="_blank">Download/View Full Announcement (PDF)</a></div>
+		<div class="exam-btn"><a href="<%= @obj.announcement_file %>" target="_blank">Download/View Full Announcement</a></div>
 	<% end %>
 	<% if !@obj.study_guide.blank? %>
-		<div class="exam-btn"><a href="<%= @obj.study_guide %>" target="_blank">Download/View Study Guide (PDF)</a></div>
+		<div class="exam-btn"><a href="<%= @obj.study_guide %>" target="_blank">Download/View Study Guide</a></div>
 	<% end %>
 	<% if @obj.can_apply %>
 		<div class="exam-btn">
