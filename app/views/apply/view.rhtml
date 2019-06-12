@@ -106,6 +106,9 @@
 	<% if !@obj.announcement_file.blank? %>
 		<div class="exam-btn"><a href="<%= @obj.announcement_file %>" target="_blank">Download/View Full Announcement (PDF)</a></div>
 	<% end %>
+	<% if !@obj.study_guide.blank? %>
+		<div class="exam-btn"><a href="<%= @obj.study_guide %>" target="_blank">Download/View Study Guide (PDF)</a></div>
+	<% end %>
 	<% if @obj.can_apply %>
 		<div class="exam-btn">
 			<%= form_tag :action => :cart %>
