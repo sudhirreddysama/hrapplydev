@@ -9,11 +9,11 @@
 	<h2>Login</h2>
 	<% form_for(:login) { |f| %>
 		<div class="field">
-			<label>Username: <span class="req">*</span></label>
+			<label for="login_username"">Username: <span class="req">*</span></label>
 			<%= f.text_field :username %>
 		</div>
 		<div class="field">
-			<label>Password: <span class="req">*</span></label>
+			<label for="login_password">Password: <span class="req">*</span></label>
 			<%= f.password_field :password %>
 		</div>
 		<%= submit_tag 'Login' %>
@@ -21,7 +21,7 @@
 	<h2>Lost Password?</h2>
 	<% form_for(:lost) { |f| %>
 		<div class="field">
-			<label>Username or Email: <span class="req">*</span></label>
+			<label for="lost_username">Username or Email: <span class="req">*</span></label>
 			<%= f.text_field :username %>
 			<p>Enter your username or email and we'll<br />send you your account information</p>
 		</div>
@@ -34,27 +34,27 @@
 	<h2>Register</h2>
 	<% form_for(:obj) { |f| %>
 		<div class="field">
-			<label>Your Email: <span class="req">*</span></label>
+			<label for="obj_email">Your Email: <span class="req">*</span></label>
 			<%= f.text_field :email %>
 		</div>
 		<div class="field">
-			<label>First Name: <span class="req">*</span></label>
+			<label for="obj_first_name">First Name: <span class="req">*</span></label>
 			<%= f.text_field :first_name %>
 		</div>
 		<div class="field">
-			<label>Last Name: <span class="req">*</span></label>
+			<label for="obj_last_name">Last Name: <span class="req">*</span></label>
 			<%= f.text_field :last_name %>
 		</div>
 		<div class="field">
-			<label>Desired Username: <span class="req">*</span></label>
+			<label for="obj_username">Desired Username: <span class="req">*</span></label>
 			<%= f.text_field :username %>
 		</div>
 		<div class="field">
-			<label>Password: <span class="req">*</span></label>
+			<label for="obj_password">Password: <span class="req">*</span></label>
 			<%= f.password_field :password %>
 		</div>
 		<div class="field">
-			<label>Confirm Password: <span class="req">*</span></label>
+			<label for="obj_password_confirmation">Confirm Password: <span class="req">*</span></label>
 			<%= f.password_field :password_confirmation %>
 		</div>
 		<div class="field">
