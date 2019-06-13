@@ -153,3 +153,11 @@ tr.deadline-passed td a:hover { color: #444; }
 }
 
 #dev-bar { color: #fff; background-color: #a00; text-align: center; padding: 2px; border-bottom: 1px solid #f00; font-weight: bold; }
+
+.element-invisible {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px);
+	clip: rect(1px, 1px, 1px, 1px);
+	overflow: hidden;
+	height: 1px;
+}
