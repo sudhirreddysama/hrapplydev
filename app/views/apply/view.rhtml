@@ -1,3 +1,9 @@
+<style type="text/css">
+	.exam-btns { text-align: center; }
+	.exam-btns a, .exam-btns button { display: inline-block; padding: 5px 20px; border: none; border-radius: 5px; background: #194e84; color: #fff; font-weight: bold; text-decoration: none; font-size: 1em; }
+	.exam-btns a:hover, .exam-btns button:hover { background-color: #2063a7; text-decoration: none; cursor: pointer; }
+	.exam-btns .exam-btn { margin: 1em 0; }
+</style>
 <script type="application/ld+json">
 {
   "@context": "http://schema.org/",
@@ -85,6 +91,11 @@
 		</tr>
 	<% end %>
 </table>
+<% if @obj.no == 'CW' || @obj.no == 'CWB' %>
+	<div class="exam-btns">
+		<div class="exam-btn"><a href="http://caseworkers.org" target="_blank">Learn More @ caseworkers.org</a></div>
+	</div>
+<% end %>
 <% if !@obj.description.blank? %>
 	<h2>Description of Duties</h2>
 	<%= @obj.description %>
@@ -93,13 +104,7 @@
 	<h2>Minimum Qualifications</h2>
 	<%= @obj.min_qualifications %>
 <% end %>
-<style type="text/css">
-	#exam-btns { text-align: center; }
-	#exam-btns a, #exam-btns button { display: inline-block; padding: 5px 20px; border: none; border-radius: 5px; background: #194e84; color: #fff; font-weight: bold; text-decoration: none; font-size: 1em; }
-	#exam-btns a:hover, #exam-btns button:hover { background-color: #2063a7; text-decoration: none; cursor: pointer; }
-	#exam-btns .exam-btn { margin: 1em 0; }
-</style>
-<div id="exam-btns">
+<div class="exam-btns">
 	<% if !@obj.recruitment_brochure.blank? %>
 		<div class="exam-btn"><a href="<%= @obj.recruitment_brochure %>" target="_blank">Download/View Recruitment Brochure</a></div>
 	<% end %>
