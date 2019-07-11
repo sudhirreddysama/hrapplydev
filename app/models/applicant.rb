@@ -601,7 +601,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'address', 'Address is required', e.id if e.address.blank?
           err 'city', 'City, state & zip are required', e.id if e.city.blank? or e.state.blank? or e.zip.blank?
           err 'dates', 'Dates of employment are required', e.id if e.start_date.blank? or (e.end_date.blank? and !e.currently_employed)
-          err 'salary', 'Salary is required', e.id if e.salary.blank?
+          #err 'salary', 'Salary is required', e.id if e.salary.blank?
           err 'hours', 'Hours worked per week is required and must be a number', e.id if e.hours.blank? or !(e.hours =~ /[0-9]/)
           err 'reason_left', 'Reason(s) for leaving is required', e.id if e.reason_left.blank?
           err 'title', 'Your job title is required', e.id if e.title.blank?
