@@ -584,6 +584,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'major', 'Major is required', o.id if o.major.blank?
           err 'credits', 'Please indicate either semester or quarter credits completed', o.id if o.credits_semester.blank? and o.credits_quarter.blank?
           err 'degree', 'Type of degree / certificate received is required', o.id if o.degree.blank?
+          err 'graduated', 'Please indicate if you graduated', o.id if o.graduated.nil?
           has_graduation_date ||= o.graduation_date
         }
         if require_graduation_date && !has_graduation_date
