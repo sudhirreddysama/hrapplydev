@@ -557,9 +557,10 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         err 'ssn', 'Social security number is invalid' if !ssn.blank? and ssn == '000-00-0000'
         err 'ssn', 'Social security number is invalid' if !ssn.blank? and ssn == '111-11-1111'
         err 'state_drivers_license', 'Please indicate if you have a NY drivers license' if state_drivers_license.nil?
-        err 'law_violation', 'Please indicate if you have been convicted of a crime other than a minor traffic violation' if law_violation.nil?
+        err 'law_violation', 'Please indicate if you have ever been convicted of a crime other than a minor traffic violation' if law_violation.nil?
         err 'pending_criminal_charges', 'Please indicate if you have pending criminal charges' if pending_criminal_charges.nil?
-				err 'removed_employment', 'Please indicate if you have been removed from any type of employment' if removed_employment.nil?
+				err 'removed_employment', 'Please indicate if you have been dismissed from any type of employment other than reduction in staff' if removed_employment.nil?
+				err 'resigned_employment', 'Please indicate if you have ever resigned from any type of employment rather than face discipline or dismissal' if resigned_employment.nil?
         err 'applied_before', 'Please indicate if your have applied to Monroe County before' if applied_before.nil?
         err 'name_changed', 'Please indicate if your name has changed since your last application' if applied_before && name_changed.nil?
         err 'previous_first_name', 'Previous first name is required' if applied_before && name_changed && previous_first_name.blank?
@@ -603,6 +604,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'dates', 'Dates of employment are required', e.id if e.start_date.blank? or (e.end_date.blank? and !e.currently_employed)
           #err 'salary', 'Salary is required', e.id if e.salary.blank?
           err 'hours', 'Hours worked per week is required and must be a number', e.id if e.hours.blank? or !(e.hours =~ /[0-9]/)
+          err 'volunteer', 'Please indicate if this position was paid or volunteer', e.id if e.volunteer.nil?
           err 'reason_left', 'Reason(s) for leaving is required', e.id if e.reason_left.blank?
           err 'title', 'Your job title is required', e.id if e.title.blank?
           err 'supervisor_name', 'Supervisor\'s name is required', e.id if e.supervisor_name.blank?

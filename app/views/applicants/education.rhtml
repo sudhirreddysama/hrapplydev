@@ -35,8 +35,8 @@
 				<%= err 'school_name', e.id %>
 			</div>
 			<div class="field">
-				<label>State: <span class="req">*</span></label>
-				<%= ff.select :state, State::NAMES %>
+				<label>State/Country: <span class="req">*</span></label>
+				<%= ff.text_field :state %>
 				<%= err 'state', e.id %>
 			</div>
 			<div class="field">
@@ -61,6 +61,12 @@
 					<%= ff.calendar_date_select :graduation_date, :style => 'width: 40%' %>
 				</div>
 			<% end %>
+			<div class="field">
+				<label>Graduated?</label>
+				<label><%= ff.radio_button :graduated, true %> Yes</label>
+				<label><%= ff.radio_button :graduated, false %> No</label>
+				<%= err 'graduated', e.id %>
+			</div>
 		</div>
 		<% }} %>
 	<div class="field">
