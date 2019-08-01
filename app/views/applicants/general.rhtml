@@ -24,7 +24,7 @@
 		<div class="field">
 		<label>Mailing Address Street: <span class="req">*</span> <span id="mailing-i" style="display: none; font-weight: normal;"><%= image_tag 'ajax-loader.gif', :size => '16x11', :style => 'margin: 0; padding: 0; border: 0;' %> searching...</span></label>
 		<div>
-			<div style="float: left; width: 120px; font-size: 80%;">Line 1 (#, street):</div><%= f.text_field :address, :style => 'width: 60%' %>
+			<div style="float: left; width: 120px; font-size: 80%;">Line 1 (#, street):</div><%= f.text_field :address, :style => 'width: 60%', :autocomplete => 'new-password' %>
 			<div id="mailing-ac" class="autocomplete"></div>
 		</div>
 		<div class="clear"></div>
@@ -320,7 +320,8 @@
 				$('obj_city').value = $(li).down('.cty').innerHTML;
 				$('obj_zip').value = $(li).down('.zip').innerHTML;
 			}
-		})
+		});
+		$('obj_address').setAttribute('autocomplete', 'new-password');
 		
 		var r_ac = new Ajax.Autocompleter('obj_res_address', 'residence-ac', <%= url_for(:action => 'address_ac').to_json %>, {
 			paramName: 'adr',
@@ -330,7 +331,8 @@
 				$('obj_res_city').value = $(li).down('.cty').innerHTML;
 				$('obj_res_zip').value = $(li).down('.zip').innerHTML;
 			}
-		})		
+		});
+		$('obj_res_address').setAttribute('autocomplete', 'new-password');		
 		
 
 		
