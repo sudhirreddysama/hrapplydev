@@ -51,7 +51,7 @@
 							<td bgcolor="#f8f8f8" align="center">
 								<p><b>For Office Use Only</b></p>
 								<p><b>Check/Money Order #: <u><%= s * 2 %></u><%= s * 3 %>
-									<% if ep.exam.price.to_f == 0 %>
+									<% if !ep.exam || ep.exam.price.to_f == 0 %>
 										<%= uchk %> Waiver&nbsp;&nbsp;&nbsp;&nbsp;<%= uchk %> Waiver-e
 										<%= chk %> No Fee
 									<% else %>
@@ -321,7 +321,7 @@
 				
 				
 
-        <% if @obj.ask_fee_waiver && !seasonal %>
+        <% if ep.exam && ep.exam.price.to_f > 0 %>
     <%= new_page %>
     <h2>Special Arrangements for Examination</h2>
       
