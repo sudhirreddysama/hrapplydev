@@ -114,7 +114,7 @@
 	<% if !@obj.study_guide.blank? %>
 		<div class="exam-btn"><a href="<%= @obj.study_guide %>" target="_blank">Download/View Study Guide</a></div>
 	<% end %>
-	<% if @obj.can_apply && @obj.deadline && @obj.deadline >= Time.now %>
+	<% if @obj.can_apply && (!@obj.deadline || @obj.deadline >= Time.now) %>
 		<div class="exam-btn">
 			<%= form_tag :action => :cart %>
 				<%= hidden_field_tag 'add', @obj.id %>
