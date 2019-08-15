@@ -69,11 +69,15 @@ class ApplicantsController < ApplicationController
 	def submit
 	
 		# Quick hack to clear errors for sections no longer required after an exam is removed because the deadline passed.
-		['typing', 'waiver', 'other_exams', 'supplement'].each { |s|
+		# Actually, do all sections.
+		#['typing', 'waiver', 'other_exams', 'supplement'].each { |s|
+		@obj.final_check = true
+		%w{exams general certifications education training employment veteran equal attachments comments supplement typing waiver other_exams}.each { |s|
 			@obj.section = s
 			@obj.validate_section
 			@obj.dont_validate = false
 		}
+		@obj.final_check = false
 	
 		@obj.section = params[:action]
 		if !@noform and request.post? and @obj.update_attributes params[:obj] and !@obj.dont_redirect

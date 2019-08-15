@@ -491,7 +491,9 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
   def is_numeric
     true if Float(self) rescue false
   end
-
+	
+	attr :final_check, true
+	
   def validate_section
     return if @dont_validate
     @dont_validate = true
@@ -565,7 +567,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         err 'name_changed', 'Please indicate if your name has changed since your last application' if applied_before && name_changed.nil?
         err 'previous_first_name', 'Previous first name is required' if applied_before && name_changed && previous_first_name.blank?
         err 'previous_last_name', 'Previous last name is required' if applied_before && name_changed && previous_last_name.blank?
-        update_attribute :general_complete, !@err
+        update_attribute :general_complete, !@err if !final_check
       when 'certifications'
         certifications.each { |o|
           err 'name', 'Name of Trade or Profession is required', o.id if o.name.blank?
@@ -573,7 +575,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         if !license_requirement.blank? && certifications.empty?
           err 'license_requirement', "License Required: #{license_requirement}"
         end
-        update_attribute :certifications_complete, !@err
+        update_attribute :certifications_complete, !@err if !final_check
       when 'education'
         err 'education', 'Education level is required' if education.blank?
         err 'education_grade', 'Please indicate the highest grade of school you completed' if ['lths', 'ged'].include?(education) and education_grade.blank?
@@ -590,13 +592,13 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
         if require_graduation_date && !has_graduation_date
         	err 'education_higher', 'At least one college and graduation date is required'
         end
-        update_attribute :education_complete, !@err
+        update_attribute :education_complete, !@err if !final_check
       when 'training'
         trainings.each { |t|
           err 'description', 'Course / Program name is required', t.id if t.description.blank?
           err 'hours', 'Hours is required (please estimate)', t.id if t.hours.blank?
         }
-        update_attribute :training_complete, !@err
+        update_attribute :training_complete, !@err if !final_check
       when 'employment'
         employments.each { |e|
           err 'name', 'Employer\'s name is required', e.id if e.name.blank?
@@ -613,7 +615,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'supervisor_phone', 'Supervisor\'s phone is required', e.id if e.supervisor_phone.blank?
           err 'description', 'Description of duties is required', e.id if e.description.blank?
         }
-        update_attribute :employment_complete, !@err
+        update_attribute :employment_complete, !@err if !final_check
       when 'veteran'
       	if vc_type == 'disabled' || vc_type == 'nondisabled' || vc_type == 'active'
       		err 'army_enlisted', 'Enlistment date is required' if army_enlisted.blank?
@@ -628,26 +630,26 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
 						err 'vc_used_agency', 'Agency that established the eligible list is required' if vc_used_agency.blank?
 					end
       	end
-        update_attribute :veteran_complete, !@err
+        update_attribute :veteran_complete, !@err if !final_check
       when 'equal'
-        update_attribute :equal_complete, !@err
+        update_attribute :equal_complete, !@err if !final_check
       when 'attachments'
-        update_attribute :attachments_complete, !@err
+        update_attribute :attachments_complete, !@err if !final_check
       when 'comments'
-        update_attribute :comments_complete, !@err
+        update_attribute :comments_complete, !@err if !final_check
       when 'supplement'
         if false && ask_loans && nonseasonal_fields?
           err 'loans_outstanding', 'Please answer yes or no to this question' if loans_outstanding.nil?
           err 'loans_default', 'Please answer yes or no to this question' if loans_default.nil?
           err 'loans_confirmed', 'You must check this box to continue' unless loans_confirmed
         end
-        update_attribute :supplement_complete, !@err
+        update_attribute :supplement_complete, !@err if !final_check
       when 'typing'
         if ask_typing_waiver && nonseasonal_fields?
           err 'typing_waiver', 'Please select a reason why you are requesting the test be waived from the options below' if typing_waiver and !typing_waiver_1 and !typing_waiver_2
           err 'typing_waiver_2', 'Title and dept. are required' if typing_waiver and typing_waiver_2 and (typing_waiver_2_title.blank? or typing_waiver_2_dept.blank?)
         end
-        update_attribute :typing_complete, !@err
+        update_attribute :typing_complete, !@err if !final_check
       when 'waiver'
         if ask_fee_waiver && nonseasonal_fields?
           err 'waiver_requested', 'Please select at least one reason from the list below' if waiver_requested and !waiver_medicaid and !waiver_unemployed and !waiver_public_assistance and !waiver_ssi and !waiver_wia and !waiver_county and !waiver_social_workers
@@ -658,7 +660,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
           err 'waiver_legal', 'You must confirm that you have read the above portion of Section 50.5(b) of the Civil Service Law' if waiver_requested and !waiver_legal
           #err 'waiver_wia', 'Caseworker name and number are required' if waiver_requested and waiver_wia and (!waiver_wia_caseworker or !waiver_wia_phone)
         end
-        update_attribute :waiver_complete, !@err
+        update_attribute :waiver_complete, !@err if !final_check
       when 'other_exams'
         if ask_crossfiler && nonseasonal_fields?
           other_exams.each { |o|
@@ -670,7 +672,7 @@ where applicants.id<> #{id} and user_id=#{user_id} and exam_id=#{ep.exam_id} and
             err 'other_exams_admin', 'Please select who you would like to administer these exams' if other_exams_admin.blank?
           end
         end
-        update_attribute :other_exams_complete, !@err
+        update_attribute :other_exams_complete, !@err if !final_check
       when 'submit'
         err 'confirmed', 'You must check the box below to indicate you agree to the terms of this application' unless confirmed
         if self.save_view
