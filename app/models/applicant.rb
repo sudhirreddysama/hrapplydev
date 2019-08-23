@@ -84,6 +84,7 @@ class Applicant < ActiveRecord::Base
   end
 
   def self.setup_and_create u, ids, pay_fee
+  	
     last = u.applicants.find :first, :order => 'applicants.created_at desc'
     if last
       if last.submit_complete
