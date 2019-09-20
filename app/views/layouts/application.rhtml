@@ -47,17 +47,13 @@
 		<div id="skip-link"><a href="#main-body" class="element-invisible element-focusable">Skip to main content</a></div>
 		<% if RAILS_ENV == 'development' %><div id="dev-bar">DEVELOPMENT SITE</div><% end %>
 		<div id="wrap">
-			<div id="login">
-				<p>
-					<% if @current_user %>
-						You are logged in as <%= h @current_user.username %>
-						<%= link_to '(logout)', :controller => :account, :action => :logout %>
-					<% else %>
-						<%= link_to 'login', :controller => :account, :action => :index %>
-					<% end %>	
-				</p>
-			</div>
 			<div id="header">
+				<% if @current_user %>
+					<div style="float: right;">
+						You are logged in as <%= h @current_user.username %>
+						<%= link_to '(logout)', {:controller => :account, :action => :logout}, :style => 'color: #000;' %>
+					</div>
+				<% end %>
 			</div>
 			<div id="navbar">
 				<ul id="nav">
