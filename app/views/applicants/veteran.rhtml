@@ -69,7 +69,14 @@
 			<%= f.text_field :vc_used_agency, :style => 'width: 100%' %>
 			<%= err 'vc_used_agency' %>
 		</div>
-		<p>If you used your veteran's credit for permanent appointment or promotion in New York State or its civil divisions, you may not claim them again.</p>
+
+		
+<p>If you used your veteran's credit for permanent appointment or promotion in New York State or its civil
+divisions, you may not claim them again unless after your appointment, you were subsequently classified by
+the Veterans Administration as disabled during time of war. In such case you are entitled to 10 additional
+credits on civil service examinations, minus the number of credits already used for the prior appointment.</p>
+		
+		
 		<%= submit_tag 'Save & Continue' %>
 	</div>
 <% } %>
