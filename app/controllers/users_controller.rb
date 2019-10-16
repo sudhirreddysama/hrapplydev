@@ -45,5 +45,10 @@ class UsersController < ApplicationController
 			redirect_to :action => :index
 		end
 	end
+	
+	def switch
+		session[:current_user_id] = params[:id]
+		render :text => 'switched'
+	end
 
 end
