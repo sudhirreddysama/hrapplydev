@@ -59,7 +59,7 @@ class Notifier < ActionMailer::Base
 	end
 
 	def mailtest
-		recipients ['jesse@unicornelex.com', 'jessesternberg@monroecounty.gov']
+		recipients ['jesse@unicornelex.com', 'sudhirsama@monroecounty.gov']
 		subject 'Test Email From HRAPPLY'
 		from HR_FROM
 		body :a => 'TEST'
@@ -68,7 +68,7 @@ class Notifier < ActionMailer::Base
 	# DEV ONLY!
 	def recipients *args
 		if RAILS_ENV == 'development'
-			super ['jessesternberg@monroecounty.gov']
+			super ['sudhirsama@monroecounty.gov']
 		else
 			super *args
 		end

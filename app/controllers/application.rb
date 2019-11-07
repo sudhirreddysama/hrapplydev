@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
 
 	skip_before_filter :verify_authenticity_token
 
-	include SslRequirement
+	#include SslRequirement
   include ExceptionNotifiable
   local_addresses.clear
 

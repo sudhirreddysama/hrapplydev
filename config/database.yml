@@ -4,7 +4,7 @@ development:
   adapter: mysql
   database: hr_apply_onlinedev
   username: root
-  password: McMilk1
+  password: Sudhir@99
   host: localhost
   timeout: 50000
   reconnect: true
