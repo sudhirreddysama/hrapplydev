@@ -45,30 +45,16 @@
 				<p>Your application requires a payment total of <strong><%= m @obj.total %>.</strong> Please fill out your payment information below. You will be charged immediately for your application.</p>
 				<% fields_for('obj[new_payment]', @obj.new_payment) { |f| %>
 					<%= render :partial => 'partial/errors', :locals => {:errors => @obj.new_payment.errors.full_messages} %>
-					<div class="field">
+ 					<div class="field">
 						<label>Card Number: <span class="req">*</span></label>
 						<%= f.text_field :number %>
 					</div>
+
 					<div class="field">
-						<label>Card Type: <span class="req">*</span></label>
-						<%= f.select :typ, Applicant::PAY_CARD_TYPES, :include_blank => true %>
-					</div>
-					<div class="field">
-						<label>First Name (on card): <span class="req">*</span></label>
+						<label>Name on card: <span class="req">*</span></label>
 						<%= f.text_field :first_name %>
 					</div>
-					<div class="field">
-						<label>Last Name (on card): <span class="req">*</span></label>
-						<%= f.text_field :last_name %>
-					</div>
-					<div class="field">
-						<label>Address (use the address the card company has on file) <span class="req">*</span></label>
-						<%= f.text_field :address %>
-					</div>
-					<div class="field">
-						<label>City, State &amp; Zip: <span class="req">*</span></label>
-						<%= f.text_field :city %> <%= f.select :state, State::NAMES %> <%= f.text_field :zip, :size => 11, :maxlength => 11 %>
-					</div>
+
 					<div class="field">
 						<label>Card Expiration Date: <span class="req">*</span></label>
 						<% cy = Time.now.year %>
@@ -80,6 +66,25 @@
 						<%= f.text_field :verification_value %>
 						<div>From back of card. <%= link_to 'Click here to locate', '/hrapply/cardcodes.gif', :target => '_blank' %></div>
 					</div>
+
+<!--					<div class="field">
+						<label>Card Type: <span class="req">*</span></label>
+						<%#= f.select :typ, Applicant::PAY_CARD_TYPES, :include_blank => true %>
+					</div>
+					
+					<div class="field">
+						<label>Last Name (on card): <span class="req">*</span></label>
+						<%#= f.text_field :last_name %>
+					</div>
+					<div class="field">
+						<label>Address (use the address the card company has on file) <span class="req">*</span></label>
+						<%#= f.text_field :address %>
+					</div>
+					<div class="field">
+						<label>City, State &amp; Zip: <span class="req">*</span></label>
+						<%#= f.text_field :city %> <%#= f.select :state, State::NAMES %> <%#= f.text_field :zip, :size => 11, :maxlength => 11 %>
+					</div>
+					 -->
 				<% } %>
 			<% end %>
 		<% end %>
